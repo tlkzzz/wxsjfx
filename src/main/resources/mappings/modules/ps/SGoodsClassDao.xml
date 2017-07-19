@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tlkzzz.jeesite.modules.ps.dao.SGoodsClassDao">
+    
+	<sql id="sGoodsClassColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.parent_id AS "parent.id",
+		a.parent_ids AS "parentIds",
+		a.gener_id AS "generId",
+		a.sort AS "sort",
+		a.remarks AS "remarks",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="sGoodsClassJoins">
+	</sql>
+    
+	<select id="get" resultType="SGoodsClass">
+		SELECT 
+			<include refid="sGoodsClassColumns"/>
+		FROM s_goods_class a
+		<include refid="sGoodsClassJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="SGoodsClass">
+		SELECT 
+			<include refid="sGoodsClassColumns"/>
+		FROM s_goods_class a
+		<include refid="sGoodsClassJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="SGoodsClass">
+		SELECT 
+			<include refid="sGoodsClassColumns"/>
+		FROM s_goods_class a
+		<include refid="sGoodsClassJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO s_goods_class(
+			id,
+			name,
+			parent_id,
+			parent_ids,
+			gener_id,
+			sort,
+			remarks,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			del_flag
+		) VALUES (
+			#{id},
+			#{name},
+			#{parent.id},
+			#{parentIds},
+			#{generId},
+			#{sort},
+			#{remarks},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE s_goods_class SET 	
+			name = #{name},
+			parent_id = #{parent.id},
+			parent_ids = #{parentIds},
+			gener_id = #{generId},
+			sort = #{sort},
+			remarks = #{remarks},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE s_goods_class SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

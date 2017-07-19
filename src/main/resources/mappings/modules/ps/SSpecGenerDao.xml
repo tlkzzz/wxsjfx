@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tlkzzz.jeesite.modules.ps.dao.SSpecGenerDao">
+    
+	<sql id="sSpecGenerColumns">
+		a.gener_id AS "generId",
+		a.spec_id AS "specId"
+	</sql>
+	
+	<sql id="sSpecGenerJoins">
+	</sql>
+    
+	<select id="get" resultType="SSpecGener">
+		SELECT 
+			<include refid="sSpecGenerColumns"/>
+		FROM s_spec_gener a
+		<include refid="sSpecGenerJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="SSpecGener">
+		SELECT 
+			<include refid="sSpecGenerColumns"/>
+		FROM s_spec_gener a
+		<include refid="sSpecGenerJoins"/>
+		<where>
+			
+			<if test="generId != null and generId != ''">
+				AND a.gener_id = #{generId}
+			</if>
+			<if test="specId != null and specId != ''">
+				AND a.spec_id = #{specId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="SSpecGener">
+		SELECT 
+			<include refid="sSpecGenerColumns"/>
+		FROM s_spec_gener a
+		<include refid="sSpecGenerJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO s_spec_gener(
+			gener_id,
+			spec_id
+		) VALUES (
+			#{generId},
+			#{specId}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE s_spec_gener SET 	
+			gener_id = #{generId},
+			spec_id = #{specId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM s_spec_gener
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
