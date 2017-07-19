@@ -27,7 +27,7 @@ public class SGoodsComment extends DataEntity<SGoodsComment> {
 		super(id);
 	}
 
-	@NotNull
+	@NotNull(message = "商品不能为空")
 	public SGoods getGoods() {
 		return goods;
 	}
@@ -36,7 +36,7 @@ public class SGoodsComment extends DataEntity<SGoodsComment> {
 		this.goods = goods;
 	}
 	
-	@NotNull
+	@NotNull(message = "订单不能为空")
 	public SOrder getOrder() {
 		return order;
 	}
