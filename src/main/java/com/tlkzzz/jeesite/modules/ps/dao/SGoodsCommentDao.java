@@ -10,7 +10,7 @@ import com.tlkzzz.jeesite.modules.ps.entity.SGoodsComment;
 /**
  * 商品评论DAO接口
  * @author xrc
- * @version 2017-07-19
+ * @version 2017-07-195sss
  */
 @MyBatisDao
 public interface SGoodsCommentDao extends CrudDao<SGoodsComment> {
