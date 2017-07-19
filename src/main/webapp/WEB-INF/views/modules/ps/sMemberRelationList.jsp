@@ -19,17 +19,16 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/ps/sMemberRelation/">会员关系列表</a></li>
-		<shiro:hasPermission name="ps:sMemberRelation:edit"><li><a href="${ctx}/ps/sMemberRelation/form">会员关系添加</a></li></shiro:hasPermission>
 	</ul>
 	<form:form id="searchForm" modelAttribute="sMemberRelation" action="${ctx}/ps/sMemberRelation/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>老会员ID：</label>
-				<form:input path="oldMemberId" htmlEscape="false" maxlength="64" class="input-medium"/>
+			<li><label>老会员名称：</label>
+				<form:input path="oldMember.name" htmlEscape="false" maxlength="100" class="input-medium"/>
 			</li>
-			<li><label>新会员ID：</label>
-				<form:input path="newMemberId" htmlEscape="false" maxlength="64" class="input-medium"/>
+			<li><label>新会员名称：</label>
+				<form:input path="newMember.name" htmlEscape="false" maxlength="100" class="input-medium"/>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
@@ -39,9 +38,9 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>老会员ID</th>
-				<th>新会员ID</th>
-				<th>建立关系时间</th>
+				<th>老会员</th>
+				<th>新会员</th>
+				<th>建立时间</th>
 				<th>排序</th>
 				<th>备注</th>
 				<th>更新时间</th>
@@ -52,10 +51,10 @@
 		<c:forEach items="${page.list}" var="sMemberRelation">
 			<tr>
 				<td><a href="${ctx}/ps/sMemberRelation/form?id=${sMemberRelation.id}">
-					${sMemberRelation.oldMemberId}
+					${sMemberRelation.oldMember.name}
 				</a></td>
 				<td>
-					${sMemberRelation.newMemberId}
+					${sMemberRelation.newMember.name}
 				</td>
 				<td>
 					<fmt:formatDate value="${sMemberRelation.buildDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
@@ -70,7 +69,6 @@
 					<fmt:formatDate value="${sMemberRelation.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<shiro:hasPermission name="ps:sMemberRelation:edit"><td>
-    				<a href="${ctx}/ps/sMemberRelation/form?id=${sMemberRelation.id}">修改</a>
 					<a href="${ctx}/ps/sMemberRelation/delete?id=${sMemberRelation.id}" onclick="return confirmx('确认要删除该会员关系吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>

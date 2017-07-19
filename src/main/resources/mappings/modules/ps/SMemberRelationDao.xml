@@ -4,8 +4,8 @@
     
 	<sql id="sMemberRelationColumns">
 		a.id AS "id",
-		a.old_member_id AS "oldMemberId",
-		a.new_member_id AS "newMemberId",
+		a.old_member_id AS "oldMember.id",
+		a.new_member_id AS "newMember.id",
 		a.build_date AS "buildDate",
 		a.sort AS "sort",
 		a.remarks AS "remarks",
@@ -34,11 +34,23 @@
 		<include refid="sMemberRelationJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="oldMemberId != null and oldMemberId != ''">
-				AND a.old_member_id = #{oldMemberId}
+			<if test="oldMember != null and oldMember.id != null and oldMember.id != ''">
+				AND a.old_member_id = #{oldMember.id}
 			</if>
-			<if test="newMemberId != null and newMemberId != ''">
-				AND a.new_member_id = #{newMemberId}
+			<if test="oldMember != null and oldMember.name != null and oldMember.name != ''">
+				AND a.old_member_id LIKE
+					<if test="dbName == 'oracle'">'%'||#{oldMember.name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{oldMember.name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{oldMember.name},'%')</if>
+			</if>
+			<if test="newMember != null and newMember.id != null and newMember.id != ''">
+				AND a.new_member_id = #{newMember.id}
+			</if>
+			<if test="newMember != null and newMember.name != null and newMember.name != ''">
+				AND a.new_member_id LIKE
+					<if test="dbName == 'oracle'">'%'||#{newMember.name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{newMember.name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{newMember.name},'%')</if>
 			</if>
 		</where>
 		<choose>
@@ -84,8 +96,8 @@
 			del_flag
 		) VALUES (
 			#{id},
-			#{oldMemberId},
-			#{newMemberId},
+			#{oldMember.id},
+			#{newMember.id},
 			#{buildDate},
 			#{sort},
 			#{remarks},
@@ -99,8 +111,8 @@
 	
 	<update id="update">
 		UPDATE s_member_relation SET 	
-			old_member_id = #{oldMemberId},
-			new_member_id = #{newMemberId},
+			old_member_id = #{oldMember.id},
+			new_member_id = #{newMember.id},
 			build_date = #{buildDate},
 			sort = #{sort},
 			remarks = #{remarks},

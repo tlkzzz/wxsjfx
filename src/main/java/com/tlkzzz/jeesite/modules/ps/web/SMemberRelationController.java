@@ -50,6 +50,7 @@ public class SMemberRelationController extends BaseController {
 	@RequestMapping(value = {"list", ""})
 	public String list(SMemberRelation sMemberRelation, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<SMemberRelation> page = sMemberRelationService.findPage(new Page<SMemberRelation>(request, response), sMemberRelation); 
+		model.addAttribute("sMemberRelation", sMemberRelation);
 		model.addAttribute("page", page);
 		return "modules/ps/sMemberRelationList";
 	}
@@ -57,7 +58,7 @@ public class SMemberRelationController extends BaseController {
 	@RequiresPermissions("ps:sMemberRelation:view")
 	@RequestMapping(value = "form")
 	public String form(SMemberRelation sMemberRelation, Model model) {
-		model.addAttribute("sMemberRelation", sMemberRelation);
+//		model.addAttribute("sMemberRelation", sMemberRelation);
 		return "modules/ps/sMemberRelationForm";
 	}
 

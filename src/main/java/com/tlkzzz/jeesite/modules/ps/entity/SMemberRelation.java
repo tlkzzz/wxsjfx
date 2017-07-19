@@ -18,8 +18,8 @@ import com.tlkzzz.jeesite.common.persistence.DataEntity;
 public class SMemberRelation extends DataEntity<SMemberRelation> {
 	
 	private static final long serialVersionUID = 1L;
-	private String oldMemberId;		// 老会员ID
-	private String newMemberId;		// 新会员ID
+	private SMember oldMember;		// 老会员
+	private SMember newMember;		// 新会员
 	private Date buildDate;		// 建立关系时间
 	private String sort;		// 排序
 	
@@ -31,22 +31,22 @@ public class SMemberRelation extends DataEntity<SMemberRelation> {
 		super(id);
 	}
 
-	@Length(min=1, max=64, message="老会员ID长度必须介于 1 和 64 之间")
-	public String getOldMemberId() {
-		return oldMemberId;
+	@NotNull(message="老会员不能为空")
+	public SMember getOldMember() {
+		return oldMember;
 	}
 
-	public void setOldMemberId(String oldMemberId) {
-		this.oldMemberId = oldMemberId;
-	}
-	
-	@Length(min=1, max=64, message="新会员ID长度必须介于 1 和 64 之间")
-	public String getNewMemberId() {
-		return newMemberId;
+	public void setOldMember(SMember oldMember) {
+		this.oldMember = oldMember;
 	}
 
-	public void setNewMemberId(String newMemberId) {
-		this.newMemberId = newMemberId;
+	@NotNull(message="新会员不能为空")
+	public SMember getNewMember() {
+		return newMember;
+	}
+
+	public void setNewMember(SMember newMember) {
+		this.newMember = newMember;
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
