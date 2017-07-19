@@ -6,6 +6,8 @@ package com.tlkzzz.jeesite.modules.ps.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.tlkzzz.jeesite.modules.ps.entity.SGoods;
+import com.tlkzzz.jeesite.modules.ps.service.SGoodsService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +35,8 @@ public class SGoodsCommentController extends BaseController {
 
 	@Autowired
 	private SGoodsCommentService sGoodsCommentService;
+	@Autowired
+	private SGoodsService sGoodsService;
 	
 	@ModelAttribute
 	public SGoodsComment get(@RequestParam(required=false) String id) {
@@ -50,6 +54,8 @@ public class SGoodsCommentController extends BaseController {
 	@RequestMapping(value = {"list", ""})
 	public String list(SGoodsComment sGoodsComment, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<SGoodsComment> page = sGoodsCommentService.findPage(new Page<SGoodsComment>(request, response), sGoodsComment); 
+		model.addAttribute("goodsList", sGoodsService.findList(new SGoods()));
+		model.addAttribute("sGoodsComment", sGoodsComment);
 		model.addAttribute("page", page);
 		return "modules/ps/sGoodsCommentList";
 	}
@@ -57,7 +63,7 @@ public class SGoodsCommentController extends BaseController {
 	@RequiresPermissions("ps:sGoodsComment:view")
 	@RequestMapping(value = "form")
 	public String form(SGoodsComment sGoodsComment, Model model) {
-		model.addAttribute("sGoodsComment", sGoodsComment);
+//		model.addAttribute("sGoodsComment", sGoodsComment);
 		return "modules/ps/sGoodsCommentForm";
 	}
 
@@ -69,6 +75,16 @@ public class SGoodsCommentController extends BaseController {
 		}
 		sGoodsCommentService.save(sGoodsComment);
 		addMessage(redirectAttributes, "保存商品评论成功");
+		return "redirect:"+Global.getAdminPath()+"/ps/sGoodsComment/?repage";
+	}
+
+	@RequiresPermissions("ps:sGoodsComment:edit")
+	@RequestMapping(value = "addReply")
+	public String addReply(SGoodsComment sGoodsComment, Model model, RedirectAttributes redirectAttributes) {
+		if (StringUtils.isNotBlank(sGoodsComment.getReply())){
+			sGoodsCommentService.addReply(sGoodsComment);
+			addMessage(redirectAttributes, "保存回复评论成功");
+		}
 		return "redirect:"+Global.getAdminPath()+"/ps/sGoodsComment/?repage";
 	}
 	

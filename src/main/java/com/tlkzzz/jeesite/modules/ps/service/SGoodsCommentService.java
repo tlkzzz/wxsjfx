@@ -3,8 +3,10 @@
  */
 package com.tlkzzz.jeesite.modules.ps.service;
 
+import java.util.Date;
 import java.util.List;
 
+import com.tlkzzz.jeesite.modules.sys.utils.UserUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +39,13 @@ public class SGoodsCommentService extends CrudService<SGoodsCommentDao, SGoodsCo
 	@Transactional(readOnly = false)
 	public void save(SGoodsComment sGoodsComment) {
 		super.save(sGoodsComment);
+	}
+
+	@Transactional(readOnly = false)
+	public void addReply(SGoodsComment sGoodsComment) {
+		sGoodsComment.setUpdateDate(new Date());
+		sGoodsComment.setUpdateBy(UserUtils.getUser());
+		dao.addReply(sGoodsComment);
 	}
 	
 	@Transactional(readOnly = false)

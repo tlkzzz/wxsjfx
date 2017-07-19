@@ -8,12 +8,16 @@
 		sg.name AS "goods.name",
 		sg.price AS "goods.price",
 		a.order_id AS "order.id",
+		so.order_no AS "order.orderNo",
+		so.num AS "order.num",
 		a.comment AS "comment",
 		a.reply AS "reply",
 		a.remarks AS "remarks",
 		a.create_by AS "createBy.id",
+		sm.name AS "createBy.name",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
+		scs.name AS "updateBy.name",
 		a.update_date AS "updateDate",
 		a.del_flag AS "delFlag"
 	</sql>
@@ -21,6 +25,8 @@
 	<sql id="sGoodsCommentJoins">
 		LEFT JOIN s_goods sg ON sg.id=a.goods_id
 		LEFT JOIN s_order so ON so.id=a.order_id
+		LEFT JOIN s_member sm ON sm.id=a.create_by
+		LEFT JOIN s_customer_service scs ON scs.id=a.update_by
 	</sql>
     
 	<select id="get" resultType="SGoodsComment">
@@ -43,6 +49,12 @@
 			</if>
 			<if test="order != null and order.id != null and order.id != ''">
 				AND a.order_id = #{order.id}
+			</if>
+			<if test="order != null and order.orderNo != null and order.orderNo != ''">
+				AND so.order_no LIKE
+				<if test="dbName == 'oracle'">'%'||#{order.orderNo}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{order.orderNo}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{order.orderNo},'%')</if>
 			</if>
 		</where>
 		<choose>
@@ -108,6 +120,14 @@
 			comment = #{comment},
 			reply = #{reply},
 			remarks = #{remarks},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+
+	<update id="addReply">
+		UPDATE s_goods_comment SET
+			reply = #{reply},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate}
 		WHERE id = #{id}

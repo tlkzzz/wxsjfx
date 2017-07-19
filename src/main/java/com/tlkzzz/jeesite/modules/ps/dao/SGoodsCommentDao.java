@@ -14,5 +14,9 @@ import com.tlkzzz.jeesite.modules.ps.entity.SGoodsComment;
  */
 @MyBatisDao
 public interface SGoodsCommentDao extends CrudDao<SGoodsComment> {
-	
+    /**
+     * 添加评论回复
+     * @param sGoodsComment
+     */
+	void addReply(SGoodsComment sGoodsComment);
 }
