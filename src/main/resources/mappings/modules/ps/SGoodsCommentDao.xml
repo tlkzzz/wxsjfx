@@ -4,8 +4,10 @@
     
 	<sql id="sGoodsCommentColumns">
 		a.id AS "id",
-		a.goods_id AS "goodsId",
-		a.order_id AS "orderId",
+		a.goods_id AS "goods.id",
+		sg.name AS "goods.name",
+		sg.price AS "goods.price",
+		a.order_id AS "order.id",
 		a.comment AS "comment",
 		a.reply AS "reply",
 		a.remarks AS "remarks",
@@ -17,6 +19,8 @@
 	</sql>
 	
 	<sql id="sGoodsCommentJoins">
+		LEFT JOIN s_goods sg ON sg.id=a.goods_id
+		LEFT JOIN s_order so ON so.id=a.order_id
 	</sql>
     
 	<select id="get" resultType="SGoodsComment">
@@ -34,11 +38,11 @@
 		<include refid="sGoodsCommentJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="goodsId != null and goodsId != ''">
-				AND a.goods_id = #{goodsId}
+			<if test="goods != null and goods.id != null and goods != ''">
+				AND a.goods_id = #{goods.id}
 			</if>
-			<if test="orderId != null and orderId != ''">
-				AND a.order_id = #{orderId}
+			<if test="order != null and order.id != null and order.id != ''">
+				AND a.order_id = #{order.id}
 			</if>
 		</where>
 		<choose>
@@ -84,8 +88,8 @@
 			del_flag
 		) VALUES (
 			#{id},
-			#{goodsId},
-			#{orderId},
+			#{goods.id},
+			#{order.id},
 			#{comment},
 			#{reply},
 			#{remarks},
@@ -99,8 +103,8 @@
 	
 	<update id="update">
 		UPDATE s_goods_comment SET 	
-			goods_id = #{goodsId},
-			order_id = #{orderId},
+			goods_id = #{goods.id},
+			order_id = #{order.id},
 			comment = #{comment},
 			reply = #{reply},
 			remarks = #{remarks},
