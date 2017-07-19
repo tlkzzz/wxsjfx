@@ -51,6 +51,7 @@ public class SOrderController extends BaseController {
 	public String list(SOrder sOrder, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<SOrder> page = sOrderService.findPage(new Page<SOrder>(request, response), sOrder); 
 		model.addAttribute("page", page);
+		model.addAttribute("sOrder",sOrder);
 		return "modules/ps/sOrderList";
 	}
 

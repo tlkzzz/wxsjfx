@@ -25,6 +25,9 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
+			<li><label>订单：</label>
+				<form:input path="orderId.orderNo" htmlEscape="false" maxlength="64" class="input-medium"/>
+			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
 		</ul>
@@ -32,7 +35,10 @@
 	<sys:message content="${message}"/>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
-			<tr>
+			<tr><th>订单</th>
+				<th>应收金额</th>
+				<th>实收金额</th>
+				<th>收款时间</th>
 				<th>备注</th>
 				<th>更新时间</th>
 				<shiro:hasPermission name="ps:sReceipt:edit"><th>操作</th></shiro:hasPermission>
@@ -41,9 +47,21 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="sReceipt">
 			<tr>
-				<td><a href="${ctx}/ps/sReceipt/form?id=${sReceipt.id}">
+				<td>
+					${sReceipt.sOrder.orderId}
+				</td>
+				<td>
+					<fmt:formatNumber value="${sMemberCommission.receivableMoney}" pattern="#.####"/>
+				</td>
+				<td>
+					<fmt:formatNumber value="${sMemberCommission.revenueMoney}" pattern="#.####"/>
+				</td>
+				<td>
+					<fmt:formatDate value="${sReceipt.receiptDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+				</td>
+				<td>
 					${sReceipt.remarks}
-				</a></td>
+				</td>
 				<td>
 					<fmt:formatDate value="${sReceipt.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>

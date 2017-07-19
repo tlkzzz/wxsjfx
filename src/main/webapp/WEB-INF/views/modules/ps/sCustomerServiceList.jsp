@@ -37,6 +37,8 @@
 		<thead>
 			<tr>
 				<th>客服名称</th>
+				<th>状态</th>
+				<th>排序</th>
 				<th>备注</th>
 				<th>更新时间</th>
 				<shiro:hasPermission name="ps:sCustomerService:edit"><th>操作</th></shiro:hasPermission>
@@ -48,6 +50,12 @@
 				<td><a href="${ctx}/ps/sCustomerService/form?id=${sCustomerService.id}">
 					${sCustomerService.name}
 				</a></td>
+				<td>
+				     ${sCustomerService.state}
+				</td>
+				<td>
+				     ${sCustomerService.sort}
+				</td>
 				<td>
 					${sCustomerService.remarks}
 				</td>

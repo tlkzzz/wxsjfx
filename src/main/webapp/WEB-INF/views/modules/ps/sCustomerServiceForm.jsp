@@ -36,15 +36,16 @@
 		<div class="control-group">
 			<label class="control-label">客服名称：</label>
 			<div class="controls">
-				<form:input path="name" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				<form:input path="name" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
-		<div class="control-group">
-			<label class="control-label">启用状态：</label>
-			<div class="controls">
-				<form:input path="state" htmlEscape="false" maxlength="11" class="input-xlarge "/>
-			</div>
-		</div>
+		<%--<div class="control-group">--%>
+			<%--<label class="control-label">启用状态：</label>--%>
+			<%--<div class="controls">--%>
+				<%--<form:input path="state" htmlEscape="false" maxlength="11" class="input-xlarge "/>--%>
+			<%--</div>--%>
+		<%--</div>--%>
 		<div class="control-group">
 			<label class="control-label">排序：</label>
 			<div class="controls">

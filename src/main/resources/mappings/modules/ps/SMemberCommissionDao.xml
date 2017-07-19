@@ -7,6 +7,7 @@
 		a.old_member_id AS "oldMemberId",
 		a.new_member_id AS "newMemberId",
 		a.order_id AS "orderId",
+		c.order_No AS "orderId.order_No",
 		a.total AS "total",
 		a.sort AS "sort",
 		a.remarks AS "remarks",
@@ -18,6 +19,7 @@
 	</sql>
 	
 	<sql id="sMemberCommissionJoins">
+		LEFT JOIN s_order c ON a.order_id=c.id
 	</sql>
     
 	<select id="get" resultType="SMemberCommission">
@@ -53,6 +55,12 @@
 		<include refid="sMemberCommissionJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="oldMemberId != null  and oldMemberId != ''">
+				AND a.old_member_id = #{oldMemberId}
+			</if>
+			<if test="newMemberId != null  and newMemberId != ''">
+				AND a.new_member_id = #{newMemberId}
+			</if>
 		</where>		
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -82,7 +90,7 @@
 			#{id},
 			#{oldMemberId},
 			#{newMemberId},
-			#{orderId},
+			#{orderId.id},
 			#{total},
 			#{sort},
 			#{remarks},
@@ -98,7 +106,7 @@
 		UPDATE s_member_commission SET 	
 			old_member_id = #{oldMemberId},
 			new_member_id = #{newMemberId},
-			order_id = #{orderId},
+			order_id = #{orderId.id},
 			total = #{total},
 			sort = #{sort},
 			remarks = #{remarks},

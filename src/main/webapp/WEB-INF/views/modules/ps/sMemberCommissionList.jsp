@@ -19,12 +19,18 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/ps/sMemberCommission/">会员提成列表</a></li>
-		<shiro:hasPermission name="ps:sMemberCommission:edit"><li><a href="${ctx}/ps/sMemberCommission/form">会员提成添加</a></li></shiro:hasPermission>
+		<!--<shiro:hasPermission name="ps:sMemberCommission:edit"><li><a href="${ctx}/ps/sMemberCommission/form">会员提成添加</a></li></shiro:hasPermission> -->
 	</ul>
 	<form:form id="searchForm" modelAttribute="sMemberCommission" action="${ctx}/ps/sMemberCommission/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
+			<li><label>老会员：</label>
+				<form:input path="oldMemberId" htmlEscape="false" maxlength="64" class="input-medium"/>
+			</li>
+			<li><label>提成会员：</label>
+				<form:input path="newMemberId" htmlEscape="false" maxlength="64" class="input-medium"/>
+			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
 		</ul>
@@ -32,7 +38,10 @@
 	<sys:message content="${message}"/>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
-			<tr>
+			<tr><th>老会员</th>
+				<th>提成会员</th>
+				<th>订单</th>
+				<th>提成金额</th>
 				<th>备注</th>
 				<th>更新时间</th>
 				<shiro:hasPermission name="ps:sMemberCommission:edit"><th>操作</th></shiro:hasPermission>
@@ -41,9 +50,21 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="sMemberCommission">
 			<tr>
-				<td><a href="${ctx}/ps/sMemberCommission/form?id=${sMemberCommission.id}">
+				<td>
+					${sMemberCommission.oldMemberId}
+				</td>
+				<td>
+					${sMemberCommission.newMemberId}
+				</td>
+				<td>
+					${sMemberCommission.sOrder.orderId}
+				</td>
+				<td>
+					<fmt:formatNumber value="${sMemberCommission.total}" pattern="#.####"/>
+				</td>
+				<td>
 					${sMemberCommission.remarks}
-				</a></td>
+				</td>
 				<td>
 					<fmt:formatDate value="${sMemberCommission.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>

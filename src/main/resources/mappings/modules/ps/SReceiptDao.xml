@@ -5,6 +5,7 @@
 	<sql id="sReceiptColumns">
 		a.id AS "id",
 		a.order_id AS "orderId",
+		c.order_No AS "orderId.order_No",
 		a.receivable_money AS "receivableMoney",
 		a.revenue_money AS "revenueMoney",
 		a.receipt_date AS "receiptDate",
@@ -17,6 +18,7 @@
 	</sql>
 	
 	<sql id="sReceiptJoins">
+		LEFT JOIN s_order c ON a.order_id=c.id
 	</sql>
     
 	<select id="get" resultType="SReceipt">
@@ -34,6 +36,9 @@
 		<include refid="sReceiptJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="orderId != null and orderId.order_No != null and orderId.order_No != ''">
+				AND c.order_No = #{orderId.order_No}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -52,7 +57,7 @@
 		<include refid="sReceiptJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-		</where>		
+		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}
@@ -78,7 +83,7 @@
 			del_flag
 		) VALUES (
 			#{id},
-			#{orderId},
+			#{orderId.id},
 			#{receivableMoney},
 			#{revenueMoney},
 			#{receiptDate},
@@ -93,7 +98,7 @@
 	
 	<update id="update">
 		UPDATE s_receipt SET 	
-			order_id = #{orderId},
+			order_id = #{orderId.id},
 			receivable_money = #{receivableMoney},
 			revenue_money = #{revenueMoney},
 			receipt_date = #{receiptDate},

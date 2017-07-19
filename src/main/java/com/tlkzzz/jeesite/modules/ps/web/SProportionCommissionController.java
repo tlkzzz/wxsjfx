@@ -51,6 +51,7 @@ public class SProportionCommissionController extends BaseController {
 	public String list(SProportionCommission sProportionCommission, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<SProportionCommission> page = sProportionCommissionService.findPage(new Page<SProportionCommission>(request, response), sProportionCommission); 
 		model.addAttribute("page", page);
+		model.addAttribute("sProportionCommission",sProportionCommission);
 		return "modules/ps/sProportionCommissionList";
 	}
 

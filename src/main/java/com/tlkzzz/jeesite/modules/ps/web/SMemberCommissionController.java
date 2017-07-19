@@ -51,6 +51,7 @@ public class SMemberCommissionController extends BaseController {
 	public String list(SMemberCommission sMemberCommission, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<SMemberCommission> page = sMemberCommissionService.findPage(new Page<SMemberCommission>(request, response), sMemberCommission); 
 		model.addAttribute("page", page);
+		model.addAttribute("sMemberCommission",sMemberCommission);
 		return "modules/ps/sMemberCommissionList";
 	}
 

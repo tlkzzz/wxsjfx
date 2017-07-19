@@ -48,7 +48,7 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">规格ids：</label>
+			<label class="control-label">规格：</label>
 			<div class="controls">
 				<form:input path="specIds" htmlEscape="false" class="input-xlarge "/>
 			</div>

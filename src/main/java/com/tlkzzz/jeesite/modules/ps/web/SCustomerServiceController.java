@@ -51,6 +51,7 @@ public class SCustomerServiceController extends BaseController {
 	public String list(SCustomerService sCustomerService, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<SCustomerService> page = sCustomerServiceService.findPage(new Page<SCustomerService>(request, response), sCustomerService); 
 		model.addAttribute("page", page);
+		model.addAttribute("sCustomerService",sCustomerService);
 		return "modules/ps/sCustomerServiceList";
 	}
 

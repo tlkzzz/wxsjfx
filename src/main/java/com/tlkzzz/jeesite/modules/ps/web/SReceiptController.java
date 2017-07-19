@@ -51,6 +51,7 @@ public class SReceiptController extends BaseController {
 	public String list(SReceipt sReceipt, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<SReceipt> page = sReceiptService.findPage(new Page<SReceipt>(request, response), sReceipt); 
 		model.addAttribute("page", page);
+		model.addAttribute("sReceipt",sReceipt);
 		return "modules/ps/sReceiptList";
 	}
 

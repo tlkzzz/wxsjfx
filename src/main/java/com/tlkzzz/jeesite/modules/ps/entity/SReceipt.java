@@ -18,7 +18,7 @@ import com.tlkzzz.jeesite.common.persistence.DataEntity;
 public class SReceipt extends DataEntity<SReceipt> {
 	
 	private static final long serialVersionUID = 1L;
-	private String orderId;		// 订单ID
+	private SOrder orderId;		// 订单ID
 	private String receivableMoney;		// 应收金额
 	private String revenueMoney;		// 实收金额
 	private Date receiptDate;		// 收款时间
@@ -32,11 +32,11 @@ public class SReceipt extends DataEntity<SReceipt> {
 	}
 
 	@Length(min=1, max=64, message="订单ID长度必须介于 1 和 64 之间")
-	public String getOrderId() {
+	public SOrder getOrderId() {
 		return orderId;
 	}
 
-	public void setOrderId(String orderId) {
+	public void setOrderId(SOrder orderId) {
 		this.orderId = orderId;
 	}
 	

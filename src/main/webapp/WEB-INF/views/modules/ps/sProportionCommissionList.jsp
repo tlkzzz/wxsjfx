@@ -36,6 +36,8 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
+				<th>提成比例</th>
+				<th>排序</th>
 				<th>备注</th>
 				<th>更新时间</th>
 				<shiro:hasPermission name="ps:sProportionCommission:edit"><th>操作</th></shiro:hasPermission>
@@ -44,9 +46,18 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="sProportionCommission">
 			<tr>
-				<td><a href="${ctx}/ps/sProportionCommission/form?id=${sProportionCommission.id}">
+
+					<%--<a href="${ctx}/ps/sProportionCommission/form?id=${sProportionCommission.id}">--%>
+					<%--${sProportionCommission.remarks}</a>--%>
+			     <td>
+					 <fmt:formatNumber value="${sProportionCommission.commission}" pattern="#.####"/>
+				</td>
+				<td>
+					${sProportionCommission.sort}
+				</td>
+				<td>
 					${sProportionCommission.remarks}
-				</a></td>
+				</td>
 				<td>
 					<fmt:formatDate value="${sProportionCommission.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>

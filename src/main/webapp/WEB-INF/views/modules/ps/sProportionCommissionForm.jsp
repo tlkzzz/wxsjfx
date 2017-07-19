@@ -36,7 +36,7 @@
 		<div class="control-group">
 			<label class="control-label">提成比例：</label>
 			<div class="controls">
-				<form:input path="commission" htmlEscape="false" class="input-xlarge required"/>
+				<form:input path="commission" htmlEscape="false" class="input-xlarge required" number="true" maxlength="12"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
