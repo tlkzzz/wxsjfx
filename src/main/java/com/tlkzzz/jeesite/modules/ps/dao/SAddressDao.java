@@ -14,5 +14,8 @@ import com.tlkzzz.jeesite.modules.ps.entity.SAddress;
  */
 @MyBatisDao
 public interface SAddressDao extends CrudDao<SAddress> {
-	
+
+
+
+
 }
