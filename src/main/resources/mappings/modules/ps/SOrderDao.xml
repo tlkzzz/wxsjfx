@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tlkzzz.jeesite.modules.ps.dao.SOrderDao">
+    
+	<sql id="sOrderColumns">
+		a.id AS "id",
+		a.order_no AS "orderNo",
+		a.goods_id AS "goodsId",
+		a.spec_ids AS "specIds",
+		a.num AS "num",
+		a.price AS "price",
+		a.cost_price AS "costPrice",
+		a.sort AS "sort",
+		a.remarks AS "remarks",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="sOrderJoins">
+	</sql>
+    
+	<select id="get" resultType="SOrder">
+		SELECT 
+			<include refid="sOrderColumns"/>
+		FROM s_order a
+		<include refid="sOrderJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="SOrder">
+		SELECT 
+			<include refid="sOrderColumns"/>
+		FROM s_order a
+		<include refid="sOrderJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="SOrder">
+		SELECT 
+			<include refid="sOrderColumns"/>
+		FROM s_order a
+		<include refid="sOrderJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO s_order(
+			id,
+			order_no,
+			goods_id,
+			spec_ids,
+			num,
+			price,
+			cost_price,
+			sort,
+			remarks,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			del_flag
+		) VALUES (
+			#{id},
+			#{orderNo},
+			#{goodsId},
+			#{specIds},
+			#{num},
+			#{price},
+			#{costPrice},
+			#{sort},
+			#{remarks},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE s_order SET 	
+			order_no = #{orderNo},
+			goods_id = #{goodsId},
+			spec_ids = #{specIds},
+			num = #{num},
+			price = #{price},
+			cost_price = #{costPrice},
+			sort = #{sort},
+			remarks = #{remarks},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE s_order SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
