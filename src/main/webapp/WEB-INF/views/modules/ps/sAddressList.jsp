@@ -27,7 +27,7 @@
 			<li><label>会员：</label>
 				<form:input path="member.name" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
-			<li><label>区域ID：</label>
+			<li><label>区域：</label>
 				<sys:treeselect id="area" name="area.id" value="${sAddress.area.id}" labelName="area.name" labelValue="${sAddress.area.name}"
 					title="区域" url="/sys/area/treeData" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/>
 			</li>
