@@ -50,6 +50,7 @@ public class SMemberController extends BaseController {
 	@RequestMapping(value = {"list", ""})
 	public String list(SMember sMember, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<SMember> page = sMemberService.findPage(new Page<SMember>(request, response), sMember); 
+		model.addAttribute("sMember", sMember);
 		model.addAttribute("page", page);
 		return "modules/ps/sMemberList";
 	}

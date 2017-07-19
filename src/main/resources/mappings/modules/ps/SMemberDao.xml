@@ -51,7 +51,10 @@
 					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
 			</if>
 			<if test="loginName != null and loginName != ''">
-				AND a.login_name = #{loginName}
+				AND a.login_name LIKE
+				<if test="dbName == 'oracle'">'%'||#{loginName}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{loginName}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{loginName},'%')</if>
 			</if>
 			<if test="loginKey != null and loginKey != ''">
 				AND a.login_key = #{loginKey}

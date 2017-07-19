@@ -19,7 +19,6 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/ps/sMember/">会员列表</a></li>
-		<shiro:hasPermission name="ps:sMember:edit"><li><a href="${ctx}/ps/sMember/form">会员添加</a></li></shiro:hasPermission>
 	</ul>
 	<form:form id="searchForm" modelAttribute="sMember" action="${ctx}/ps/sMember/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
@@ -30,9 +29,6 @@
 			</li>
 			<li><label>登录名称：</label>
 				<form:input path="loginName" htmlEscape="false" maxlength="100" class="input-medium"/>
-			</li>
-			<li><label>三方登录凭证：</label>
-				<form:input path="loginKey" htmlEscape="false" maxlength="200" class="input-medium"/>
 			</li>
 			<li><label>手机：</label>
 				<form:input path="mobile" htmlEscape="false" maxlength="100" class="input-medium"/>
@@ -47,14 +43,13 @@
 			<tr>
 				<th>会员名称</th>
 				<th>登录名称</th>
-				<th>三方登录凭证</th>
 				<th>头像</th>
 				<th>邮箱</th>
 				<th>电话</th>
 				<th>手机</th>
 				<th>最后登录IP</th>
 				<th>最后登录时间</th>
-				<th>是否允许登录标志</th>
+				<th>是否允许登录</th>
 				<th>备注</th>
 				<th>更新时间</th>
 				<shiro:hasPermission name="ps:sMember:edit"><th>操作</th></shiro:hasPermission>
@@ -70,10 +65,7 @@
 					${sMember.loginName}
 				</td>
 				<td>
-					${sMember.loginKey}
-				</td>
-				<td>
-					${sMember.photo}
+					<c:if test="${not empty sMember.photo}"><img src="${sMember.photo}" style="height:50px;width:50px"/></c:if>
 				</td>
 				<td>
 					${sMember.email}
@@ -91,7 +83,7 @@
 					<fmt:formatDate value="${sMember.loginDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
-					${sMember.loginFlag}
+					${fns:getDictLabel(sMember.loginFlag, "yes_no", "")}
 				</td>
 				<td>
 					${sMember.remarks}
