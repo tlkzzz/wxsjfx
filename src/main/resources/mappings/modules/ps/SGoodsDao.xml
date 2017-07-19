@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tlkzzz.jeesite.modules.ps.dao.SGoodsDao">
+    
+	<sql id="sGoodsColumns">
+		a.id AS "id",
+		a.class_id AS "classId",
+		a.gener_id AS "generId",
+		a.type AS "type",
+		a.name AS "name",
+		a.title AS "title",
+		a.price AS "price",
+		a.market_price AS "marketPrice",
+		a.cost_price AS "costPrice",
+		a.spec_ids AS "specIds",
+		a.goods_stock AS "goodsStock",
+		a.item_num AS "itemNum",
+		a.image AS "image",
+		a.images AS "images",
+		a.bands_id AS "bandsId",
+		a.supplier_id AS "supplierId",
+		a.goods_desc AS "goodsDesc",
+		a.publish AS "publish",
+		a.recommend AS "recommend",
+		a.keywords AS "keywords",
+		a.sort AS "sort",
+		a.remarks AS "remarks",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="sGoodsJoins">
+	</sql>
+    
+	<select id="get" resultType="SGoods">
+		SELECT 
+			<include refid="sGoodsColumns"/>
+		FROM s_goods a
+		<include refid="sGoodsJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="SGoods">
+		SELECT 
+			<include refid="sGoodsColumns"/>
+		FROM s_goods a
+		<include refid="sGoodsJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="classId != null and classId != ''">
+				AND a.class_id = #{classId}
+			</if>
+			<if test="generId != null and generId != ''">
+				AND a.gener_id = #{generId}
+			</if>
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="title != null and title != ''">
+				AND a.title LIKE 
+					<if test="dbName == 'oracle'">'%'||#{title}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{title}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{title},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="SGoods">
+		SELECT 
+			<include refid="sGoodsColumns"/>
+		FROM s_goods a
+		<include refid="sGoodsJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO s_goods(
+			id,
+			class_id,
+			gener_id,
+			type,
+			name,
+			title,
+			price,
+			market_price,
+			cost_price,
+			spec_ids,
+			goods_stock,
+			item_num,
+			image,
+			images,
+			bands_id,
+			supplier_id,
+			goods_desc,
+			publish,
+			recommend,
+			keywords,
+			sort,
+			remarks,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			del_flag
+		) VALUES (
+			#{id},
+			#{classId},
+			#{generId},
+			#{type},
+			#{name},
+			#{title},
+			#{price},
+			#{marketPrice},
+			#{costPrice},
+			#{specIds},
+			#{goodsStock},
+			#{itemNum},
+			#{image},
+			#{images},
+			#{bandsId},
+			#{supplierId},
+			#{goodsDesc},
+			#{publish},
+			#{recommend},
+			#{keywords},
+			#{sort},
+			#{remarks},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE s_goods SET 	
+			class_id = #{classId},
+			gener_id = #{generId},
+			type = #{type},
+			name = #{name},
+			title = #{title},
+			price = #{price},
+			market_price = #{marketPrice},
+			cost_price = #{costPrice},
+			spec_ids = #{specIds},
+			goods_stock = #{goodsStock},
+			item_num = #{itemNum},
+			image = #{image},
+			images = #{images},
+			bands_id = #{bandsId},
+			supplier_id = #{supplierId},
+			goods_desc = #{goodsDesc},
+			publish = #{publish},
+			recommend = #{recommend},
+			keywords = #{keywords},
+			sort = #{sort},
+			remarks = #{remarks},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE s_goods SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

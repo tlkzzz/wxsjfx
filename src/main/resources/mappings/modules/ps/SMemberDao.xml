@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tlkzzz.jeesite.modules.ps.dao.SMemberDao">
+    
+	<sql id="sMemberColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.login_name AS "loginName",
+		a.password AS "password",
+		a.true_name AS "trueName",
+		a.login_key AS "loginKey",
+		a.member_type AS "memberType",
+		a.photo AS "photo",
+		a.email AS "email",
+		a.tel AS "tel",
+		a.mobile AS "mobile",
+		a.login_ip AS "loginIp",
+		a.login_date AS "loginDate",
+		a.login_flag AS "loginFlag",
+		a.sort AS "sort",
+		a.remarks AS "remarks",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="sMemberJoins">
+	</sql>
+    
+	<select id="get" resultType="SMember">
+		SELECT 
+			<include refid="sMemberColumns"/>
+		FROM s_member a
+		<include refid="sMemberJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="SMember">
+		SELECT 
+			<include refid="sMemberColumns"/>
+		FROM s_member a
+		<include refid="sMemberJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="loginName != null and loginName != ''">
+				AND a.login_name = #{loginName}
+			</if>
+			<if test="loginKey != null and loginKey != ''">
+				AND a.login_key = #{loginKey}
+			</if>
+			<if test="mobile != null and mobile != ''">
+				AND a.mobile = #{mobile}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="SMember">
+		SELECT 
+			<include refid="sMemberColumns"/>
+		FROM s_member a
+		<include refid="sMemberJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO s_member(
+			id,
+			name,
+			login_name,
+			password,
+			true_name,
+			login_key,
+			member_type,
+			photo,
+			email,
+			tel,
+			mobile,
+			login_ip,
+			login_date,
+			login_flag,
+			sort,
+			remarks,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			del_flag
+		) VALUES (
+			#{id},
+			#{name},
+			#{loginName},
+			#{password},
+			#{trueName},
+			#{loginKey},
+			#{memberType},
+			#{photo},
+			#{email},
+			#{tel},
+			#{mobile},
+			#{loginIp},
+			#{loginDate},
+			#{loginFlag},
+			#{sort},
+			#{remarks},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE s_member SET 	
+			name = #{name},
+			login_name = #{loginName},
+			password = #{password},
+			true_name = #{trueName},
+			login_key = #{loginKey},
+			member_type = #{memberType},
+			photo = #{photo},
+			email = #{email},
+			tel = #{tel},
+			mobile = #{mobile},
+			login_ip = #{loginIp},
+			login_date = #{loginDate},
+			login_flag = #{loginFlag},
+			sort = #{sort},
+			remarks = #{remarks},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE s_member SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

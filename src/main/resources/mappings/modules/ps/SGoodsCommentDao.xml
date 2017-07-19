@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tlkzzz.jeesite.modules.ps.dao.SGoodsCommentDao">
+    
+	<sql id="sGoodsCommentColumns">
+		a.id AS "id",
+		a.goods_id AS "goodsId",
+		a.order_id AS "orderId",
+		a.comment AS "comment",
+		a.reply AS "reply",
+		a.remarks AS "remarks",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="sGoodsCommentJoins">
+	</sql>
+    
+	<select id="get" resultType="SGoodsComment">
+		SELECT 
+			<include refid="sGoodsCommentColumns"/>
+		FROM s_goods_comment a
+		<include refid="sGoodsCommentJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="SGoodsComment">
+		SELECT 
+			<include refid="sGoodsCommentColumns"/>
+		FROM s_goods_comment a
+		<include refid="sGoodsCommentJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="goodsId != null and goodsId != ''">
+				AND a.goods_id = #{goodsId}
+			</if>
+			<if test="orderId != null and orderId != ''">
+				AND a.order_id = #{orderId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="SGoodsComment">
+		SELECT 
+			<include refid="sGoodsCommentColumns"/>
+		FROM s_goods_comment a
+		<include refid="sGoodsCommentJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO s_goods_comment(
+			id,
+			goods_id,
+			order_id,
+			comment,
+			reply,
+			remarks,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			del_flag
+		) VALUES (
+			#{id},
+			#{goodsId},
+			#{orderId},
+			#{comment},
+			#{reply},
+			#{remarks},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE s_goods_comment SET 	
+			goods_id = #{goodsId},
+			order_id = #{orderId},
+			comment = #{comment},
+			reply = #{reply},
+			remarks = #{remarks},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE s_goods_comment SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
