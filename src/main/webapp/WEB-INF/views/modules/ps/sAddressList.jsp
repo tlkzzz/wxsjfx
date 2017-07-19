@@ -42,6 +42,8 @@
 				<th>会员</th>
 				<th>区域</th>
 				<th>详细地址</th>
+				<th>邮编</th>
+				<th>电话</th>
 				<th>默认地址</th>
 				<th>排序</th>
 				<th>备注</th>
@@ -60,6 +62,12 @@
 				</td>
 				<td>
 					${sAddress.address}
+				</td>
+				<td>
+					${sAddress.code}
+				</td>
+				<td>
+					${sAddress.tel}
 				</td>
 				<td>
 					${fns:getDictLabel(sAddress.isDefault, "yes_no", "否")}

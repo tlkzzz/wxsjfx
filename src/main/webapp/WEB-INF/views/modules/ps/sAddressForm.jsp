@@ -45,7 +45,22 @@
 		<div class="control-group">
 			<label class="control-label">详细地址：</label>
 			<div class="controls">
-				<form:input path="address" htmlEscape="false" class="input-xlarge "/>
+				<form:input path="address" htmlEscape="false" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">邮编：</label>
+			<div class="controls">
+				<form:input path="code" htmlEscape="false" digits="true" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">电话：</label>
+			<div class="controls">
+				<form:input path="tel" htmlEscape="false" digits="true" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">

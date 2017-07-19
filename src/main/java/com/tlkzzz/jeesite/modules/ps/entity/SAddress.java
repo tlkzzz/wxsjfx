@@ -18,9 +18,11 @@ public class SAddress extends DataEntity<SAddress> {
 	
 	private static final long serialVersionUID = 1L;
 	private SMember member;		// 会员
-	private Area area;		// 区域
+	private Area area;			// 区域
 	private String address;		// 详细地址
-	private String isDefault;		// 默认地址
+	private String isDefault;	// 默认地址
+	private String code;		// 邮编
+	private String tel;			// 电话
 	private String sort;		// 排序
 	
 	public SAddress() {
@@ -65,7 +67,23 @@ public class SAddress extends DataEntity<SAddress> {
 	public void setIsDefault(String isDefault) {
 		this.isDefault = isDefault;
 	}
-	
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getTel() {
+		return tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+
 	@Length(min=0, max=11, message="排序长度必须介于 0 和 11 之间")
 	public String getSort() {
 		return sort;
