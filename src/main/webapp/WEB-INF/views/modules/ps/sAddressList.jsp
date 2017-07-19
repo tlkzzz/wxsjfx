@@ -19,21 +19,17 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/ps/sAddress/">送货地址列表</a></li>
-		<shiro:hasPermission name="ps:sAddress:edit"><li><a href="${ctx}/ps/sAddress/form">送货地址添加</a></li></shiro:hasPermission>
 	</ul>
 	<form:form id="searchForm" modelAttribute="sAddress" action="${ctx}/ps/sAddress/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>会员ID：</label>
-				<form:input path="memberId" htmlEscape="false" maxlength="64" class="input-medium"/>
+			<li><label>会员：</label>
+				<form:input path="member.name" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<li><label>区域ID：</label>
 				<sys:treeselect id="area" name="area.id" value="${sAddress.area.id}" labelName="area.name" labelValue="${sAddress.area.name}"
 					title="区域" url="/sys/area/treeData" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/>
-			</li>
-			<li><label>创建者：</label>
-				<form:input path="createBy.id" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
@@ -43,13 +39,13 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>会员ID</th>
-				<th>区域ID</th>
+				<th>会员</th>
+				<th>区域</th>
 				<th>详细地址</th>
 				<th>默认地址</th>
 				<th>排序</th>
 				<th>备注</th>
-				<th>更新时间</th>
+				<th>添加时间</th>
 				<shiro:hasPermission name="ps:sAddress:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
@@ -57,7 +53,7 @@
 		<c:forEach items="${page.list}" var="sAddress">
 			<tr>
 				<td><a href="${ctx}/ps/sAddress/form?id=${sAddress.id}">
-					${sAddress.memberId}
+					${sAddress.member.id}
 				</a></td>
 				<td>
 					${sAddress.area.name}
@@ -66,7 +62,7 @@
 					${sAddress.address}
 				</td>
 				<td>
-					${sAddress.isDefault}
+					${fns:getDictLabel(sAddress.isDefault, "yes_no", "否")}
 				</td>
 				<td>
 					${sAddress.sort}
@@ -75,7 +71,7 @@
 					${sAddress.remarks}
 				</td>
 				<td>
-					<fmt:formatDate value="${sAddress.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:formatDate value="${sAddress.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<shiro:hasPermission name="ps:sAddress:edit"><td>
     				<a href="${ctx}/ps/sAddress/form?id=${sAddress.id}">修改</a>

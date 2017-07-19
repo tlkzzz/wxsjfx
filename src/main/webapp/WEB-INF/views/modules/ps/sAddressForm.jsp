@@ -32,16 +32,10 @@
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="sAddress" action="${ctx}/ps/sAddress/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
-		<sys:message content="${message}"/>		
+		<form:hidden path="member.id"/>
+		<sys:message content="${message}"/>
 		<div class="control-group">
-			<label class="control-label">会员ID：</label>
-			<div class="controls">
-				<form:input path="memberId" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">区域ID：</label>
+			<label class="control-label">区域：</label>
 			<div class="controls">
 				<sys:treeselect id="area" name="area.id" value="${sAddress.area.id}" labelName="area.name" labelValue="${sAddress.area.name}"
 					title="区域" url="/sys/area/treeData" cssClass="required" allowClear="true" notAllowSelectParent="true"/>
@@ -57,13 +51,15 @@
 		<div class="control-group">
 			<label class="control-label">默认地址：</label>
 			<div class="controls">
-				<form:input path="isDefault" htmlEscape="false" maxlength="11" class="input-xlarge "/>
+				<form:checkboxes path="isDefault" items="${fns:getDictList('yes_no')}"
+								 itemLabel="label" itemValue="value" htmlEscape="false" cssClass="required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">排序：</label>
 			<div class="controls">
-				<form:input path="sort" htmlEscape="false" maxlength="11" class="input-xlarge "/>
+				<form:input path="sort" htmlEscape="false" digits="true" maxlength="11" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">

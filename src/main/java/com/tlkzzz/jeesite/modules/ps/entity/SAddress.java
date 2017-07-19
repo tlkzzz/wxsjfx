@@ -17,8 +17,8 @@ import com.tlkzzz.jeesite.common.persistence.DataEntity;
 public class SAddress extends DataEntity<SAddress> {
 	
 	private static final long serialVersionUID = 1L;
-	private String memberId;		// 会员ID
-	private Area area;		// 区域ID
+	private SMember member;		// 会员
+	private Area area;		// 区域
 	private String address;		// 详细地址
 	private String isDefault;		// 默认地址
 	private String sort;		// 排序
@@ -31,16 +31,16 @@ public class SAddress extends DataEntity<SAddress> {
 		super(id);
 	}
 
-	@Length(min=1, max=64, message="会员ID长度必须介于 1 和 64 之间")
-	public String getMemberId() {
-		return memberId;
+	@NotNull(message = "会员不能为空")
+	public SMember getMember() {
+		return member;
 	}
 
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
+	public void setMember(SMember member) {
+		this.member = member;
 	}
 	
-	@NotNull(message="区域ID不能为空")
+	@NotNull(message="区域不能为空")
 	public Area getArea() {
 		return area;
 	}

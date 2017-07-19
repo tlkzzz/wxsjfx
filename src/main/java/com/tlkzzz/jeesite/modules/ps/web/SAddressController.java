@@ -50,6 +50,7 @@ public class SAddressController extends BaseController {
 	@RequestMapping(value = {"list", ""})
 	public String list(SAddress sAddress, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<SAddress> page = sAddressService.findPage(new Page<SAddress>(request, response), sAddress); 
+		model.addAttribute("sAddress", sAddress);
 		model.addAttribute("page", page);
 		return "modules/ps/sAddressList";
 	}
