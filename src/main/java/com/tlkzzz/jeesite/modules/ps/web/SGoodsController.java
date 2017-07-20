@@ -72,11 +72,12 @@ public class SGoodsController extends BaseController {
 	public String form(SGoods sGoods, String classId, Model model) {
 		if(StringUtils.isNotBlank(classId)) {
 			SGoodsClass goodsClass = sGoodsClassService.get(classId);
-			sGoods.setGener(sGenreService.getAll(goodsClass.getGenerId()));
+			sGoods.setGener(sGenreService.getAll(goodsClass.getsGenre().getId()));
 		}
-		if(StringUtils.isNotBlank(sGoods.getGoodsDesc()))Encodes.unescapeHtml(sGoods.getGoodsDesc());
+		if(StringUtils.isNotBlank(sGoods.getGoodsDesc()))
+			sGoods.setGoodsDesc(Encodes.unescapeHtml(sGoods.getGoodsDesc()));
 		model.addAttribute("gClassList", sGoodsClassService.findList(new SGoodsClass()));
-		model.addAttribute("generList", sGenreService.findList(new SGenre()));
+		model.addAttribute("genreList", sGenreService.findList(new SGenre()));
 		model.addAttribute("sGoods", sGoods);
 		return "modules/ps/sGoodsForm";
 	}
