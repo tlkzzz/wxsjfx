@@ -25,11 +25,17 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>商品分类ID：</label>
-				<form:input path="classId" htmlEscape="false" maxlength="64" class="input-medium"/>
+			<li><label>商品分类：</label>
+				<form:select path="gClass.id">
+					<form:option value="" label="请选择"/>
+					<form:options items="${gClassList}" itemLabel="name" itemValue="id" htmlEscape="false"/>
+				</form:select>
 			</li>
-			<li><label>类型ID：</label>
-				<form:input path="generId" htmlEscape="false" maxlength="64" class="input-medium"/>
+			<li><label>类型：</label>
+				<form:select path="gener.id">
+					<form:option value="" label="请选择"/>
+					<form:options items="${generList}" itemLabel="name" itemValue="id" htmlEscape="false"/>
+				</form:select>
 			</li>
 			<li><label>商品名称：</label>
 				<form:input path="name" htmlEscape="false" maxlength="100" class="input-medium"/>
@@ -47,6 +53,14 @@
 			<tr>
 				<th>商品名称</th>
 				<th>商品副标题</th>
+				<th>商品图片</th>
+				<th>类型</th>
+				<th>商品价格</th>
+				<th>市场价</th>
+				<th>成本价</th>
+				<th>商品库存</th>
+				<th>商品货号</th>
+				<th>商品发布</th>
 				<th>备注</th>
 				<th>更新时间</th>
 				<shiro:hasPermission name="ps:sGoods:edit"><th>操作</th></shiro:hasPermission>
@@ -60,6 +74,32 @@
 				</a></td>
 				<td>
 					${sGoods.title}
+				</td>
+				<td>
+					<c:if test="${not empty sGoods.image}">
+						<img src="${sGoods.image}" style="height:50px;width:50px"/>
+					</c:if>
+				</td>
+				<td>
+					${sGoods.gener.name}
+				</td>
+				<td>
+					${sGoods.price}
+				</td>
+				<td>
+					${sGoods.marketPrice}
+				</td>
+				<td>
+					${sGoods.costPrice}
+				</td>
+				<td>
+					${sGoods.goodsStock}
+				</td>
+				<td>
+					${sGoods.itemNum}
+				</td>
+				<td>
+					${fns:getDictLabel(sGoods.publish, "yes_no", "")}
 				</td>
 				<td>
 					${sGoods.remarks}

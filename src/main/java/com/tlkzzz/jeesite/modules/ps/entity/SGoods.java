@@ -7,6 +7,8 @@ import org.hibernate.validator.constraints.Length;
 
 import com.tlkzzz.jeesite.common.persistence.DataEntity;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * 商品Entity
  * @author xrc
@@ -15,8 +17,8 @@ import com.tlkzzz.jeesite.common.persistence.DataEntity;
 public class SGoods extends DataEntity<SGoods> {
 	
 	private static final long serialVersionUID = 1L;
-	private String classId;		// 商品分类ID
-	private String generId;		// 类型ID
+	private SGoodsClass gClass;		// 商品分类
+	private SGenre gener;		// 类型
 	private String type;		// 商品类型
 	private String name;		// 商品名称
 	private String title;		// 商品副标题
@@ -31,7 +33,7 @@ public class SGoods extends DataEntity<SGoods> {
 	private String bandsId;		// 商品品牌
 	private String supplierId;		// 供应商
 	private String goodsDesc;		// 商品描述
-	private String publish;		// 商品发布
+	private String publish;		// 商品发布(1:发布，0：不发布)
 	private String recommend;		// 商品推荐
 	private String keywords;		// 关键字
 	private String sort;		// 排序
@@ -44,22 +46,22 @@ public class SGoods extends DataEntity<SGoods> {
 		super(id);
 	}
 
-	@Length(min=0, max=64, message="商品分类ID长度必须介于 0 和 64 之间")
-	public String getClassId() {
-		return classId;
+	@NotNull(message = "商品分类不能为空")
+	public SGoodsClass getGClass() {
+		return gClass;
 	}
 
-	public void setClassId(String classId) {
-		this.classId = classId;
-	}
-	
-	@Length(min=0, max=64, message="类型ID长度必须介于 0 和 64 之间")
-	public String getGenerId() {
-		return generId;
+	public void setGClass(SGoodsClass gClass) {
+		this.gClass = gClass;
 	}
 
-	public void setGenerId(String generId) {
-		this.generId = generId;
+	@NotNull(message = "类型不能为空")
+	public SGenre getGener() {
+		return gener;
+	}
+
+	public void setGener(SGenre gener) {
+		this.gener = gener;
 	}
 	
 	@Length(min=0, max=11, message="商品类型长度必须介于 0 和 11 之间")

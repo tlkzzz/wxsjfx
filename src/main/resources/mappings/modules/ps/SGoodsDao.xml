@@ -4,8 +4,10 @@
     
 	<sql id="sGoodsColumns">
 		a.id AS "id",
-		a.class_id AS "classId",
-		a.gener_id AS "generId",
+		a.class_id AS "gClass.id",
+		sgc.name AS "gClass.name",
+		a.gener_id AS "gener.id",
+		sg.name AS "gener.name",
 		a.type AS "type",
 		a.name AS "name",
 		a.title AS "title",
@@ -33,6 +35,8 @@
 	</sql>
 	
 	<sql id="sGoodsJoins">
+		LEFT JOIN s_goods_class sgc ON sgc.id=a.class_id
+		LEFT JOIN s_genre sg ON sg.id=a.gener_id
 	</sql>
     
 	<select id="get" resultType="SGoods">
@@ -50,11 +54,11 @@
 		<include refid="sGoodsJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="classId != null and classId != ''">
-				AND a.class_id = #{classId}
+			<if test="gClass != null and gClass.id != null and gClass.id != ''">
+				AND a.class_id = #{gClass.id}
 			</if>
-			<if test="generId != null and generId != ''">
-				AND a.gener_id = #{generId}
+			<if test="gener != null and gener.id != null and gener.id != ''">
+				AND a.gener_id = #{gener.id}
 			</if>
 			<if test="name != null and name != ''">
 				AND a.name LIKE 
@@ -67,6 +71,18 @@
 					<if test="dbName == 'oracle'">'%'||#{title}||'%'</if>
 					<if test="dbName == 'mssql'">'%'+#{title}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{title},'%')</if>
+			</if>
+			<if test="gClass != null and gClass.name != null and gClass.name != ''">
+				AND sgc.name LIKE
+					<if test="dbName == 'oracle'">'%'||#{gClass.name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{gClass.name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{gClass.name},'%')</if>
+			</if>
+			<if test="gener != null and gener.name != null and gener.name != ''">
+				AND sg.name LIKE
+					<if test="dbName == 'oracle'">'%'||#{gener.name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{gener.name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{gener.name},'%')</if>
 			</if>
 		</where>
 		<choose>
@@ -128,8 +144,8 @@
 			del_flag
 		) VALUES (
 			#{id},
-			#{classId},
-			#{generId},
+			#{gClass.id},
+			#{gener.id},
 			#{type},
 			#{name},
 			#{title},
@@ -159,8 +175,8 @@
 	
 	<update id="update">
 		UPDATE s_goods SET 	
-			class_id = #{classId},
-			gener_id = #{generId},
+			class_id = #{gClass.id},
+			gener_id = #{gener.id},
 			type = #{type},
 			name = #{name},
 			title = #{title},
