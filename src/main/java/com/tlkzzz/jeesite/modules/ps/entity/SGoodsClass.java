@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import com.tlkzzz.jeesite.common.persistence.TreeEntity;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * 商品分类管理Entity
  * @author szx
@@ -19,7 +21,7 @@ public class SGoodsClass extends TreeEntity<SGoodsClass> {
 	private String name;		// 名称
 	private SGoodsClass parent;		// 父级ID
 	private String parentIds;		// 父级ids
-	private String generId;		// 类型ID
+	private SGenre sGenre;		// 类型
 	
 	public SGoodsClass() {
 		super();
@@ -55,13 +57,13 @@ public class SGoodsClass extends TreeEntity<SGoodsClass> {
 		this.parentIds = parentIds;
 	}
 	
-	@Length(min=0, max=64, message="类型ID长度必须介于 0 和 64 之间")
-	public String getGenerId() {
-		return generId;
+	@NotNull(message = "类型不能为空")
+	public SGenre getsGenre() {
+		return sGenre;
 	}
 
-	public void setGenerId(String generId) {
-		this.generId = generId;
+	public void setsGenreId(SGenre sGenre) {
+		this.sGenre = sGenre;
 	}
 
 	public String getParentId() {
