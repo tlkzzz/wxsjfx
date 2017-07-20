@@ -53,6 +53,12 @@ public abstract class BaseController {
 	 */
 	@Value("${frontPath}")
 	protected String frontPath;
+
+	/**
+	 * 商城基础路径
+	 */
+	@Value("${shopPath}")
+	protected String shopPath;
 	
 	/**
 	 * 前端URL后缀
