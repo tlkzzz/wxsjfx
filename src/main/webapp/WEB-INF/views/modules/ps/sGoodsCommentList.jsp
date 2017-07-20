@@ -14,11 +14,11 @@
 			$("#searchForm").submit();
         	return false;
         }
-        function addReply(id,comment) {
+        function addReply(id,comment,reply) {
 			if(id=="")return;
 			$("#xian").css("display","block");
 			$("#commentId").val(id);
-			$("#reply").val("");
+			$("#reply").val(reply);
 			$("#reply").attr("placeholder","评论："+comment);
         }
         function commitReply() {
@@ -85,7 +85,7 @@
 					<fmt:formatDate value="${sGoodsComment.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<shiro:hasPermission name="ps:sGoodsComment:edit"><td>
-					<a href="javascript:void(0)" onclick="addReply('${sGoodsComment.id}','${sGoodsComment.comment}')" >回复</a>
+					<a href="javascript:void(0)" onclick="addReply('${sGoodsComment.id}','${sGoodsComment.comment}','${sGoodsComment.reply}')" >回复</a>
 					<a href="${ctx}/ps/sGoodsComment/delete?id=${sGoodsComment.id}" onclick="return confirmx('确认要删除该商品评论吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>
