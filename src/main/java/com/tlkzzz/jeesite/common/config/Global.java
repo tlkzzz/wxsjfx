@@ -92,6 +92,13 @@ public class Global {
 	public static String getFrontPath() {
 		return getConfig("frontPath");
 	}
+
+	/**
+	 * 获取商城根路径
+	 */
+	public static String getShopPath() {
+		return getConfig("shopPath");
+	}
 	
 	/**
 	 * 获取URL后缀
