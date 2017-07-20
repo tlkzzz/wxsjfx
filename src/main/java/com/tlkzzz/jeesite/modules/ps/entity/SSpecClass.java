@@ -7,6 +7,8 @@ import org.hibernate.validator.constraints.Length;
 
 import com.tlkzzz.jeesite.common.persistence.DataEntity;
 
+import java.util.List;
+
 /**
  * 规格分类Entity
  * @author szx
@@ -17,6 +19,7 @@ public class SSpecClass extends DataEntity<SSpecClass> {
 	private static final long serialVersionUID = 1L;
 	private String name;		// 名称
 	private String sort;		// 排序
+	private List<SSpec> sSpecList;		// 规格列表
 	
 	public SSpecClass() {
 		super();
@@ -43,5 +46,12 @@ public class SSpecClass extends DataEntity<SSpecClass> {
 	public void setSort(String sort) {
 		this.sort = sort;
 	}
-	
+
+	public List<SSpec> getsSpecList() {
+		return sSpecList;
+	}
+
+	public void setsSpecList(List<SSpec> sSpecList) {
+		this.sSpecList = sSpecList;
+	}
 }

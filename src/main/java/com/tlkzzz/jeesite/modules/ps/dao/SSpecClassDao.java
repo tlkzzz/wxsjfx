@@ -7,6 +7,8 @@ import com.tlkzzz.jeesite.common.persistence.CrudDao;
 import com.tlkzzz.jeesite.common.persistence.annotation.MyBatisDao;
 import com.tlkzzz.jeesite.modules.ps.entity.SSpecClass;
 
+import java.util.List;
+
 /**
  * 规格分类DAO接口
  * @author szx
@@ -14,5 +16,6 @@ import com.tlkzzz.jeesite.modules.ps.entity.SSpecClass;
  */
 @MyBatisDao
 public interface SSpecClassDao extends CrudDao<SSpecClass> {
-	
+    public List<SSpecClass> ggfindList(String ids);
+
 }
