@@ -26,6 +26,13 @@
     <example>${fns:getFrontPath()}</example>
   </function>
   <function>
+    <description>获取商城路径</description>
+    <name>getShopPath</name>
+    <function-class>com.tlkzzz.jeesite.common.config.Global</function-class>
+    <function-signature>java.lang.String getShopPath()</function-signature>
+    <example>${fns:getShopPath()}</example>
+  </function>
+  <function>
     <description>获取网站URL后缀</description>
     <name>getUrlSuffix</name>
     <function-class>com.tlkzzz.jeesite.common.config.Global</function-class>
