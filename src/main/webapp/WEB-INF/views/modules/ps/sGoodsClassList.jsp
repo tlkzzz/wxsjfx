@@ -58,6 +58,7 @@
 		<thead>
 			<tr>
 				<th>名称</th>
+				<th>类型</th>
 				<th>备注</th>
 				<th>更新时间</th>
 				<shiro:hasPermission name="ps:sGoodsClass:edit"><th>操作</th></shiro:hasPermission>
@@ -70,6 +71,9 @@
 			<td><a href="${ctx}/ps/sGoodsClass/form?id={{row.id}}">
 				{{row.name}}
 			</a></td>
+			<td>
+				{{row.sGenre.name}}
+			</td>
 			<td>
 				{{row.remarks}}
 			</td>
