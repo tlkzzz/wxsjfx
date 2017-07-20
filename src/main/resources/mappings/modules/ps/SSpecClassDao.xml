@@ -24,6 +24,12 @@
 		<include refid="sSpecClassJoins"/>
 		WHERE a.id = #{id}
 	</select>
+
+	<select id="ggfindList" resultType="SSpecClass">
+		SELECT <include refid="sSpecClassColumns"/>
+		FROM s_spec_class
+		WHERE id IN (SELECT ssg.`spec_id` FROM s_spec_gener ssg WHERE ssg.`gener_id`=#{ids})
+	</select>
 	
 	<select id="findList" resultType="SSpecClass">
 		SELECT 

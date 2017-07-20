@@ -3,21 +3,30 @@
  */
 package com.tlkzzz.jeesite.modules.ps.entity;
 
+import com.tlkzzz.jeesite.modules.ps.service.SGoodsClassService;
+import com.tlkzzz.jeesite.modules.ps.service.SSpecClassService;
 import org.hibernate.validator.constraints.Length;
 
 import com.tlkzzz.jeesite.common.persistence.DataEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 /**
  * 类型管理Entity
  * @author szx
  * @version 2017-07-19
  */
+
 public class SGenre extends DataEntity<SGenre> {
-	
+	@Autowired
+	private SSpecClassService sSpecClassService;
+
 	private static final long serialVersionUID = 1L;
 	private String name;		// 名称
 	private String sort;		// 排序
 	private String specClass;  //规格类型
+	private List<SSpecClass> specClassList;  //规格类型
 	
 	public SGenre() {
 		super();
@@ -51,5 +60,13 @@ public class SGenre extends DataEntity<SGenre> {
 
 	public void setSpecClass(String specClass) {
 		this.specClass = specClass;
+	}
+
+	public List<SSpecClass> getSpecClassList() {
+		return specClassList;
+	}
+
+	public void setSpecClassList(List<SSpecClass> specClassList) {
+		this.specClassList = specClassList;
 	}
 }
