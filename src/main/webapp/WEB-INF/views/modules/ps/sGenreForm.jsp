@@ -40,6 +40,13 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">规格分类：</label>
+			<div class="controls">
+				<form:checkboxes path="specClass" items="${sSpecClassList}" itemLabel="name" itemValue="id" htmlEscape="false"/>
+				<%--<form:input path="sort" htmlEscape="false" maxlength="11" class="input-xlarge "/>--%>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">排序：</label>
 			<div class="controls">
 				<form:input path="sort" htmlEscape="false" maxlength="11" class="input-xlarge "/>

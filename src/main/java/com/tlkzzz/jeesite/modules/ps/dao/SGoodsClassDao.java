@@ -3,7 +3,7 @@
  */
 package com.tlkzzz.jeesite.modules.ps.dao;
 
-import com.tlkzzz.jeesite.common.persistence.CrudDao;
+import com.tlkzzz.jeesite.common.persistence.TreeDao;
 import com.tlkzzz.jeesite.common.persistence.annotation.MyBatisDao;
 import com.tlkzzz.jeesite.modules.ps.entity.SGoodsClass;
 
@@ -13,6 +13,6 @@ import com.tlkzzz.jeesite.modules.ps.entity.SGoodsClass;
  * @version 2017-07-19
  */
 @MyBatisDao
-public interface SGoodsClassDao extends CrudDao<SGoodsClass> {
+public interface SGoodsClassDao extends TreeDao<SGoodsClass> {
 	
 }

@@ -36,7 +36,8 @@
 		<div class="control-group">
 			<label class="control-label">规格名称：</label>
 			<div class="controls">
-				<form:input path="name" htmlEscape="false" maxlength="100" class="input-xlarge "/>
+				<form:input path="name" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
@@ -49,7 +50,11 @@
 		<div class="control-group">
 			<label class="control-label">规格分类：</label>
 			<div class="controls">
-				<form:input path="specClassId" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
+				<form:select path="specClassId" required="true">
+					<form:option value="" label="请选择" ></form:option>
+					<form:options items="${sSpecClassList}" itemLabel="name" itemValue="id" htmlEscape="false"></form:options>
+				</form:select>
+				<%--<form:input path="specClassId" htmlEscape="false" maxlength="64" class="input-xlarge required"/>--%>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>

@@ -6,6 +6,8 @@ package com.tlkzzz.jeesite.modules.ps.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.tlkzzz.jeesite.modules.ps.entity.SSpecClass;
+import com.tlkzzz.jeesite.modules.ps.service.SSpecClassService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,8 @@ import com.tlkzzz.jeesite.common.utils.StringUtils;
 import com.tlkzzz.jeesite.modules.ps.entity.SSpec;
 import com.tlkzzz.jeesite.modules.ps.service.SSpecService;
 
+import java.util.List;
+
 /**
  * 规格Controller
  * @author szx
@@ -33,6 +37,8 @@ public class SSpecController extends BaseController {
 
 	@Autowired
 	private SSpecService sSpecService;
+	@Autowired
+	private SSpecClassService sSpecClassService;
 	
 	@ModelAttribute
 	public SSpec get(@RequestParam(required=false) String id) {
@@ -50,6 +56,7 @@ public class SSpecController extends BaseController {
 	@RequestMapping(value = {"list", ""})
 	public String list(SSpec sSpec, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<SSpec> page = sSpecService.findPage(new Page<SSpec>(request, response), sSpec); 
+		model.addAttribute("sSpec", sSpec);
 		model.addAttribute("page", page);
 		return "modules/ps/sSpecList";
 	}
@@ -57,7 +64,9 @@ public class SSpecController extends BaseController {
 	@RequiresPermissions("ps:sSpec:view")
 	@RequestMapping(value = "form")
 	public String form(SSpec sSpec, Model model) {
+		List<SSpecClass> sSpecClassList=sSpecClassService.findList(new SSpecClass());
 		model.addAttribute("sSpec", sSpec);
+		model.addAttribute("sSpecClassList", sSpecClassList);
 		return "modules/ps/sSpecForm";
 	}
 

@@ -19,7 +19,8 @@ public class SSpec extends DataEntity<SSpec> {
 	private String code;		// 规格
 	private String specClassId;		// 规格分类
 	private String sort;		// 排序
-	
+	private SSpecClass sSpecClass; //规格类型
+
 	public SSpec() {
 		super();
 	}
@@ -63,5 +64,12 @@ public class SSpec extends DataEntity<SSpec> {
 	public void setSort(String sort) {
 		this.sort = sort;
 	}
-	
+
+	public SSpecClass getsSpecClass() {
+		return sSpecClass;
+	}
+
+	public void setsSpecClass(SSpecClass sSpecClass) {
+		this.sSpecClass = sSpecClass;
+	}
 }

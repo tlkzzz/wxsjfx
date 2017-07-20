@@ -3,6 +3,9 @@
  */
 package com.tlkzzz.jeesite.modules.ps.web;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,10 +16,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.tlkzzz.jeesite.common.config.Global;
-import com.tlkzzz.jeesite.common.persistence.Page;
 import com.tlkzzz.jeesite.common.web.BaseController;
 import com.tlkzzz.jeesite.common.utils.StringUtils;
 import com.tlkzzz.jeesite.modules.ps.entity.SGoodsClass;
@@ -49,14 +54,33 @@ public class SGoodsClassController extends BaseController {
 	@RequiresPermissions("ps:sGoodsClass:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(SGoodsClass sGoodsClass, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<SGoodsClass> page = sGoodsClassService.findPage(new Page<SGoodsClass>(request, response), sGoodsClass); 
-		model.addAttribute("page", page);
+		List<SGoodsClass> list = sGoodsClassService.findList(sGoodsClass); 
+		model.addAttribute("sGoodsClass", sGoodsClass);
+		model.addAttribute("list", list);
 		return "modules/ps/sGoodsClassList";
 	}
 
 	@RequiresPermissions("ps:sGoodsClass:view")
 	@RequestMapping(value = "form")
 	public String form(SGoodsClass sGoodsClass, Model model) {
+		if (sGoodsClass.getParent()!=null && StringUtils.isNotBlank(sGoodsClass.getParent().getId())){
+			sGoodsClass.setParent(sGoodsClassService.get(sGoodsClass.getParent().getId()));
+			// 获取排序号，最末节点排序号+30
+			if (StringUtils.isBlank(sGoodsClass.getId())){
+				SGoodsClass sGoodsClassChild = new SGoodsClass();
+				sGoodsClassChild.setParent(new SGoodsClass(sGoodsClass.getParent().getId()));
+				List<SGoodsClass> list = sGoodsClassService.findList(sGoodsClass); 
+				if (list.size() > 0){
+					sGoodsClass.setSort(list.get(list.size()-1).getSort());
+					if (sGoodsClass.getSort() != null){
+						sGoodsClass.setSort(sGoodsClass.getSort() + 30);
+					}
+				}
+			}
+		}
+		if (sGoodsClass.getSort() == null){
+			sGoodsClass.setSort(30);
+		}
 		model.addAttribute("sGoodsClass", sGoodsClass);
 		return "modules/ps/sGoodsClassForm";
 	}
@@ -80,4 +104,23 @@ public class SGoodsClassController extends BaseController {
 		return "redirect:"+Global.getAdminPath()+"/ps/sGoodsClass/?repage";
 	}
 
+	@RequiresPermissions("user")
+	@ResponseBody
+	@RequestMapping(value = "treeData")
+	public List<Map<String, Object>> treeData(@RequestParam(required=false) String extId, HttpServletResponse response) {
+		List<Map<String, Object>> mapList = Lists.newArrayList();
+		List<SGoodsClass> list = sGoodsClassService.findList(new SGoodsClass());
+		for (int i=0; i<list.size(); i++){
+			SGoodsClass e = list.get(i);
+			if (StringUtils.isBlank(extId) || (extId!=null && !extId.equals(e.getId()) && e.getParentIds().indexOf(","+extId+",")==-1)){
+				Map<String, Object> map = Maps.newHashMap();
+				map.put("id", e.getId());
+				map.put("pId", e.getParentId());
+				map.put("name", e.getName());
+				mapList.add(map);
+			}
+		}
+		return mapList;
+	}
+	
 }

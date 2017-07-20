@@ -6,21 +6,20 @@ package com.tlkzzz.jeesite.modules.ps.entity;
 import org.hibernate.validator.constraints.Length;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import com.tlkzzz.jeesite.common.persistence.DataEntity;
+import com.tlkzzz.jeesite.common.persistence.TreeEntity;
 
 /**
  * 商品分类管理Entity
  * @author szx
  * @version 2017-07-19
  */
-public class SGoodsClass extends DataEntity<SGoodsClass> {
+public class SGoodsClass extends TreeEntity<SGoodsClass> {
 	
 	private static final long serialVersionUID = 1L;
 	private String name;		// 名称
 	private SGoodsClass parent;		// 父级ID
 	private String parentIds;		// 父级ids
 	private String generId;		// 类型ID
-	private String sort;		// 排序
 	
 	public SGoodsClass() {
 		super();
@@ -64,14 +63,8 @@ public class SGoodsClass extends DataEntity<SGoodsClass> {
 	public void setGenerId(String generId) {
 		this.generId = generId;
 	}
-	
-	@Length(min=0, max=11, message="排序长度必须介于 0 和 11 之间")
-	public String getSort() {
-		return sort;
-	}
 
-	public void setSort(String sort) {
-		this.sort = sort;
+	public String getParentId() {
+		return parent != null && parent.getId() != null ? parent.getId() : "0";
 	}
-	
 }

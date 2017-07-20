@@ -13,10 +13,12 @@
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
-		a.del_flag AS "delFlag"
+		a.del_flag AS "delFlag",
+		ssc.name AS "sSpecClass.name"
 	</sql>
 	
 	<sql id="sSpecJoins">
+		LEFT JOIN s_spec_class ssc ON ssc.id =a.spec_class_id
 	</sql>
     
 	<select id="get" resultType="SSpec">
@@ -40,8 +42,11 @@
 					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
 			</if>
-			<if test="specClassId != null and specClassId != ''">
-				AND a.spec_class_id = #{specClassId}
+			<if test="sSpecClass != null and sSpecClass != ''">
+				AND ssc.name LIKE
+				<if test="dbName == 'oracle'">'%'||#{sSpecClass.name}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{sSpecClass.name}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{sSpecClass.name},'%')</if>
 			</if>
 		</where>
 		<choose>

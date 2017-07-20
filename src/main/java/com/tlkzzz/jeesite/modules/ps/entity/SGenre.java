@@ -17,6 +17,7 @@ public class SGenre extends DataEntity<SGenre> {
 	private static final long serialVersionUID = 1L;
 	private String name;		// 名称
 	private String sort;		// 排序
+	private String specClass;  //规格类型
 	
 	public SGenre() {
 		super();
@@ -43,5 +44,12 @@ public class SGenre extends DataEntity<SGenre> {
 	public void setSort(String sort) {
 		this.sort = sort;
 	}
-	
+
+	public String getSpecClass() {
+		return specClass;
+	}
+
+	public void setSpecClass(String specClass) {
+		this.specClass = specClass;
+	}
 }

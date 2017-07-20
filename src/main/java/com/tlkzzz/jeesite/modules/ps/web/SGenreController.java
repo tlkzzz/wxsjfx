@@ -6,6 +6,10 @@ package com.tlkzzz.jeesite.modules.ps.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.tlkzzz.jeesite.modules.ps.entity.SSpecClass;
+import com.tlkzzz.jeesite.modules.ps.entity.SSpecGener;
+import com.tlkzzz.jeesite.modules.ps.service.SSpecClassService;
+import com.tlkzzz.jeesite.modules.ps.service.SSpecGenerService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +26,9 @@ import com.tlkzzz.jeesite.common.utils.StringUtils;
 import com.tlkzzz.jeesite.modules.ps.entity.SGenre;
 import com.tlkzzz.jeesite.modules.ps.service.SGenreService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 类型管理Controller
  * @author szx
@@ -33,7 +40,11 @@ public class SGenreController extends BaseController {
 
 	@Autowired
 	private SGenreService sGenreService;
-	
+	@Autowired
+	private SSpecClassService sSpecClassService;
+	@Autowired
+	private SSpecGenerService sSpecGenerService;
+
 	@ModelAttribute
 	public SGenre get(@RequestParam(required=false) String id) {
 		SGenre entity = null;
@@ -50,6 +61,7 @@ public class SGenreController extends BaseController {
 	@RequestMapping(value = {"list", ""})
 	public String list(SGenre sGenre, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<SGenre> page = sGenreService.findPage(new Page<SGenre>(request, response), sGenre); 
+		model.addAttribute("sGenre", sGenre);
 		model.addAttribute("page", page);
 		return "modules/ps/sGenreList";
 	}
@@ -57,7 +69,9 @@ public class SGenreController extends BaseController {
 	@RequiresPermissions("ps:sGenre:view")
 	@RequestMapping(value = "form")
 	public String form(SGenre sGenre, Model model) {
+		List<SSpecClass> sSpecClassList=sSpecClassService.findList(new SSpecClass());
 		model.addAttribute("sGenre", sGenre);
+		model.addAttribute("sSpecClassList", sSpecClassList);
 		return "modules/ps/sGenreForm";
 	}
 
@@ -68,6 +82,13 @@ public class SGenreController extends BaseController {
 			return form(sGenre, model);
 		}
 		sGenreService.save(sGenre);
+		String[] SList=sGenre.getSpecClass().split(",");
+		SSpecGener sSpecGener=new SSpecGener();
+		for(int i=0;i<SList.length;i++){
+			sSpecGener.setGenerId(sGenre.getId());
+			sSpecGener.setSpecId(SList[i]);
+			sSpecGenerService.save(sSpecGener);
+		}
 		addMessage(redirectAttributes, "保存类型管理成功");
 		return "redirect:"+Global.getAdminPath()+"/ps/sGenre/?repage";
 	}

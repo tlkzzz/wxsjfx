@@ -6,7 +6,7 @@
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			//$("#name").focus();
+			$("#name").focus();
 			$("#inputForm").validate({
 				submitHandler: function(form){
 					loading('正在提交，请稍等...');
@@ -15,7 +15,7 @@
 				errorContainer: "#messageBox",
 				errorPlacement: function(error, element) {
 					$("#messageBox").text("输入有误，请先更正。");
-					if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
+					if (element.is(":checkbox") || element.is(":radio") || element.parent().is(".input-append")){
 						error.appendTo(element.parent().parent());
 					} else {
 						error.insertAfter(element);
@@ -28,7 +28,7 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/ps/sGoodsClass/">商品分类管理列表</a></li>
-		<li class="active"><a href="${ctx}/ps/sGoodsClass/form?id=${sGoodsClass.id}">商品分类管理<shiro:hasPermission name="ps:sGoodsClass:edit">${not empty sGoodsClass.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="ps:sGoodsClass:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"><a href="${ctx}/ps/sGoodsClass/form?id=${sGoodsClass.id}&parent.id=${sGoodsClassparent.id}">商品分类管理<shiro:hasPermission name="ps:sGoodsClass:edit">${not empty sGoodsClass.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="ps:sGoodsClass:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="sGoodsClass" action="${ctx}/ps/sGoodsClass/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
@@ -40,14 +40,10 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">父级ID：</label>
+			<label class="control-label">上级父级ID:</label>
 			<div class="controls">
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">父级ids：</label>
-			<div class="controls">
-				<form:input path="parentIds" htmlEscape="false" class="input-xlarge "/>
+				<sys:treeselect id="parent" name="parent.id" value="${sGoodsClass.parent.id}" labelName="parent.name" labelValue="${sGoodsClass.parent.name}"
+					title="父级ID" url="/ps/sGoodsClass/treeData" extId="${sGoodsClass.id}" cssClass="" allowClear="true"/>
 			</div>
 		</div>
 		<div class="control-group">

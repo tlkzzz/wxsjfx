@@ -51,6 +51,7 @@ public class SGoodsController extends BaseController {
 	public String list(SGoods sGoods, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<SGoods> page = sGoodsService.findPage(new Page<SGoods>(request, response), sGoods); 
 		model.addAttribute("page", page);
+		model.addAttribute("sGoods", sGoods);
 		return "modules/ps/sGoodsList";
 	}
 

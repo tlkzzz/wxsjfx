@@ -50,6 +50,7 @@ public class SSpecGenerController extends BaseController {
 	@RequestMapping(value = {"list", ""})
 	public String list(SSpecGener sSpecGener, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<SSpecGener> page = sSpecGenerService.findPage(new Page<SSpecGener>(request, response), sSpecGener); 
+		model.addAttribute("sSpecGener", sSpecGener);
 		model.addAttribute("page", page);
 		return "modules/ps/sSpecGenerList";
 	}

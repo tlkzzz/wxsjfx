@@ -50,6 +50,7 @@ public class SSpecClassController extends BaseController {
 	@RequestMapping(value = {"list", ""})
 	public String list(SSpecClass sSpecClass, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<SSpecClass> page = sSpecClassService.findPage(new Page<SSpecClass>(request, response), sSpecClass); 
+		model.addAttribute("sSpecClass", sSpecClass);
 		model.addAttribute("page", page);
 		return "modules/ps/sSpecClassList";
 	}

@@ -8,8 +8,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tlkzzz.jeesite.common.persistence.Page;
-import com.tlkzzz.jeesite.common.service.CrudService;
+import com.tlkzzz.jeesite.common.service.TreeService;
+import com.tlkzzz.jeesite.common.utils.StringUtils;
 import com.tlkzzz.jeesite.modules.ps.entity.SGoodsClass;
 import com.tlkzzz.jeesite.modules.ps.dao.SGoodsClassDao;
 
@@ -20,18 +20,17 @@ import com.tlkzzz.jeesite.modules.ps.dao.SGoodsClassDao;
  */
 @Service
 @Transactional(readOnly = true)
-public class SGoodsClassService extends CrudService<SGoodsClassDao, SGoodsClass> {
+public class SGoodsClassService extends TreeService<SGoodsClassDao, SGoodsClass> {
 
 	public SGoodsClass get(String id) {
 		return super.get(id);
 	}
 	
 	public List<SGoodsClass> findList(SGoodsClass sGoodsClass) {
+		if (StringUtils.isNotBlank(sGoodsClass.getParentIds())){
+			sGoodsClass.setParentIds(","+sGoodsClass.getParentIds()+",");
+		}
 		return super.findList(sGoodsClass);
-	}
-	
-	public Page<SGoodsClass> findPage(Page<SGoodsClass> page, SGoodsClass sGoodsClass) {
-		return super.findPage(page, sGoodsClass);
 	}
 	
 	@Transactional(readOnly = false)

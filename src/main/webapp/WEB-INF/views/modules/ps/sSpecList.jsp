@@ -29,7 +29,7 @@
 				<form:input path="name" htmlEscape="false" maxlength="100" class="input-medium"/>
 			</li>
 			<li><label>规格分类：</label>
-				<form:input path="specClassId" htmlEscape="false" maxlength="64" class="input-medium"/>
+				<form:input path="sSpecClass.name" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
@@ -40,6 +40,7 @@
 		<thead>
 			<tr>
 				<th>规格名称</th>
+				<th>规格分类名称</th>
 				<th>备注</th>
 				<th>更新时间</th>
 				<shiro:hasPermission name="ps:sSpec:edit"><th>操作</th></shiro:hasPermission>
@@ -51,6 +52,9 @@
 				<td><a href="${ctx}/ps/sSpec/form?id=${sSpec.id}">
 					${sSpec.name}
 				</a></td>
+				<td>
+					${sSpec.sSpecClass.name}
+				</td>
 				<td>
 					${sSpec.remarks}
 				</td>
