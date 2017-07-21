@@ -25,9 +25,11 @@
 		WHERE a.id = #{id}
 	</select>
 
-	<select id="ggfindList" resultType="SSpecClass">
-		SELECT <include refid="sSpecClassColumns"/>
-		FROM s_spec_class
+	<select id="ggfindList" resultType="SSpecClass" parameterType="java.lang.String">
+		SELECT
+			<include refid="sSpecClassColumns"/>
+		FROM s_spec_class a
+		<include refid="sSpecClassJoins"/>
 		WHERE id IN (SELECT ssg.`spec_id` FROM s_spec_gener ssg WHERE ssg.`gener_id`=#{ids})
 	</select>
 	
