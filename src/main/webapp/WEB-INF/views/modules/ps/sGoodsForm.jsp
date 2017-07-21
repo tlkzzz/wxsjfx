@@ -38,10 +38,8 @@
 		<div class="control-group">
 			<label class="control-label">商品分类：</label>
 			<div class="controls">
-				<form:select path="gClass.id" cssClass="required">
-					<form:option value="" label="请选择"/>
-					<form:options items="${gClassList}" itemLabel="name" itemValue="id" htmlEscape="false"/>
-				</form:select>
+				<sys:treeselect id="gClass" name="gClass.id" value="${sGoods.GClass.id}" labelName="gClass.name" labelValue="${sGoods.GClass.name}"
+								title="商品分类" url="/ps/sGoodsClass/treeData" extId="0" cssClass="" allowClear="true"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
