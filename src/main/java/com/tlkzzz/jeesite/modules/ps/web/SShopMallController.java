@@ -2,19 +2,23 @@ package com.tlkzzz.jeesite.modules.ps.web;
 
 
 import com.tlkzzz.jeesite.common.config.Global;
+import com.tlkzzz.jeesite.common.persistence.Page;
 import com.tlkzzz.jeesite.common.utils.StringUtils;
 import com.tlkzzz.jeesite.common.web.BaseController;
 import com.tlkzzz.jeesite.modules.ps.entity.SAddress;
+import com.tlkzzz.jeesite.modules.ps.entity.SGenre;
+import com.tlkzzz.jeesite.modules.ps.entity.SGoods;
 import com.tlkzzz.jeesite.modules.ps.entity.SMember;
 import com.tlkzzz.jeesite.modules.ps.service.SAddressService;
-import com.tlkzzz.jeesite.modules.ps.service.SSpecClassService;
+import com.tlkzzz.jeesite.modules.ps.service.SGoodsService;
 import com.tlkzzz.jeesite.modules.sys.entity.Area;
 import com.tlkzzz.jeesite.modules.sys.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,13 +31,15 @@ import java.util.List;
  */
 @Controller
 @RequestMapping(value = "${shopPath}")
-public class SShopMallController  extends BaseController{
+public class SShopMallController extends BaseController{
+    private String url = "";
+
+    @Autowired
+    private SGoodsService sGoodsService;
     @Autowired
     private SAddressService sAddressService;
 
-    @ModelAttribute
-    public String check() {
-        String url = "";
+    public String check(ModelAndView modelAndView) {
         if (StringUtils.isBlank(UserUtils.getUser().getId())){
             url =  "redirect:"+ Global.getAdminPath();
         }
@@ -41,8 +47,24 @@ public class SShopMallController  extends BaseController{
     }
     /**         商城代码开始          **/
     @RequestMapping(value = {"index",""})
-    public String index(){
-        return "modules/shop/";
+    public String index(){/**首页**/
+        return "modules/shop/index";
+    }
+    @RequestMapping(value = "foot")
+    public String foot(){/**页脚**/
+        return "modules/shop/foot";
+    }
+    @RequestMapping(value = "home")/**主页**/
+    public String home(HttpServletRequest request,HttpServletResponse response,Model model){
+        model.addAttribute("page",sGoodsService.findPage(new Page<SGoods>(request,response),new SGoods()));
+        return "modules/shop/home";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "getGoodsList")/**获取商品列表**/
+    public List<SGoods> getGoodsList(HttpServletRequest request,HttpServletResponse response){
+        Page<SGoods> page = sGoodsService.findPage(new Page<SGoods>(request,response),new SGoods());
+        return page.getList();
     }
 
     /**
