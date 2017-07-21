@@ -69,14 +69,14 @@ public class SGoodsController extends BaseController {
 
 	@RequiresPermissions("ps:sGoods:view")
 	@RequestMapping(value = "form")
-	public String form(SGoods sGoods, String classId, Model model) {
-		if(StringUtils.isNotBlank(classId)) {
-			SGoodsClass goodsClass = sGoodsClassService.get(classId);
-			sGoods.setGener(sGenreService.getAll(goodsClass.getsGenre().getId()));
+	public String form(SGoods sGoods, Model model) {
+		if(sGoods.getGClass()!=null&&StringUtils.isNotBlank(sGoods.getGClass().getId())) {
+			SGoodsClass goodsClass = sGoodsClassService.get(sGoods.getGClass().getId());
+			if(goodsClass!=null&&goodsClass.getsGenre()!=null&&StringUtils.isNotBlank(goodsClass.getsGenre().getId()))
+				sGoods.setGener(sGenreService.getAll(goodsClass.getsGenre().getId()));
 		}
 		if(StringUtils.isNotBlank(sGoods.getGoodsDesc()))
 			sGoods.setGoodsDesc(Encodes.unescapeHtml(sGoods.getGoodsDesc()));
-		model.addAttribute("gClassList", sGoodsClassService.findList(new SGoodsClass()));
 		model.addAttribute("genreList", sGenreService.findList(new SGenre()));
 		model.addAttribute("sGoods", sGoods);
 		return "modules/ps/sGoodsForm";
@@ -86,7 +86,7 @@ public class SGoodsController extends BaseController {
 	@RequestMapping(value = "save")
 	public String save(SGoods sGoods, Model model, RedirectAttributes redirectAttributes) {
 		if (!beanValidator(model, sGoods)){
-			return form(sGoods, sGoods.getGClass().getId(), model);
+			return form(sGoods, model);
 		}
 		sGoodsService.save(sGoods);
 		addMessage(redirectAttributes, "保存商品成功");
