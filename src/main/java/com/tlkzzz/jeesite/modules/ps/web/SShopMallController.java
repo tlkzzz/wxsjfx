@@ -5,8 +5,12 @@ import com.tlkzzz.jeesite.common.config.Global;
 import com.tlkzzz.jeesite.common.utils.StringUtils;
 import com.tlkzzz.jeesite.modules.sys.utils.UserUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 商品Controller
@@ -29,10 +33,29 @@ public class SShopMallController {
     /**         商城代码开始          **/
     @RequestMapping(value = {"index",""})
     public String index(){
-        return "";
+        return "modules/shop/";
     }
 
+    /**
+     * shizx 收货地址添加页面调用方法
+     * */
+    @RequestMapping(value = {"listss"})
+    public String listss() {
+        return "modules/shop/shopShdzForm";
+    }
 
+    /**
+     *  shizx
+     **/
+    @RequestMapping(value = {"shdzSave"})
+    public String shdzSave(HttpServletRequest request, HttpServletResponse response, Model model) {
+        String shr=request.getParameter("shr");
+        String sjhm=request.getParameter("sjhm");
+        String qrsjhm=request.getParameter("qrsjhm");
+        String sqdz=request.getParameter("sqdz");
+        String ssq=request.getParameter("ssq");
+        return "modules/shop/shopShdzForm";
+    }
 
 
     /**         商城代码结束          **/

@@ -24,6 +24,7 @@ public class SAddress extends DataEntity<SAddress> {
 	private String code;		// 邮编
 	private String tel;			// 电话
 	private String sort;		// 排序
+	private String shr;    		//收货人
 	
 	public SAddress() {
 		super();
@@ -92,5 +93,12 @@ public class SAddress extends DataEntity<SAddress> {
 	public void setSort(String sort) {
 		this.sort = sort;
 	}
-	
+
+	public String getShr() {
+		return shr;
+	}
+
+	public void setShr(String shr) {
+		this.shr = shr;
+	}
 }
