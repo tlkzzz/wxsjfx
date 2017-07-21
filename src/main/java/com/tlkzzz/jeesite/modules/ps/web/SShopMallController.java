@@ -3,7 +3,14 @@ package com.tlkzzz.jeesite.modules.ps.web;
 
 import com.tlkzzz.jeesite.common.config.Global;
 import com.tlkzzz.jeesite.common.utils.StringUtils;
+import com.tlkzzz.jeesite.common.web.BaseController;
+import com.tlkzzz.jeesite.modules.ps.entity.SAddress;
+import com.tlkzzz.jeesite.modules.ps.entity.SMember;
+import com.tlkzzz.jeesite.modules.ps.service.SAddressService;
+import com.tlkzzz.jeesite.modules.ps.service.SSpecClassService;
+import com.tlkzzz.jeesite.modules.sys.entity.Area;
 import com.tlkzzz.jeesite.modules.sys.utils.UserUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -11,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 商品Controller
@@ -19,8 +27,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 @RequestMapping(value = "${shopPath}")
-public class SShopMallController {
-
+public class SShopMallController  extends BaseController{
+    @Autowired
+    private SAddressService sAddressService;
 
     @ModelAttribute
     public String check() {
@@ -45,16 +54,38 @@ public class SShopMallController {
     }
 
     /**
-     *  shizx
+     *  shizx收货地址保存方法
      **/
     @RequestMapping(value = {"shdzSave"})
     public String shdzSave(HttpServletRequest request, HttpServletResponse response, Model model) {
         String shr=request.getParameter("shr");
         String sjhm=request.getParameter("sjhm");
-        String qrsjhm=request.getParameter("qrsjhm");
-        String sqdz=request.getParameter("sqdz");
+        String xqdz=request.getParameter("xqdz");
         String ssq=request.getParameter("ssq");
-        return "modules/shop/shopShdzForm";
+        SAddress sAddress=new SAddress();
+        sAddress.setMember(new SMember(UserUtils.getUser().getId()));
+        sAddress.setArea(new Area(ssq));
+        sAddress.setAddress(xqdz);
+        sAddress.setTel(sjhm);
+        sAddress.setShr(shr);
+        sAddressService.save(sAddress);
+        return "modules/shop/shdzList";
+    }
+
+    /**
+     * shizx 地址页面
+     * */
+    @RequestMapping(value = {"shdzList"})
+    public String shdzList() {
+        return "modules/shop/shdzList";
+    }
+
+    @RequestMapping(value = {"dzList"})
+    public List<SAddress> dzList() {
+        SAddress sAddress=new SAddress();
+        sAddress.setMember(new SMember(UserUtils.getUser().getId()));
+        List<SAddress> sAddressList=sAddressService.findList(sAddress);
+        return  sAddressList;
     }
 
 
