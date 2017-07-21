@@ -41,8 +41,8 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/ps/sGoodsClass/">商品分类管理列表</a></li>
-		<shiro:hasPermission name="ps:sGoodsClass:edit"><li><a href="${ctx}/ps/sGoodsClass/form">商品分类管理添加</a></li></shiro:hasPermission>
+		<li class="active"><a href="${ctx}/ps/sGoodsClass/">商品分类列表</a></li>
+		<shiro:hasPermission name="ps:sGoodsClass:edit"><li><a href="${ctx}/ps/sGoodsClass/form">商品分类添加</a></li></shiro:hasPermission>
 	</ul>
 	<form:form id="searchForm" modelAttribute="sGoodsClass" action="${ctx}/ps/sGoodsClass/" method="post" class="breadcrumb form-search">
 		<ul class="ul-form">
@@ -82,8 +82,8 @@
 			</td>
 			<shiro:hasPermission name="ps:sGoodsClass:edit"><td>
    				<a href="${ctx}/ps/sGoodsClass/form?id={{row.id}}">修改</a>
-				<a href="${ctx}/ps/sGoodsClass/delete?id={{row.id}}" onclick="return confirmx('确认要删除该商品分类管理及所有子商品分类管理吗？', this.href)">删除</a>
-				<a href="${ctx}/ps/sGoodsClass/form?parent.id={{row.id}}">添加下级商品分类管理</a> 
+				<a href="${ctx}/ps/sGoodsClass/delete?id={{row.id}}" onclick="return confirmx('确认要删除该商品分类及所有子商品分类吗？', this.href)">删除</a>
+				<a href="${ctx}/ps/sGoodsClass/form?parent.id={{row.id}}">添加下级商品分类</a>
 			</td></shiro:hasPermission>
 		</tr>
 	</script>
