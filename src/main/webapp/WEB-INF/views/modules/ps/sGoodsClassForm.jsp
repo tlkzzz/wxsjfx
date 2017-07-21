@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>商品分类管理管理</title>
+	<title>商品分类管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -27,8 +27,8 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/ps/sGoodsClass/">商品分类管理列表</a></li>
-		<li class="active"><a href="${ctx}/ps/sGoodsClass/form?id=${sGoodsClass.id}&parent.id=${sGoodsClassparent.id}">商品分类管理<shiro:hasPermission name="ps:sGoodsClass:edit">${not empty sGoodsClass.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="ps:sGoodsClass:edit">查看</shiro:lacksPermission></a></li>
+		<li><a href="${ctx}/ps/sGoodsClass/">商品分类列表</a></li>
+		<li class="active"><a href="${ctx}/ps/sGoodsClass/form?id=${sGoodsClass.id}&parent.id=${sGoodsClassparent.id}">商品分类<shiro:hasPermission name="ps:sGoodsClass:edit">${not empty sGoodsClass.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="ps:sGoodsClass:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="sGoodsClass" action="${ctx}/ps/sGoodsClass/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
@@ -40,16 +40,19 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">上级父级ID:</label>
+			<label class="control-label">上级父级:</label>
 			<div class="controls">
 				<sys:treeselect id="parent" name="parent.id" value="${sGoodsClass.parent.id}" labelName="parent.name" labelValue="${sGoodsClass.parent.name}"
-					title="父级ID" url="/ps/sGoodsClass/treeData" extId="${sGoodsClass.id}" cssClass="" allowClear="true"/>
+					title="父级" url="/ps/sGoodsClass/treeData" extId="${sGoodsClass.id}" cssClass="" allowClear="true"/>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">类型ID：</label>
+			<label class="control-label">类型：</label>
 			<div class="controls">
-				<form:input path="generId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				<form:select path="sGenre.id" cssStyle="width: 284px;">
+					<form:option value="" label="请选择"/>
+					<form:options items="${genreList}" itemLabel="name" itemValue="id" htmlEscape="false"/>
+				</form:select>
 			</div>
 		</div>
 		<div class="control-group">
