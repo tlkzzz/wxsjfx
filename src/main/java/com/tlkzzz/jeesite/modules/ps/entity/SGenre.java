@@ -19,8 +19,6 @@ import java.util.List;
  */
 
 public class SGenre extends DataEntity<SGenre> {
-	@Autowired
-	private SSpecClassService sSpecClassService;
 
 	private static final long serialVersionUID = 1L;
 	private String name;		// 名称

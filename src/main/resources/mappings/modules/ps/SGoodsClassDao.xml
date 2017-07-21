@@ -7,7 +7,8 @@
 		a.name AS "name",
 		a.parent_id AS "parent.id",
 		a.parent_ids AS "parentIds",
-		a.gener_id AS "generId",
+		a.genre_id AS "sGenre.id",
+		sg.name AS "sGenre.name",
 		a.sort AS "sort",
 		a.remarks AS "remarks",
 		a.create_by AS "createBy.id",
@@ -18,6 +19,7 @@
 	</sql>
 	
 	<sql id="sGoodsClassJoins">
+		LEFT JOIN s_genre sg ON sg.id=a.genre_id
 	</sql>
     
 	<select id="get" resultType="SGoodsClass">
@@ -85,7 +87,7 @@
 			name,
 			parent_id,
 			parent_ids,
-			gener_id,
+			genre_id,
 			sort,
 			remarks,
 			create_by,
@@ -98,7 +100,7 @@
 			#{name},
 			#{parent.id},
 			#{parentIds},
-			#{generId},
+			#{sGenre.id},
 			#{sort},
 			#{remarks},
 			#{createBy.id},
@@ -114,7 +116,7 @@
 			name = #{name},
 			parent_id = #{parent.id},
 			parent_ids = #{parentIds},
-			gener_id = #{generId},
+			genre_id = #{sGenre.id},
 			sort = #{sort},
 			remarks = #{remarks},
 			update_by = #{updateBy.id},

@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.tlkzzz.jeesite.modules.ps.entity.SGenre;
+import com.tlkzzz.jeesite.modules.ps.service.SGenreService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,6 +40,8 @@ public class SGoodsClassController extends BaseController {
 
 	@Autowired
 	private SGoodsClassService sGoodsClassService;
+	@Autowired
+	private SGenreService sGenreService;
 	
 	@ModelAttribute
 	public SGoodsClass get(@RequestParam(required=false) String id) {
@@ -81,6 +85,7 @@ public class SGoodsClassController extends BaseController {
 		if (sGoodsClass.getSort() == null){
 			sGoodsClass.setSort(30);
 		}
+		model.addAttribute("genreList", sGenreService.findList(new SGenre()));
 		model.addAttribute("sGoodsClass", sGoodsClass);
 		return "modules/ps/sGoodsClassForm";
 	}

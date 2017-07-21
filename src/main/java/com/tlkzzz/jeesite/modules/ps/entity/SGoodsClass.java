@@ -62,7 +62,7 @@ public class SGoodsClass extends TreeEntity<SGoodsClass> {
 		return sGenre;
 	}
 
-	public void setsGenreId(SGenre sGenre) {
+	public void setsGenre(SGenre sGenre) {
 		this.sGenre = sGenre;
 	}
 
