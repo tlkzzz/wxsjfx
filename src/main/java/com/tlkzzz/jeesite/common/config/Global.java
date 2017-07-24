@@ -114,6 +114,14 @@ public class Global {
 	public static String getSMSApiKey(){
 		return getConfig("sms.api.key");
 	}
+
+	/**
+	 * 获取短信Api模版ID
+	 * @return
+	 */
+	public static String getSMSTempId(){
+		return getConfig("sms.temp.id");
+	}
 	
 	/**
 	 * 是否是演示模式，演示模式下不能修改用户、角色、密码、菜单、授权
