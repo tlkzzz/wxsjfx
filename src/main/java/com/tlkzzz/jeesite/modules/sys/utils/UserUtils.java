@@ -5,6 +5,9 @@ package com.tlkzzz.jeesite.modules.sys.utils;
 
 import java.util.List;
 
+import com.tlkzzz.jeesite.common.utils.StringUtils;
+import com.tlkzzz.jeesite.modules.ps.dao.SMemberDao;
+import com.tlkzzz.jeesite.modules.ps.entity.SMember;
 import com.tlkzzz.jeesite.modules.sys.dao.OfficeDao;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.UnavailableSecurityManagerException;
@@ -34,12 +37,16 @@ import com.tlkzzz.jeesite.modules.sys.security.SystemAuthorizingRealm.Principal;
 public class UserUtils {
 
 	private static UserDao userDao = SpringContextHolder.getBean(UserDao.class);
+	private static SMemberDao memberDao = SpringContextHolder.getBean(SMemberDao.class);
 	private static RoleDao roleDao = SpringContextHolder.getBean(RoleDao.class);
 	private static MenuDao menuDao = SpringContextHolder.getBean(MenuDao.class);
 	private static AreaDao areaDao = SpringContextHolder.getBean(AreaDao.class);
 	private static OfficeDao officeDao = SpringContextHolder.getBean(OfficeDao.class);
 
 	public static final String USER_CACHE = "userCache";
+	public static final String MEMBER_CACHE = "memberCache";
+	public static final String USER_LOGIN_TYPE = "type_";
+	public static final String USER_LOGIN_ID = "memberId";
 	public static final String USER_CACHE_ID_ = "id_";
 	public static final String USER_CACHE_LOGIN_NAME_ = "ln";
 	public static final String USER_CACHE_LIST_BY_OFFICE_ID_ = "oid_";
@@ -67,6 +74,35 @@ public class UserUtils {
 			CacheUtils.put(USER_CACHE, USER_CACHE_LOGIN_NAME_ + user.getLoginName(), user);
 		}
 		return user;
+	}
+
+	/**
+	 * 根据ID获取会员
+	 * @param id
+	 * @return 取不到返回null
+	 */
+	public static SMember getMember(String id){
+		SMember member = (SMember) CacheUtils.get(MEMBER_CACHE, USER_CACHE_ID_ + id);
+		if (member ==  null){
+			member = memberDao.get(id);
+			if (member == null){
+				return null;
+			}
+			CacheUtils.put(MEMBER_CACHE, USER_CACHE_ID_ + member.getId(), member);
+			CacheUtils.put(MEMBER_CACHE, USER_CACHE_LOGIN_NAME_ + member.getLoginName(), member);
+		}
+		return member;
+	}
+
+	/**
+	 * 将会员ID存入Session中，并标记类型
+	 * @param id
+	 */
+	public static void setMemberId(String id){
+		if(StringUtils.isNotBlank(id)){
+			putCache(USER_LOGIN_ID,id);
+			putCache(USER_LOGIN_TYPE,"member");
+		}
 	}
 	
 	/**
@@ -118,13 +154,25 @@ public class UserUtils {
 	 * @return 取不到返回 new User()
 	 */
 	public static User getUser(){
-		Principal principal = getPrincipal();
-		if (principal!=null){
-			User user = get(principal.getId());
-			if (user != null){
+		if(getCache(USER_LOGIN_TYPE)==null||"".equals(getCache(USER_LOGIN_TYPE))) {
+			Principal principal = getPrincipal();
+			if (principal != null) {
+				User user = get(principal.getId());
+				if (user != null) {
+					return user;
+				}
+				return new User();
+			}
+		}else {
+			User user = new User();
+			SMember member = getMember(getCache(USER_LOGIN_ID).toString());
+			if(member != null){
+				user.setId(member.getId());
+				user.setName(member.getName());
+				user.setLoginName(member.getLoginName());
+				user.setMember(member);
 				return user;
 			}
-			return new User();
 		}
 		// 如果没有登录，则返回实例化空的User对象。
 		return new User();
