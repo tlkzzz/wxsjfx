@@ -35,6 +35,11 @@ public class SGenreService extends CrudService<SGenreDao, SGenre> {
 		return super.get(id);
 	}
 
+	/**
+	 * 查询类型中的规格分类和规格
+	 * @param id 类型ID
+	 * @return
+	 */
 	public SGenre getAll(String id) {
 		SGenre genre = super.get(id);
 		genre.setSpecClassList(sSpecClassDao.ggfindList(id));
