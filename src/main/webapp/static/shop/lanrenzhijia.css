@@ -1,0 +1,28 @@
+@charset "utf-8";
+/* 代码整理：懒人之家 lanrenzhijia.com */
+body, div, ul, li {
+	margin:0;
+	padding:0;
+}
+#box {
+	width:770px;
+	margin:0 auto;
+	padding:10px 0 0 10px;
+	background:#f00;
+	overflow:hidden;
+	zoom:1;
+}
+#box li {
+	float:left;
+	width:375px;
+	height:225px;
+	color:#fff;
+	padding:10px 0;
+	display:inline;
+	text-align:center;
+	margin:0 10px 10px 0;
+	background:#000 url(../images/loading.gif) 50% 50% no-repeat;
+}
+#box textarea {
+	display:none;
+}
