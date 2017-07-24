@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
+import com.tlkzzz.jeesite.modules.ps.entity.SMember;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 
@@ -51,6 +52,8 @@ public class User extends DataEntity<User> {
 	private Date oldLoginDate;	// 上次登陆日期
 	
 	private Role role;	// 根据角色查询用户条件
+
+	private SMember member;		//存放会员登录时的会员信息
 	
 	private List<Role> roleList = Lists.newArrayList(); // 拥有角色列表
 
@@ -72,7 +75,15 @@ public class User extends DataEntity<User> {
 		super();
 		this.role = role;
 	}
-	
+
+	public SMember getMember() {
+		return member;
+	}
+
+	public void setMember(SMember member) {
+		this.member = member;
+	}
+
 	public String getPhoto() {
 		return photo;
 	}
