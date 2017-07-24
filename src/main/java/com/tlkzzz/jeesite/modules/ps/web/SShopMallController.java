@@ -3,14 +3,11 @@ package com.tlkzzz.jeesite.modules.ps.web;
 
 import com.tlkzzz.jeesite.common.config.Global;
 import com.tlkzzz.jeesite.common.persistence.Page;
+import com.tlkzzz.jeesite.common.utils.Encodes;
 import com.tlkzzz.jeesite.common.utils.StringUtils;
 import com.tlkzzz.jeesite.common.web.BaseController;
-import com.tlkzzz.jeesite.modules.ps.entity.SAddress;
-import com.tlkzzz.jeesite.modules.ps.entity.SGenre;
-import com.tlkzzz.jeesite.modules.ps.entity.SGoods;
-import com.tlkzzz.jeesite.modules.ps.entity.SMember;
-import com.tlkzzz.jeesite.modules.ps.service.SAddressService;
-import com.tlkzzz.jeesite.modules.ps.service.SGoodsService;
+import com.tlkzzz.jeesite.modules.ps.entity.*;
+import com.tlkzzz.jeesite.modules.ps.service.*;
 import com.tlkzzz.jeesite.modules.sys.entity.Area;
 import com.tlkzzz.jeesite.modules.sys.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +34,13 @@ public class SShopMallController extends BaseController{
     @Autowired
     private SGoodsService sGoodsService;
     @Autowired
+    private SGenreService sGenreService;
+    @Autowired
+    private SGoodsClassService sGoodsClassService;
+    @Autowired
     private SAddressService sAddressService;
+    @Autowired
+    private SGoodsCommentService sGoodsCommentService;
 
     public String check(ModelAndView modelAndView) {
         if (StringUtils.isBlank(UserUtils.getUser().getId())){
@@ -65,6 +68,25 @@ public class SShopMallController extends BaseController{
     public List<SGoods> getGoodsList(HttpServletRequest request,HttpServletResponse response){
         Page<SGoods> page = sGoodsService.findPage(new Page<SGoods>(request,response),new SGoods());
         return page.getList();
+    }
+
+    /**
+     * 商品详情页
+     * @param goods
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "goodsInfo")
+    public String goodsInfo(SGoods goods,Model model){
+        SGoodsComment goodsComment = new SGoodsComment();
+        goodsComment.setGoods(goods);
+        goods = sGoodsService.get(goods);
+        SGoodsClass goodsClass = sGoodsClassService.get(goods.getGClass());
+        goods.setGener(sGenreService.getAll(goodsClass.getsGenre().getId()));
+        goods.setGoodsDesc(Encodes.unescapeHtml(goods.getGoodsDesc()));
+        model.addAttribute("goods", goods);
+        model.addAttribute("commentList",sGoodsCommentService.findList(goodsComment));
+        return "modules/shop/xiangqing";
     }
 
     /**
