@@ -5,9 +5,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0,  user-scalable=no">
 <title>三级分销</title>
-<link href="../static/shop/lanrenzhijia.css" type="text/css" rel="stylesheet" />
-<script type="text/javascript" src="../static/shop/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="../static/shop/lanrenzhijia.js"></script>
+<link href="${ctxStatic}/shop/lanrenzhijia.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="${ctxStatic}/shop/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="${ctxStatic}/shop/lanrenzhijia.js"></script>
 <style>
 	body{
 		margin: 0;
@@ -68,12 +68,12 @@
 	<div class="lunbo">
 		<c:forEach items="${page.list}" var="goods" varStatus="status">
 			<c:if test="${status.index < 3}">
-			<a href="?id=${goods.id}"><img src="${goods.image}"></a>
+			<a href="${shop}/goodsInfo?id=${goods.id}"><img src="${goods.image}"></a>
 			</c:if>
 		</c:forEach>
-		<a href="xiangqing.html"><img src="../static/images/产品图/lunbo1.png"></a>
-		<a href="xiangqing.html"><img src="../static/images/产品图/lunbo2.png"></a>
-		<a href="xiangqing.html"><img src="../static/images/产品图/lunbo3.png"></a>
+		<%--<a href="xiangqing.html"><img src="${ctxStatic}/images/产品图/lunbo1.png"></a>
+		<a href="xiangqing.html"><img src="${ctxStatic}/images/产品图/lunbo2.png"></a>
+		<a href="xiangqing.html"><img src="${ctxStatic}/images/产品图/lunbo3.png"></a>--%>
 		<ul>
 			<li></li>
 			<li></li>
@@ -82,6 +82,9 @@
 		</ul>
 	</div>
 	<script>
+        $(document).ready(function () {
+            $("#iframeTwo",window.parent.document)[0].contentWindow.home();
+        });
         window.onload = function (){
             var oLazy = document.getElementById("container");
             new LazyLoad(oLazy);
@@ -108,7 +111,7 @@
 	<div>
 	<c:forEach items="${page.list}" var="goods">
 	<div class="shangpin">
-		<a href="?id=${goods.id}">
+		<a href="${shop}/goodsInfo?id=${goods.id}">
 			<div style="position: relative;">
 				<div><img src="${goods.image}"></div>
 				<div style="position: absolute;bottom: 0;width: 100%;background-color: rgba(0,0,0,0.4);padding: 2rem;box-sizing: border-box;">
@@ -119,10 +122,21 @@
 		</a>
 	</div>
 	</c:forEach>
+		<%--<div class="shangpin">
+			<a href="xiangqing.html">
+				<div style="position: relative;">
+					<div><img src="${ctxStatic}/images/产品图/shangpin1.png"></div>
+					<div style="position: absolute;bottom: 0;width: 100%;background-color: rgba(0,0,0,0.4);padding: .8rem;box-sizing: border-box;">
+						<p style="float: left;">商品名称</p>
+						<p style="float: right;">￥45.45</p>
+					</div>
+				</div>
+			</a>
+		</div>
 		<div class="shangpin">
 			<a href="xiangqing.html">
 				<div style="position: relative;">
-					<div><img src="../static/images/产品图/shangpin1.png"></div>
+					<div><img src="${ctxStatic}/images/产品图/shangpin1.png"></div>
 					<div style="position: absolute;bottom: 0;width: 100%;background-color: rgba(0,0,0,0.4);padding: .8rem;box-sizing: border-box;">
 						<p style="float: left;">商品名称</p>
 						<p style="float: right;">￥45.45</p>
@@ -144,25 +158,14 @@
 		<div class="shangpin">
 			<a href="xiangqing.html">
 				<div style="position: relative;">
-					<div><img src="../static/images/产品图/shangpin1.png"></div>
+					<div><img src="${ctxStatic}/images/产品图/shangpin1.png"></div>
 					<div style="position: absolute;bottom: 0;width: 100%;background-color: rgba(0,0,0,0.4);padding: .8rem;box-sizing: border-box;">
 						<p style="float: left;">商品名称</p>
 						<p style="float: right;">￥45.45</p>
 					</div>
 				</div>
 			</a>
-		</div>
-		<div class="shangpin">
-			<a href="xiangqing.html">
-				<div style="position: relative;">
-					<div><img src="../static/images/产品图/shangpin1.png"></div>
-					<div style="position: absolute;bottom: 0;width: 100%;background-color: rgba(0,0,0,0.4);padding: .8rem;box-sizing: border-box;">
-						<p style="float: left;">商品名称</p>
-						<p style="float: right;">￥45.45</p>
-					</div>
-				</div>
-			</a>
-		</div>
+		</div>--%>
 	</div>
 </div>
 <script type="text/javascript">
@@ -254,7 +257,7 @@
                 isLock = true;
                 isCanDo = true;
                 //保存当前鼠标Y坐标
-                start = hasTouch ? even.touches[0].pageY : even.pageY;
+                start = (hasTouch&&even.touches) ? even.touches[0].pageY : even.pageY;
                 //消除滑块动画时间
                 fn.setTransition(0);
                 loading.innerHTML='下拉刷新数据';
