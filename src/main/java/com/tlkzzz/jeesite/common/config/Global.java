@@ -106,6 +106,14 @@ public class Global {
 	public static String getUrlSuffix() {
 		return getConfig("urlSuffix");
 	}
+
+	/**
+	 * 获取短信Api接口Key
+	 * @return
+	 */
+	public static String getSMSApiKey(){
+		return getConfig("sms.api.key");
+	}
 	
 	/**
 	 * 是否是演示模式，演示模式下不能修改用户、角色、密码、菜单、授权
