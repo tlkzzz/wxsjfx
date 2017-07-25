@@ -21,4 +21,8 @@ public interface SAddressDao extends CrudDao<SAddress> {
 
     public void updatess(SAddress sAddress);
 
+    public void updateOne(SAddress sAddress);
+
+    public void updateTwo(SAddress sAddress);
+
 }

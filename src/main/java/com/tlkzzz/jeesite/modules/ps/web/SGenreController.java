@@ -70,6 +70,21 @@ public class SGenreController extends BaseController {
 	@RequestMapping(value = "form")
 	public String form(SGenre sGenre, Model model) {
 		List<SSpecClass> sSpecClassList=sSpecClassService.findList(new SSpecClass());
+		SSpecGener sSpecGener=new SSpecGener();
+		sSpecGener.setGenerId(sGenre.getId());
+		List<SSpecGener> sSpecGenerList=sSpecGenerService.findList(sSpecGener);
+		String ss = "";
+		for(SSpecGener sg:sSpecGenerList){
+			ss += (sg.getSpecId()+",");
+		}/*
+		for(int j=0;j<sSpecClassList.size();j++){
+			for(int i=0;i<sSpecGenerList.size();i++){
+				if(sSpecGenerList.get(i).getSpecId()==sSpecClassList.get(j).getId()){
+					ss += (sSpecClassList.get(j).getId()+",");
+				}
+		}
+		}*/
+		sGenre.setSpecClass(ss);
 		model.addAttribute("sGenre", sGenre);
 		model.addAttribute("sSpecClassList", sSpecClassList);
 		return "modules/ps/sGenreForm";
@@ -84,10 +99,13 @@ public class SGenreController extends BaseController {
 		sGenreService.save(sGenre);
 		String[] SList=sGenre.getSpecClass().split(",");
 		SSpecGener sSpecGener=new SSpecGener();
+		sSpecGener.setGenerId(sGenre.getId());
+		sSpecGenerService.deleteIn(sSpecGener);
+
 		for(int i=0;i<SList.length;i++){
 			sSpecGener.setGenerId(sGenre.getId());
 			sSpecGener.setSpecId(SList[i]);
-			sSpecGenerService.save(sSpecGener);
+			sSpecGenerService.saveIn(sSpecGener);
 		}
 		addMessage(redirectAttributes, "保存类型管理成功");
 		return "redirect:"+Global.getAdminPath()+"/ps/sGenre/?repage";

@@ -131,7 +131,17 @@
 		#{shr}
 		)
 	</insert>
-
+	<update id="updateOne">
+		UPDATE s_address
+		SET is_default='0'
+		WHERE
+		member_id=#{member.id}
+	</update>
+	<update id="updateTwo">
+		UPDATE s_address
+		SET is_default='1'
+		WHERE id=#{id}
+	</update>
 	<update id="updatess">
 		UPDATE s_address SET
 		member_id = #{member.id},

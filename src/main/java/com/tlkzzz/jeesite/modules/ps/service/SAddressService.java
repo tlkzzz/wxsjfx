@@ -43,8 +43,18 @@ public class SAddressService extends CrudService<SAddressDao, SAddress> {
 		super.save(sAddress);
 	}
 
+	@Transactional(readOnly = false)
 	public void updatess(SAddress sAddress){
 		dao.updatess(sAddress);
+	}
+
+	@Transactional(readOnly = false)
+	public void updateOne(SAddress sAddress){
+		dao.updateOne(sAddress);
+	}
+	@Transactional(readOnly = false)
+	public void updateTwo(SAddress sAddress){
+		dao.updateTwo(sAddress);
 	}
 
 	@Transactional(readOnly = false)

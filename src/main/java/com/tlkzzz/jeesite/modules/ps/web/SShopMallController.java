@@ -220,11 +220,22 @@ public class SShopMallController extends BaseController{
         sAddress.setId(idss);
         sAddress.setMember(new SMember(UserUtils.getUser().getId()));
         sAddress.setArea(new Area(ssq));
-        sAddress.setAddress(xqdz);
+//        sAddress.setAddress(xqdz);
         sAddress.setTel(sjhm);
         sAddress.setShr(shr);
         sAddressService.updatess(sAddress);
         return "modules/shop/shdzList";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = {"updateIs"})
+    public String updateIs(String ids) {
+        SAddress sAddress=new SAddress();
+        sAddress.setMember(new SMember(UserUtils.getUser().getId()));
+        sAddressService.updateOne(sAddress);
+        sAddress.setId(ids);
+        sAddressService.updateTwo(sAddress);
+        return "true";
     }
     /**         商城代码结束          **/
 }

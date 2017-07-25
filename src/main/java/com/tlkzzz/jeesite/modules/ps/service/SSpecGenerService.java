@@ -38,10 +38,19 @@ public class SSpecGenerService extends CrudService<SSpecGenerDao, SSpecGener> {
 	public void save(SSpecGener sSpecGener) {
 		super.save(sSpecGener);
 	}
-	
+
+	@Transactional(readOnly = false)
+	public void saveIn(SSpecGener sSpecGener) {
+		dao.saveIn(sSpecGener);
+	}
+
 	@Transactional(readOnly = false)
 	public void delete(SSpecGener sSpecGener) {
 		super.delete(sSpecGener);
 	}
-	
+
+	@Transactional(readOnly = false)
+	public void deleteIn(SSpecGener sSpecGener) {
+		dao.deleteIn(sSpecGener);
+	}
 }

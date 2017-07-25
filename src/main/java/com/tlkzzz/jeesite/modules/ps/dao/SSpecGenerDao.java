@@ -14,5 +14,7 @@ import com.tlkzzz.jeesite.modules.ps.entity.SSpecGener;
  */
 @MyBatisDao
 public interface SSpecGenerDao extends CrudDao<SSpecGener> {
-	
+	public void saveIn(SSpecGener sSpecGener);
+
+	public void deleteIn(SSpecGener sSpecGener);
 }

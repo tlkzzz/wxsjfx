@@ -42,7 +42,14 @@
 		<div class="control-group">
 			<label class="control-label">规格分类：</label>
 			<div class="controls">
-				<form:checkboxes path="specClass" items="${sSpecClassList}" itemLabel="name" itemValue="id" htmlEscape="false"/>
+				<c:forEach items="${sSpecClassList}" var="spec">
+				<span>
+					<input name="specClass" type="checkbox" value="${spec.id}"
+						   <c:if test="${fn:contains(sGenre.specClass, spec.id)}">checked="checked"</c:if>/>
+					<label>${spec.name}</label>
+				</span>
+				</c:forEach>
+				<%--<form:checkboxes path="specClass" items="${sSpecClassList}" itemLabel="name" itemValue="id" htmlEscape="false"/>--%>
 				<%--<form:input path="sort" htmlEscape="false" maxlength="11" class="input-xlarge "/>--%>
 			</div>
 		</div>

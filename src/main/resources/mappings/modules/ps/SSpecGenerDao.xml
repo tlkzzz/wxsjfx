@@ -24,7 +24,6 @@
 		FROM s_spec_gener a
 		<include refid="sSpecGenerJoins"/>
 		<where>
-			
 			<if test="generId != null and generId != ''">
 				AND a.gener_id = #{generId}
 			</if>
@@ -57,7 +56,17 @@
 			</otherwise>
 		</choose>
 	</select>
-	
+
+	<insert id="saveIn">
+		INSERT INTO s_spec_gener(
+		gener_id,
+		spec_id
+		) VALUES (
+		#{generId},
+		#{specId}
+		)
+	</insert>
+
 	<insert id="insert">
 		INSERT INTO s_spec_gener(
 			gener_id,
@@ -78,6 +87,11 @@
 	<update id="delete">
 		DELETE FROM s_spec_gener
 		WHERE id = #{id}
+	</update>
+
+	<update id="deleteIn">
+		DELETE FROM s_spec_gener
+		WHERE gener_id = #{generId}
 	</update>
 	
 </mapper>
