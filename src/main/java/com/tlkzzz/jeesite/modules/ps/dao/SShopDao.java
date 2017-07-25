@@ -15,5 +15,10 @@ import com.tlkzzz.jeesite.modules.ps.entity.SShop;
 @MyBatisDao
 public interface SShopDao extends CrudDao<SShop> {
 
+    /**
+     * 通过ID修改规格ids和数量
+     * @param sShop
+     */
+    void updateInfo(SShop sShop);
 
 }
