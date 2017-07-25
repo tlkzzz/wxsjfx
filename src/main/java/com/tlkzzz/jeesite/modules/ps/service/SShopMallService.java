@@ -13,10 +13,15 @@ import java.util.Random;
 @Transactional(readOnly = true)
 public class SShopMallService  extends BaseService {
 
-    public String random(){
+    /**
+     * 获取指定位数的随机数
+     * @return
+     */
+    public String random(int bit){
+        if(bit<=0)return null;
         Random r = new Random();
         StringBuffer s = new StringBuffer();
-        for(int i=0;i<6;i++) {
+        for(int i=0;i<bit;i++) {
             int num = r.nextInt(10);
             s.append(num);
         }
