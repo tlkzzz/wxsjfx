@@ -46,6 +46,14 @@
 		<include refid="sGoodsJoins"/>
 		WHERE a.id = #{id}
 	</select>
+
+	<select id="getname" resultType="SGoods">
+		SELECT
+		<include refid="sGoodsColumns"/>
+		FROM s_goods a
+		<include refid="sGoodsJoins"/>
+		WHERE a.name = #{name}
+	</select>
 	
 	<select id="findList" resultType="SGoods">
 		SELECT 
