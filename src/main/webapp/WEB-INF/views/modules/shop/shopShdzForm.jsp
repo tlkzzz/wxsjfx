@@ -94,7 +94,6 @@
             data:{
                 shr:shr,
                 sjhm:sjhm,
-                qrsjhm:qrsjhm,
                 xqdz:xqdz,
                 ssq:ssq
             },

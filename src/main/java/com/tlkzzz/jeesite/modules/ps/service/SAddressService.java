@@ -29,7 +29,11 @@ public class SAddressService extends CrudService<SAddressDao, SAddress> {
 	public List<SAddress> findList(SAddress sAddress) {
 		return super.findList(sAddress);
 	}
-	
+
+	public List<SAddress> idsFindList(SAddress sAddress) {
+		return dao.idsFindList(sAddress);
+	}
+
 	public Page<SAddress> findPage(Page<SAddress> page, SAddress sAddress) {
 		return super.findPage(page, sAddress);
 	}
@@ -38,7 +42,11 @@ public class SAddressService extends CrudService<SAddressDao, SAddress> {
 	public void save(SAddress sAddress) {
 		super.save(sAddress);
 	}
-	
+
+	public void updatess(SAddress sAddress){
+		dao.updatess(sAddress);
+	}
+
 	@Transactional(readOnly = false)
 	public void delete(SAddress sAddress) {
 		super.delete(sAddress);
