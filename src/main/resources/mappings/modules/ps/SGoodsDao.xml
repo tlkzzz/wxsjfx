@@ -54,7 +54,7 @@
 		<include refid="sGoodsJoins"/>
 		WHERE a.name = #{name}
 	</select>
-	
+
 	<select id="findList" resultType="SGoods">
 		SELECT 
 			<include refid="sGoodsColumns"/>
