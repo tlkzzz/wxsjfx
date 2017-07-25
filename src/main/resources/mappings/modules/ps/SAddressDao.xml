@@ -41,6 +41,16 @@
 		WHERE a.id = #{id}
 	</select>
 
+	<select id="idsFindList" resultType="SAddress">
+		SELECT
+		<include refid="sAddressColumns"/>
+		FROM s_address a
+		<include refid="sAddressJoins"/>
+		where
+			 a.id=#{id}
+		AND a.del_flag='0'
+	</select>
+
 	<select id="findList" resultType="SAddress">
 		SELECT
 		<include refid="sAddressColumns"/>
@@ -121,6 +131,16 @@
 		#{shr}
 		)
 	</insert>
+
+	<update id="updatess">
+		UPDATE s_address SET
+		member_id = #{member.id},
+		area_id = #{area.id},
+		address = #{address},
+		tel = #{tel},
+		shr=#{shr}
+		WHERE id = #{id}
+	</update>
 
 	<update id="update">
 		UPDATE s_address SET
