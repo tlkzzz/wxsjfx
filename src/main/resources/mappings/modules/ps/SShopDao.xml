@@ -11,7 +11,7 @@
 		a.spec_ids AS "specIds",
 		a.num AS "num",
 		a.price AS "price",
-		order_flag AS "orderFlag",
+		a.order_flag AS "orderFlag",
 		a.remarks AS "remarks",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
@@ -41,6 +41,9 @@
 		<include refid="sShopJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="createBy != null and createBy.id != null and createBy.id != ''">
+				a.create_by = #{createBy.id}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -50,6 +53,19 @@
 				ORDER BY a.update_date DESC
 			</otherwise>
 		</choose>
+	</select>
+
+	<select id="findConfirmOrderList" resultType="SShop">
+		SELECT
+			<include refid="sShopColumns"/>
+		FROM s_shop a
+		<include refid="sShopJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} AND a.order_flag = #{DEL_FLAG_DELETE}
+			<if test="createBy != null and createBy.id != null and createBy.id != ''">
+				a.create_by = #{createBy.id}
+			</if>
+		</where>
 	</select>
 	
 	<select id="findAllList" resultType="SShop">
