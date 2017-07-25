@@ -36,6 +36,14 @@
 		<include refid="sMemberJoins"/>
 		WHERE a.id = #{id}
 	</select>
+
+	<select id="getByKey" resultType="SMember">
+		SELECT
+			<include refid="sMemberColumns"/>
+		FROM s_member a
+		<include refid="sMemberJoins"/>
+		WHERE a.login_key = #{loginKey}
+	</select>
 	
 	<select id="findList" resultType="SMember">
 		SELECT 
@@ -161,8 +169,14 @@
 		WHERE id = #{id}
 	</update>
 	
-	<update id="delete">
+	<update id="updateMobile" parameterType="java.lang.String">
 		UPDATE s_member SET 
+			mobile = #{param2}
+		WHERE id = #{param1}
+	</update>
+
+	<update id="delete">
+		UPDATE s_member SET
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
