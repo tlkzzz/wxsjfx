@@ -6,7 +6,7 @@
 		a.id AS "id",
 		a.class_id AS "gClass.id",
 		sgc.name AS "gClass.name",
-		a.gener_id AS "gener.id",
+		sg.gener_id AS "gener.id",
 		sg.name AS "gener.name",
 		a.type AS "type",
 		a.name AS "name",
@@ -36,7 +36,7 @@
 	
 	<sql id="sGoodsJoins">
 		LEFT JOIN s_goods_class sgc ON sgc.id=a.class_id
-		LEFT JOIN s_genre sg ON sg.id=a.gener_id
+		LEFT JOIN s_genre sg ON sg.id=sgc.genre_id
 	</sql>
     
 	<select id="get" resultType="SGoods">
