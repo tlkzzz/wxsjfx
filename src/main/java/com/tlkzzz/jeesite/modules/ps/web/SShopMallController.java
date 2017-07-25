@@ -47,6 +47,8 @@ public class SShopMallController extends BaseController{
     private SGoodsCommentService sGoodsCommentService;
     @Autowired
     private SMemberService sMemberService;
+    @Autowired
+    private SShopMallService sShopMallService;
 
     public String check(ModelAndView modelAndView) {
         if (StringUtils.isBlank(UserUtils.getUser().getId())){
@@ -115,16 +117,11 @@ public class SShopMallController extends BaseController{
             if(oldDate!=null&&((date.getTime()-oldDate.getTime())/(1000*60))<1){
                 return "true";
             }
-            Random r = new Random();
-            StringBuffer s = new StringBuffer();
-            for(int i=0;i<6;i++) {
-                int num = r.nextInt(10);
-                s.append(num);
-            }
-            String code = "#name#="+user.getName()+"&#code#="+s.toString();
-            if(JuheSmsUtils.getRequest(mobile,code)){
-            //if(true){
-                UserUtils.putCache("SmsVCode",s.toString());
+            String s = sShopMallService.random();
+            String code = "#name#="+user.getName()+"&#code#="+s;
+            //if(JuheSmsUtils.getRequest(mobile,code)){
+            if(true){
+                UserUtils.putCache("SmsVCode",s);
                 UserUtils.putCache("SmsMobile",mobile.trim());
                 UserUtils.putCache("SmsDate",new Date());
                 return "true";
