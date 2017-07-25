@@ -21,4 +21,10 @@ public interface SShopDao extends CrudDao<SShop> {
      */
     void updateInfo(SShop sShop);
 
+    /**
+     * 通过用户ID将当前用户的选定订单清除
+     * @param userId
+     */
+    void updateOrderFlag(String userId);
+
 }
