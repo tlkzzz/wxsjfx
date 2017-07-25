@@ -9,9 +9,9 @@
 		c.name     AS "goods.name",
 		c.image    AS "goods.image",
 		a.spec_ids AS "specIds",
-
 		a.num AS "num",
 		a.price AS "price",
+		order_flag AS "orderFlag",
 		a.remarks AS "remarks",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
@@ -78,6 +78,7 @@
 			spec_ids,
 			num,
 			price,
+			order_flag,
 			remarks,
 			create_by,
 			create_date,
@@ -91,6 +92,7 @@
 			#{specIds},
 			#{num},
 			#{price},
+			#{orderFlag},
 			#{remarks},
 			#{createBy.id},
 			#{createDate},
@@ -107,14 +109,23 @@
 			spec_ids = #{specIds},
 			num = #{num},
 			price = #{price},
+			order_flag = #{orderFlag},
 			remarks = #{remarks},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate}
 		WHERE id = #{id}
 	</update>
 	
-	<update id="delete">
+	<update id="updateInfo">
 		UPDATE s_shop SET 
+			spec_ids = #{specIds},
+			order_flag = #{orderFlag},
+			num = #{num}
+		WHERE id = #{id}
+	</update>
+
+	<update id="delete">
+		UPDATE s_shop SET
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
