@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -179,14 +180,51 @@ public class SShopMallController extends BaseController{
         return "modules/shop/shdzList";
     }
 
+    @ResponseBody
     @RequestMapping(value = {"dzList"})
     public List<SAddress> dzList() {
         SAddress sAddress=new SAddress();
         sAddress.setMember(new SMember(UserUtils.getUser().getId()));
         List<SAddress> sAddressList=sAddressService.findList(sAddress);
-        return  sAddressList;
+        return sAddressList;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = {"scshList"})
+    public String scshList(String ids) {
+        sAddressService.delete(new SAddress(ids));
+        return "true";
     }
 
 
+    @RequestMapping(value = {"xgshList"})
+    public String xgshList(HttpServletRequest request,Model model) {
+        String ids=request.getParameter("data");
+        SAddress sAddress=new SAddress(ids);
+        List<SAddress> sAddressList=sAddressService.findList(sAddress);
+        model.addAttribute("sAddressList",sAddressList);
+        return "modules/shop/shopXgForm";
+    }
+
+    /**
+     *  shizx收货地址修改方法
+     **/
+    @RequestMapping(value = {"xgdzSave"})
+    public String xgdzSave(HttpServletRequest request, HttpServletResponse response, Model model) {
+        String idss=request.getParameter("ids");
+        String shr=request.getParameter("shr");
+        String sjhm=request.getParameter("sjhm");
+        String xqdz=request.getParameter("xqdz");
+        String ssq=request.getParameter("ssq");
+        SAddress sAddress=new SAddress();
+        sAddress.setId(idss);
+        sAddress.setMember(new SMember(UserUtils.getUser().getId()));
+        sAddress.setArea(new Area(ssq));
+        sAddress.setAddress(xqdz);
+        sAddress.setTel(sjhm);
+        sAddress.setShr(shr);
+        sAddressService.updatess(sAddress);
+        return "modules/shop/shdzList";
+    }
     /**         商城代码结束          **/
 }

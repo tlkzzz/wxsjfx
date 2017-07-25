@@ -7,6 +7,8 @@ import com.tlkzzz.jeesite.common.persistence.CrudDao;
 import com.tlkzzz.jeesite.common.persistence.annotation.MyBatisDao;
 import com.tlkzzz.jeesite.modules.ps.entity.SAddress;
 
+import java.util.List;
+
 /**
  * 送货地址DAO接口s
  * @author xrc
@@ -15,7 +17,8 @@ import com.tlkzzz.jeesite.modules.ps.entity.SAddress;
 @MyBatisDao
 public interface SAddressDao extends CrudDao<SAddress> {
 
+    public List<SAddress> idsFindList(SAddress sAddress);
 
-
+    public void updatess(SAddress sAddress);
 
 }
