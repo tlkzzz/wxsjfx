@@ -4,11 +4,13 @@ package com.tlkzzz.jeesite.modules.ps.web;
 import com.tlkzzz.jeesite.common.config.Global;
 import com.tlkzzz.jeesite.common.persistence.Page;
 import com.tlkzzz.jeesite.common.utils.Encodes;
+import com.tlkzzz.jeesite.common.utils.JuheSmsUtils;
 import com.tlkzzz.jeesite.common.utils.StringUtils;
 import com.tlkzzz.jeesite.common.web.BaseController;
 import com.tlkzzz.jeesite.modules.ps.entity.*;
 import com.tlkzzz.jeesite.modules.ps.service.*;
 import com.tlkzzz.jeesite.modules.sys.entity.Area;
+import com.tlkzzz.jeesite.modules.sys.entity.User;
 import com.tlkzzz.jeesite.modules.sys.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +21,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 /**
  * 商品Controller
@@ -41,6 +45,8 @@ public class SShopMallController extends BaseController{
     private SAddressService sAddressService;
     @Autowired
     private SGoodsCommentService sGoodsCommentService;
+    @Autowired
+    private SMemberService sMemberService;
 
     public String check(ModelAndView modelAndView) {
         if (StringUtils.isBlank(UserUtils.getUser().getId())){
@@ -51,6 +57,8 @@ public class SShopMallController extends BaseController{
     /**         商城代码开始          **/
     @RequestMapping(value = {"index",""})
     public String index(){/**首页**/
+        SMember member = sMemberService.saveUserByJson("{\"openid\":\"oI-t8wHURtTZVlvYAHCzvqPO81CM\",\"nickname\":\"国服卡牌\",\"sex\":1,\"language\":\"zh_CN\",\"city\":\"长沙\",\"province\":\"湖南\",\"country\":\"中国\",\"headimgurl\":\"http://wx.qlogo.cn/mmhead/PiajxSqBRaEKmEB9icvchLClMf608zv19X72ya8h6eaQpPwm3nRFmJeA/0\",\"privilege\":[],\"unionid\":\"oGjjfspNk16U8ENVjjd93QYzU4ro\"}");
+        if(member!=null&&StringUtils.isNotBlank(member.getId()))UserUtils.setMemberId(member.getId());
         return "modules/shop/index";
     }
     @RequestMapping(value = "foot")
@@ -81,12 +89,62 @@ public class SShopMallController extends BaseController{
         SGoodsComment goodsComment = new SGoodsComment();
         goodsComment.setGoods(goods);
         goods = sGoodsService.get(goods);
-        SGoodsClass goodsClass = sGoodsClassService.get(goods.getGClass());
-        goods.setGener(sGenreService.getAll(goodsClass.getsGenre().getId()));
+        if(goods!=null&&goods.getGener()!=null)
+            goods.setGener(sGenreService.getAll(goods.getGener().getId()));
         goods.setGoodsDesc(Encodes.unescapeHtml(goods.getGoodsDesc()));
         model.addAttribute("goods", goods);
         model.addAttribute("commentList",sGoodsCommentService.findList(goodsComment));
         return "modules/shop/xiangqing";
+    }
+
+
+
+    @RequestMapping(value = "smsVCode")
+    public String smsVCode(SGoods goods,Model model){
+        return "modules/shop/denglu";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "sendSmsVCode")
+    public String sendSmsVCode(String mobile){
+        User user = UserUtils.getUser();
+        if(StringUtils.isNotBlank(mobile)&&user!=null&&StringUtils.isNotBlank(user.getId())){
+        //if(StringUtils.isNotBlank(mobile)){
+            Date oldDate = (Date)UserUtils.getCache("SmsDate");
+            Date date = new Date();
+            if(oldDate!=null&&((date.getTime()-oldDate.getTime())/(1000*60))<1){
+                return "true";
+            }
+            Random r = new Random();
+            StringBuffer s = new StringBuffer();
+            for(int i=0;i<6;i++) {
+                int num = r.nextInt(10);
+                s.append(num);
+            }
+            String code = "#name#="+user.getName()+"&#code#="+s.toString();
+            if(JuheSmsUtils.getRequest(mobile,code)){
+            //if(true){
+                UserUtils.putCache("SmsVCode",s.toString());
+                UserUtils.putCache("SmsMobile",mobile.trim());
+                UserUtils.putCache("SmsDate",new Date());
+                return "true";
+            }
+        }
+        return "false";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "checkSmsVCode")
+    public String checkSmsVCode(String mobile, String vCode){
+        if(UserUtils.getUser()==null||StringUtils.isBlank(UserUtils.getUser().getId()))return "false";
+        if(StringUtils.isBlank(mobile)||StringUtils.isBlank(vCode))return "false";
+        mobile = mobile.trim();vCode = vCode.trim();
+        String cacheMobile = (String)UserUtils.getCache("SmsMobile");
+        String cacheVcode = (String)UserUtils.getCache("SmsVCode");
+        if(StringUtils.isBlank(cacheMobile)||StringUtils.isBlank(cacheVcode))return "false";
+        if(!mobile.equals(cacheMobile)||!vCode.equals(cacheVcode))return "false";
+        sMemberService.updateMobile(UserUtils.getUser().getId(),cacheMobile);
+        return "true";
     }
 
     /**
