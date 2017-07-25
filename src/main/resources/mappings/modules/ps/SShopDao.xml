@@ -124,6 +124,12 @@
 		WHERE id = #{id}
 	</update>
 
+	<update id="updateOrderFlag" parameterType="java.lang.String">
+		UPDATE s_shop SET
+			order_flag = '0'
+		WHERE create_by = #{userId}
+	</update>
+
 	<update id="delete">
 		UPDATE s_shop SET
 			del_flag = #{DEL_FLAG_DELETE}
