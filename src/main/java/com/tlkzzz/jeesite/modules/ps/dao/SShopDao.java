@@ -7,6 +7,8 @@ import com.tlkzzz.jeesite.common.persistence.CrudDao;
 import com.tlkzzz.jeesite.common.persistence.annotation.MyBatisDao;
 import com.tlkzzz.jeesite.modules.ps.entity.SShop;
 
+import java.util.List;
+
 /**
  * 购物车DAO接口
  * @author xlc
@@ -26,5 +28,12 @@ public interface SShopDao extends CrudDao<SShop> {
      * @param userId
      */
     void updateOrderFlag(String userId);
+
+    /**
+     * 查询当前用户下所有确定订单
+     * @param sShop
+     * @return
+     */
+    List<SShop> findConfirmOrderList(SShop sShop);
 
 }
