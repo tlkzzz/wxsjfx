@@ -84,6 +84,7 @@
 	<script>
         $(document).ready(function () {
             $("#iframeTwo",window.parent.document)[0].contentWindow.home();
+//            window.parent.showSms();
         });
         window.onload = function (){
             var oLazy = document.getElementById("container");
@@ -95,11 +96,7 @@
 		$("li").css("background-color","#999")
 		$("li").eq(0).css("background-color","#f79353")
 		setInterval(function(){
-			if(x<3){
-				x=x+1
-			}else{
-				x=0
-			}
+			x = (x<3)?x+1:0;
 			$(".lunbo img").hide().eq(x).show()
 			$("li").css("background-color","#999")
 			$("li").eq(x).css("background-color","#f79353")
