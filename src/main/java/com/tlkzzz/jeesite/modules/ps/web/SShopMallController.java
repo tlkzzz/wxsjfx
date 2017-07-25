@@ -118,7 +118,7 @@ public class SShopMallController extends BaseController{
             if(oldDate!=null&&((date.getTime()-oldDate.getTime())/(1000*60))<1){
                 return "true";
             }
-            String s = sShopMallService.random();
+            String s = sShopMallService.random(6);
             String code = "#name#="+user.getName()+"&#code#="+s;
             //if(JuheSmsUtils.getRequest(mobile,code)){
             if(true){

@@ -93,7 +93,7 @@ public class SGoodsController extends BaseController {
 		List<SShop>  sshoplist = sOrderService.findList(sShop);
 		model.addAttribute("generList", sSpecService.findList(new SSpec()));
 		model.addAttribute("sshoplist",sshoplist);
-		return "modules/ps/shop";
+		return "modules/shop/shoplist";
 	}
 
 	@RequiresPermissions("ps:sGoods:view")
