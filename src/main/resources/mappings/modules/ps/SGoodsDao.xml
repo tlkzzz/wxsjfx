@@ -6,7 +6,7 @@
 		a.id AS "id",
 		a.class_id AS "gClass.id",
 		sgc.name AS "gClass.name",
-		sg.gener_id AS "gener.id",
+		sg.id AS "gener.id",
 		sg.name AS "gener.name",
 		a.type AS "type",
 		a.name AS "name",
@@ -45,6 +45,14 @@
 		FROM s_goods a
 		<include refid="sGoodsJoins"/>
 		WHERE a.id = #{id}
+	</select>
+
+	<select id="getname" resultType="SGoods">
+		SELECT
+		<include refid="sGoodsColumns"/>
+		FROM s_goods a
+		<include refid="sGoodsJoins"/>
+		WHERE a.name = #{name}
 	</select>
 	
 	<select id="findList" resultType="SGoods">
