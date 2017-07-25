@@ -22,7 +22,7 @@ public class SMember extends DataEntity<SMember> {
 	private String password;		// 密码
 	private String trueName;		// 真实姓名
 	private String loginKey;		// 三方登录凭证
-	private String memberType;		// 会员类型
+	private String memberType;		// 会员类型(改为性别)
 	private String photo;		// 头像
 	private String email;		// 邮箱
 	private String tel;		// 电话
