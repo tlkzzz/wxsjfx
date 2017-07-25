@@ -158,7 +158,6 @@
 
             });
            $('.je').text(sum);
-           alert($('.je').text(sum))
 //        var b=    $('#jjsl').attr('class');
             var arrPrePrice = [];//定义数组
             //htje的值，为数组赋值
@@ -190,7 +189,7 @@
 //             var je =   $('.je').text();
                 var sum = parseInt(htje) * parseInt(jjsl)
              $('.je').text(sum);
-                alert( $('.je').text(sum));
+//                alert( $('.je').text(sum));
 
          }
          function deleted(){
@@ -223,10 +222,11 @@
             <div class="name_box">
                 <p class="name">商品名称<span>:${shop.goods.name}</span></p>
                 <p class="spec">
-                    <span>规格 : </span>
-                  1111  <input type="checkbox" name="mm"  onclick="chose(this)" />
+                    <%--<c:forEach items="${sGoods.gener.specClassList}" var="specClass">--%>
+                    <span>规格 :${specClass.name} </span>
+                            <input type="checkbox" name="mm"  value="11111" onclick="chose(this)" />
                 </p>
-
+                <%--</c:forEach>--%>
             <%--<c:forEach items="${sGoods.gener.specClassList}" var="specClass">--%>
                     <%--<span style="color: #666;font-size: 2.2em;">${specClass.name}:</span>--%>
                     <%--<c:forEach items="${specClass.sSpecList}" var="spec">--%>
