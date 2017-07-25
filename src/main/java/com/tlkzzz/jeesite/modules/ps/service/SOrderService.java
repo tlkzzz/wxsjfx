@@ -41,7 +41,7 @@ public class SOrderService extends CrudService<SOrderDao, SOrder> {
 	public Page<SOrder> findPage(Page<SOrder> page, SOrder sOrder) {
 		return super.findPage(page, sOrder);
 	}
-	
+
 	@Transactional(readOnly = false)
 	public void save(SOrder sOrder) {
 		super.save(sOrder);
@@ -55,6 +55,11 @@ public class SOrderService extends CrudService<SOrderDao, SOrder> {
 	public List<SShop> findList(SShop sShop) {
 		return shopDao.findList(sShop);
 	}
+
+	public List<SShop> findConfirmOrderList(SShop sShop){
+		return shopDao.findConfirmOrderList(sShop);
+	}
+
 	@Transactional(readOnly = false)
 	public void savelist(SGoods sGoods) {
         SShop sShop=new SShop();

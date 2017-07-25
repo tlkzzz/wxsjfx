@@ -1,9 +1,18 @@
 package com.tlkzzz.jeesite.modules.ps.service;
 
 import com.tlkzzz.jeesite.common.service.BaseService;
+import com.tlkzzz.jeesite.common.utils.StringUtils;
+import com.tlkzzz.jeesite.modules.ps.dao.SShopDao;
+import com.tlkzzz.jeesite.modules.ps.entity.SAddress;
+import com.tlkzzz.jeesite.modules.ps.entity.SGoods;
+import com.tlkzzz.jeesite.modules.ps.entity.SShop;
+import com.tlkzzz.jeesite.modules.sys.utils.UserUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -12,7 +21,10 @@ import java.util.Random;
 @Service
 @Transactional(readOnly = true)
 public class SShopMallService  extends BaseService {
-
+    @Autowired
+    private SShopDao sShopDao;
+    @Autowired
+    private SAddressService sAddressService;
     /**
      * 获取指定位数的随机数
      * @return
@@ -26,6 +38,59 @@ public class SShopMallService  extends BaseService {
             s.append(num);
         }
         return s.toString();
+    }
+
+    /**
+     * 确认订单保存购物车选择信息
+     * @param ids
+     * @param specIds
+     * @param nums
+     * @return
+     */
+    public List<SShop> confirmOrder(String ids, String specIds, String nums){
+        if(StringUtils.isBlank(ids)||StringUtils.isBlank(specIds)||StringUtils.isBlank(nums))return null;
+        String[] idList = ids.split(",");
+        String[] specIdList = specIds.split("|");
+        String[] numList = nums.split(",");
+        List<SShop> shopList = new ArrayList<SShop>();
+        sShopDao.updateOrderFlag(UserUtils.getUser().getId());
+        for(int i=0;i<idList.length;i++){
+            SShop shop = sShopDao.get(idList[i]);
+            if(shop==null)continue;
+            int num = Integer.parseInt(numList[i]);
+            shop.setSpecIds(specIdList[i]);
+            shop.setNum(String.valueOf((num<1)?1:num));
+            shop.setOrderFlag("1");
+            sShopDao.updateInfo(shop);
+        }
+        return shopList;
+    }
+
+    /**
+     * 计算订单的总金额
+     * @param list
+     * @return
+     */
+    public double countOrderTotal(List<SShop> list){
+        double total = 0;
+        for (SShop s: list){
+            if(s==null)continue;
+            if(StringUtils.isBlank(s.getNum()))continue;
+            if(StringUtils.isBlank(s.getPrice()))continue;
+            total += Integer.parseInt(s.getNum())*Double.parseDouble(s.getPrice());
+        }
+        return total;
+    }
+
+    /**
+     * 通过当前登录会员ID查询会员所有送货地址
+     * 默认送货地址排序在第一个
+     * @return
+     */
+    public List<SAddress> findAddressListByM(){
+        SAddress address = new SAddress();
+        address.setMember(UserUtils.getUser().getMember());
+        return sAddressService.findList(address);
     }
 
 }
