@@ -20,7 +20,8 @@ public class SShop extends DataEntity<SShop> {
 	private String specIds;		// 规格ids
 	private String num;		// 数量
 	private String price;		// 价格
-	
+	private String orderFlag;		// 订单标识（1：客户选择支付订单）
+
 	public SShop() {
 		super();
 	}
@@ -70,5 +71,12 @@ public class SShop extends DataEntity<SShop> {
 	public void setPrice(String price) {
 		this.price = price;
 	}
-	
+
+	public String getOrderFlag() {
+		return orderFlag;
+	}
+
+	public void setOrderFlag(String orderFlag) {
+		this.orderFlag = orderFlag;
+	}
 }
