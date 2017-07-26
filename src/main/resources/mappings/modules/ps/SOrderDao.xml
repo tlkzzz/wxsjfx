@@ -5,7 +5,9 @@
 	<sql id="sOrderColumns">
 		a.id AS "id",
 		a.order_no AS "orderNo",
-		a.goods_id AS "goodsId",
+		a.goods_id AS "goods.id",
+		sg.name AS "goods.name",
+		sg.image AS "goods.image",
 		a.spec_ids AS "specIds",
 		a.num AS "num",
 		a.price AS "price",
@@ -20,6 +22,7 @@
 	</sql>
 	
 	<sql id="sOrderJoins">
+		LEFT JOIN s_goods sg ON sg.id=a.goods_id
 	</sql>
     
 	<select id="get" resultType="SOrder">
@@ -88,7 +91,7 @@
 		) VALUES (
 			#{id},
 			#{orderNo},
-			#{goodsId},
+			#{goods.id},
 			#{specIds},
 			#{num},
 			#{price},
@@ -106,7 +109,7 @@
 	<update id="update">
 		UPDATE s_order SET 	
 			order_no = #{orderNo},
-			goods_id = #{goodsId},
+			goods_id = #{goods.id},
 			spec_ids = #{specIds},
 			num = #{num},
 			price = #{price},
