@@ -14,6 +14,42 @@
 		margin: 0;
 		padding: 0;
 	}
+	.content {
+		width: 90%;
+		position: absolute;
+		overflow: hidden;
+		top: 25%;
+		left: 5%;
+		border-radius: 10px;
+		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+		z-index: 100;
+		padding: 1rem 1rem;
+		box-sizing: border-box;
+		/*不会把盒子撑开*/
+	}
+	.content::before{
+		content: "";
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		right: 0px;
+		bottom: 0px;
+		z-index: -1;
+		/*-1 可以当背景*/
+		-webkit-filter: blur(10px);
+		filter: blur(10px);
+		margin: -30px;  /*消除边缘透明*/
+		background: rgba(255,255,255,.4) center top;
+		background-size: cover;
+		/*平铺*/
+		background-attachment: fixed;
+		/*位置固定*/
+	}
+	.content p {
+		font-size: 3rem;
+		line-height: 1.7;
+		/*1.7倍行间距*/
+	}
 </style>
 <script type="text/javascript" src="static/shop/jquery-1.9.1.js"></script>
 <script type="text/javascript">
@@ -37,9 +73,10 @@
         var vCode = $("#vCode").val();
         if(mobile==""){$("#mobile").focus();return;}
         if(vCode==""){$("#vCode").focus();return;}
+        if(!checkMobile(mobile)){$("#mobile").focus();return;}
         ele.attr("disabled",true);
-        $.get("",function (data) {
-			if(data||data=="true"){
+        $.get("s/checkSmsVCode?mobile="+mobile+"&vCode="+vCode,function (data) {
+			if(data&&data=="true"){
 			    showSms();
 			}else {
 			    Message("验证失败,请重新输入验证码！");
@@ -78,7 +115,11 @@
 		}
     }
 	function Message(context) {
-		alert(context);
+	    if(context=="")return;
+		$("#message").text(context);
+        $(".content").fadeIn(1000);
+        $(".content").slideUp(3000);
+
     }
     function showSms() {
 		var ele = $("#SMS");
@@ -95,6 +136,9 @@
 <div style="position: relative;width: 100%;height: 100%;">
 	<iframe name="jj" frameborder="0" marginheight="0" marginwidth="0" src="s/home" style="width: 100%;height: 90%;"></iframe>
 	<iframe id="iframeTwo" scrolling="no" frameborder="0" marginheight="0" marginwidth="0" src="s/foot" style="width: 100%;height: 10%;position: fixed;bottom: 0;left: 0;"></iframe>
+</div>
+<div class="content" style="display: none;">
+	<p id="message"></p>
 </div>
 <div id="SMS" style="width: 100%;height: 100%;background-color: rgba(255,255,255,.8);padding: 50% 0;position: fixed;top: 0;left: 0;display: none">
 	<div style="width: 70%;margin: 0 auto;padding: 1rem 0;border-radius: 8px;background-color: #fff;box-shadow: 0 0 20px #999;">
