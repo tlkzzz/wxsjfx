@@ -7,6 +7,8 @@ import com.tlkzzz.jeesite.common.persistence.CrudDao;
 import com.tlkzzz.jeesite.common.persistence.annotation.MyBatisDao;
 import com.tlkzzz.jeesite.modules.ps.entity.SSpec;
 
+import java.util.List;
+
 /**
  * 规格DAO接口
  * @author szx
@@ -14,5 +16,12 @@ import com.tlkzzz.jeesite.modules.ps.entity.SSpec;
  */
 @MyBatisDao
 public interface SSpecDao extends CrudDao<SSpec> {
-	
+
+    /**
+     * 通过ids查询ids中的规格列表
+     * ids字符串存放在id中
+     * @param sSpec
+     * @return
+     */
+	List<SSpec> findListByIds(SSpec sSpec);
 }
