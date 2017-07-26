@@ -63,7 +63,7 @@
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL} AND a.order_flag = #{DEL_FLAG_DELETE}
 			<if test="createBy != null and createBy.id != null and createBy.id != ''">
-				a.create_by = #{createBy.id}
+				AND a.create_by = #{createBy.id}
 			</if>
 		</where>
 	</select>
