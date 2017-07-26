@@ -50,6 +50,8 @@ public class SShopMallController extends BaseController{
     private SMemberService sMemberService;
     @Autowired
     private SShopMallService sShopMallService;
+    @Autowired
+    private SOrderService sOrderService;
 
     public String check(ModelAndView modelAndView) {
         if (StringUtils.isBlank(UserUtils.getUser().getId())){
@@ -235,6 +237,40 @@ public class SShopMallController extends BaseController{
         sAddressService.updateOne(sAddress);
         sAddress.setId(ids);
         sAddressService.updateTwo(sAddress);
+        return "true";
+    }
+
+    /**
+     * shizx 我的订单详情页面
+     * */
+    @RequestMapping(value = {"myDdList"})
+    public String myDdList() {
+        return "modules/shop/MyddList";
+    }
+
+
+    /**
+     * shizx 我的订单详情页面
+     * */
+    @ResponseBody
+    @RequestMapping(value = {"myList"})
+    public List<SOrder> myList(String bs) {
+        SOrder sOrder=new SOrder();
+        sOrder.setCreateBy(new User(UserUtils.getUser().getId()));
+        sOrder.setDdbs(bs);
+        List<SOrder> sorderList=sOrderService.findList(sOrder);
+        return sorderList;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = {"saveHf"})
+    public String saveHf(String hf,String ids) {
+        SGoodsComment sGoodsComment=new SGoodsComment();
+        sGoodsComment.setComment(hf);
+        sGoodsComment.setOrder(new SOrder(ids));
+        List<SOrder> sorderList=sOrderService.findList(new SOrder(ids));
+        sGoodsComment.setGoods(new SGoods(sorderList.get(0).getsGoods().getId()));
+        sGoodsCommentService.save(sGoodsComment);
         return "true";
     }
     /**         商城代码结束          **/

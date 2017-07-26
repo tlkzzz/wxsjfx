@@ -18,7 +18,10 @@
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
-		a.del_flag AS "delFlag"
+		a.del_flag AS "delFlag",
+		a.ddbs AS "ddbs",
+		sg.name AS "sGoods.name",
+		sg.image AS "sGoods.image"
 	</sql>
 	
 	<sql id="sOrderJoins">
@@ -42,6 +45,12 @@
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="orderNo != null  and orderNo != ''">
 				AND a.order_no = #{orderNo}
+			</if>
+			<if test="ddbs != null  and ddbs != ''">
+				AND a.ddbs = #{ddbs}
+			</if>
+			<if test="createBy != null and createBy.id != null  and createBy.id != ''">
+				AND a.create_by = #{createBy.id}
 			</if>
 		</where>
 		<choose>
@@ -87,7 +96,8 @@
 			create_date,
 			update_by,
 			update_date,
-			del_flag
+			del_flag,
+			ddbs
 		) VALUES (
 			#{id},
 			#{orderNo},
@@ -102,7 +112,8 @@
 			#{createDate},
 			#{updateBy.id},
 			#{updateDate},
-			#{delFlag}
+			#{delFlag},
+			#{ddbs}
 		)
 	</insert>
 	
@@ -117,7 +128,8 @@
 			sort = #{sort},
 			remarks = #{remarks},
 			update_by = #{updateBy.id},
-			update_date = #{updateDate}
+			update_date = #{updateDate},
+			ddbs=#{ddbs}
 		WHERE id = #{id}
 	</update>
 	

@@ -24,7 +24,8 @@ public class SOrder extends DataEntity<SOrder> {
 	private String price;		// 价格
 	private String costPrice;		// 商品成本价
 	private String sort;		// 排序
-	
+	private String ddbs;        //订单标识
+
 	public SOrder() {
 		super();
 	}
@@ -92,5 +93,12 @@ public class SOrder extends DataEntity<SOrder> {
 	public void setSort(String sort) {
 		this.sort = sort;
 	}
-	
+
+	public String getDdbs() {
+		return ddbs;
+	}
+
+	public void setDdbs(String ddbs) {
+		this.ddbs = ddbs;
+	}
 }
