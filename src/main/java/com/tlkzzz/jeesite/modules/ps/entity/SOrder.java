@@ -7,6 +7,8 @@ import org.hibernate.validator.constraints.Length;
 
 import com.tlkzzz.jeesite.common.persistence.DataEntity;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * 订单Entity
  * @author xlc
@@ -16,7 +18,7 @@ public class SOrder extends DataEntity<SOrder> {
 	
 	private static final long serialVersionUID = 1L;
 	private String orderNo;		// 订单编号
-	private String goodsId;		// 商品ID
+	private SGoods goods;		// 商品
 	private String specIds;		// 规格ids
 	private String num;		// 数量
 	private String price;		// 价格
@@ -40,13 +42,13 @@ public class SOrder extends DataEntity<SOrder> {
 		this.orderNo = orderNo;
 	}
 	
-	@Length(min=1, max=64, message="商品ID长度必须介于 1 和 64 之间")
-	public String getGoodsId() {
-		return goodsId;
+	@NotNull
+	public SGoods getGoods() {
+		return goods;
 	}
 
-	public void setGoodsId(String goodsId) {
-		this.goodsId = goodsId;
+	public void setGoods(SGoods goods) {
+		this.goods = goods;
 	}
 	
 	public String getSpecIds() {
