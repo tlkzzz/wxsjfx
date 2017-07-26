@@ -148,6 +148,15 @@ public class UserUtils {
 			CacheUtils.remove(USER_CACHE, USER_CACHE_LIST_BY_OFFICE_ID_ + user.getOffice().getId());
 		}
 	}
+
+	/**
+	 * 清除指定会员缓存
+	 * @param member
+	 */
+	public static void clearCache(SMember member){
+		CacheUtils.remove(MEMBER_CACHE, USER_CACHE_ID_ + member.getId());
+		CacheUtils.remove(MEMBER_CACHE, USER_CACHE_LOGIN_NAME_ + member.getLoginName());
+	}
 	
 	/**
 	 * 获取当前用户
