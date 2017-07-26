@@ -3,9 +3,9 @@ package com.tlkzzz.jeesite.modules.ps.service;
 import com.tlkzzz.jeesite.common.service.BaseService;
 import com.tlkzzz.jeesite.common.utils.StringUtils;
 import com.tlkzzz.jeesite.modules.ps.dao.SShopDao;
-import com.tlkzzz.jeesite.modules.ps.entity.SAddress;
-import com.tlkzzz.jeesite.modules.ps.entity.SGoods;
-import com.tlkzzz.jeesite.modules.ps.entity.SShop;
+import com.tlkzzz.jeesite.modules.ps.dao.SSpecClassDao;
+import com.tlkzzz.jeesite.modules.ps.dao.SSpecDao;
+import com.tlkzzz.jeesite.modules.ps.entity.*;
 import com.tlkzzz.jeesite.modules.sys.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +23,10 @@ import java.util.Random;
 public class SShopMallService  extends BaseService {
     @Autowired
     private SShopDao sShopDao;
+    @Autowired
+    private SSpecDao sSpecDao;
+    @Autowired
+    private SSpecClassDao sSpecClassDao;
     @Autowired
     private SAddressService sAddressService;
     /**
@@ -91,6 +95,34 @@ public class SShopMallService  extends BaseService {
         SAddress address = new SAddress();
         address.setMember(UserUtils.getUser().getMember());
         return sAddressService.findList(address);
+    }
+
+    /**
+     * 通过商品和规格ids查询规格列表
+     * @param goods
+     * @param specIds
+     * @return
+     */
+    public SGoods findSpecInfo(SGoods goods,String specIds){
+        if(goods==null||StringUtils.isBlank(specIds))return goods;
+        if(goods.getGener()==null)goods.setGener(new SGenre());
+        List<SSpec> specList = sSpecDao.findListByIds(new SSpec(specIds));
+        if(specList.size()>0){
+            List<SSpecClass> specClassList = sSpecClassDao.findList(new SSpecClass());
+            for(SSpecClass sc:specClassList){
+                sc.setsSpecList(new ArrayList<SSpec>());
+                for(SSpec s:specList){
+                    if(s.getSpecClassId().equals(sc.getId())){
+                        sc.getsSpecList().add(s);
+                    }
+                }
+            }
+            for(int i=0;i<specClassList.size();i++){
+                if(specClassList.get(i).getsSpecList().size()<=0)specClassList.remove(i);
+            }
+            goods.getGener().setSpecClassList(specClassList);
+        }
+        return goods;
     }
 
 }
