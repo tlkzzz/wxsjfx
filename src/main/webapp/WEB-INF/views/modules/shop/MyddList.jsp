@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>我的订单ss</title>
+    <title>我的订单</title>
     <script src="${ctxStatic}/shop/jquery-1.9.1.js"></script>
     <style>
         body,p{
