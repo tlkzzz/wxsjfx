@@ -22,21 +22,15 @@ public class SReceipt extends DataEntity<SReceipt> {
 	private String receivableMoney;		// 应收金额
 	private String revenueMoney;		// 实收金额
 	private Date receiptDate;		// 收款时间
-	
+	private String zfState;			//支付状态
+	private String tcState;			//提成状态
+
 	public SReceipt() {
 		super();
 	}
 
 	public SReceipt(String id){
 		super(id);
-	}
-
-	public String getOrder() {
-		return snKey;
-	}
-
-	public void setOrder(String snKey) {
-		this.snKey = snKey;
 	}
 	
 	public String getReceivableMoney() {
@@ -56,7 +50,6 @@ public class SReceipt extends DataEntity<SReceipt> {
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	@NotNull(message="收款时间不能为空")
 	public Date getReceiptDate() {
 		return receiptDate;
 	}
@@ -64,5 +57,28 @@ public class SReceipt extends DataEntity<SReceipt> {
 	public void setReceiptDate(Date receiptDate) {
 		this.receiptDate = receiptDate;
 	}
-	
+
+	public String getSnKey() {
+		return snKey;
+	}
+
+	public void setSnKey(String snKey) {
+		this.snKey = snKey;
+	}
+
+	public String getZfState() {
+		return zfState;
+	}
+
+	public void setZfState(String zfState) {
+		this.zfState = zfState;
+	}
+
+	public String getTcState() {
+		return tcState;
+	}
+
+	public void setTcState(String tcState) {
+		this.tcState = tcState;
+	}
 }
