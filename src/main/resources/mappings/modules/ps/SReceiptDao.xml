@@ -8,7 +8,6 @@
 		a.receivable_money AS "receivableMoney",
 		a.revenue_money AS "revenueMoney",
 		a.receipt_date AS "receiptDate",
-		a.remarks AS "remarks",
 		a.zf_state AS "zfState",
 		a.tc_state AS "tcState",
 		a.remarks AS "remarks",
