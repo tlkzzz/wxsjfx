@@ -8,6 +8,7 @@
 		a.goods_id    AS "goods.id",
 		c.name     AS "goods.name",
 		c.image    AS "goods.image",
+		c.cost_price AS "goods.costPrice",
 		a.spec_ids AS "specIds",
 		a.num AS "num",
 		a.price AS "price",
@@ -21,9 +22,7 @@
 	</sql>
 	
 	<sql id="sShopJoins">
-		LEFT JOIN s_order ck ON a.order_no=ck.id
 		LEFT JOIN s_goods c ON a.goods_id=c.id
-		LEFT JOIN s_spec cc ON a.spec_ids=cc.id
 	</sql>
     
 	<select id="get" resultType="SShop">
