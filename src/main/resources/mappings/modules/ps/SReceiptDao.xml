@@ -4,8 +4,7 @@
     
 	<sql id="sReceiptColumns">
 		a.id AS "id",
-		a.order_id AS "order",
-		c.order_No AS "order.order_No",
+		a.sn_key AS "snKey",
 		a.receivable_money AS "receivableMoney",
 		a.revenue_money AS "revenueMoney",
 		a.receipt_date AS "receiptDate",
@@ -18,7 +17,6 @@
 	</sql>
 	
 	<sql id="sReceiptJoins">
-		LEFT JOIN s_order c ON a.order_id=c.id
 	</sql>
     
 	<select id="get" resultType="SReceipt">
@@ -36,9 +34,6 @@
 		<include refid="sReceiptJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="order != null and order.id != null and order.id != ''">
-				AND c.id = #{order.id}
-			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -71,7 +66,7 @@
 	<insert id="insert">
 		INSERT INTO s_receipt(
 			id,
-			order_id,
+			sn_key,
 			receivable_money,
 			revenue_money,
 			receipt_date,
@@ -83,7 +78,7 @@
 			del_flag
 		) VALUES (
 			#{id},
-			#{order.id},
+			#{snKey},
 			#{receivableMoney},
 			#{revenueMoney},
 			#{receiptDate},
@@ -98,7 +93,7 @@
 	
 	<update id="update">
 		UPDATE s_receipt SET 	
-			order_id = #{order.id},
+			sn_key = #{snKey},
 			receivable_money = #{receivableMoney},
 			revenue_money = #{revenueMoney},
 			receipt_date = #{receiptDate},
