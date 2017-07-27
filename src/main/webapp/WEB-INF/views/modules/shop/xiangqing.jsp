@@ -102,7 +102,7 @@
 			</c:forEach>
 		</div>
 	</div>
-	<div id="anniu" style="width: 100%;margin-top: 1.8rem;">
+	<div id="anniu" style="width: 100%;margin-top: 1.8rem;margin-bottom: 20%;">
 		<a href="${shop}/shoplist?id=${goods.id}" onClick="changeImage()"><input id="an" type="button" value="立 即 购 买" style="width: 100%;background-color: #84bd00;color: #fff;font-size: 4em;border: 0;padding: 2rem 0;"></a>
 	</div>
 	<script>
