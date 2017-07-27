@@ -14,5 +14,7 @@ import com.tlkzzz.jeesite.modules.ps.entity.SReceipt;
  */
 @MyBatisDao
 public interface SReceiptDao extends CrudDao<SReceipt> {
-	
+
+    public void updateTc(SReceipt sReceipt);
+
 }

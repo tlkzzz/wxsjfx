@@ -54,5 +54,8 @@ public class SReceiptService extends CrudService<SReceiptDao, SReceipt> {
 	public void delete(SReceipt sReceipt) {
 		super.delete(sReceipt);
 	}
+
+	@Transactional(readOnly = false)
+	public void updateTc(SReceipt sReceipt){ dao.updateTc(sReceipt);}
 	
 }

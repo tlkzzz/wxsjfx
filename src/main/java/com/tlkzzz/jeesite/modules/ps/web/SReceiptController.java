@@ -6,6 +6,10 @@ package com.tlkzzz.jeesite.modules.ps.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.tlkzzz.jeesite.modules.ps.entity.*;
+import com.tlkzzz.jeesite.modules.ps.service.SMemberCommissionService;
+import com.tlkzzz.jeesite.modules.ps.service.SMemberRelationService;
+import com.tlkzzz.jeesite.modules.ps.service.SProportionCommissionService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,8 +23,9 @@ import com.tlkzzz.jeesite.common.config.Global;
 import com.tlkzzz.jeesite.common.persistence.Page;
 import com.tlkzzz.jeesite.common.web.BaseController;
 import com.tlkzzz.jeesite.common.utils.StringUtils;
-import com.tlkzzz.jeesite.modules.ps.entity.SReceipt;
 import com.tlkzzz.jeesite.modules.ps.service.SReceiptService;
+
+import java.util.List;
 
 /**
  * 收款表Controller
@@ -33,6 +38,12 @@ public class SReceiptController extends BaseController {
 
 	@Autowired
 	private SReceiptService sReceiptService;
+	@Autowired
+	private SMemberCommissionService sMemberCommissionService;
+	@Autowired
+	private SMemberRelationService sMemberRelationService;
+	@Autowired
+	private SProportionCommissionService sProportionCommissionService;
 	
 	@ModelAttribute
 	public SReceipt get(@RequestParam(required=false) String id) {
@@ -79,6 +90,39 @@ public class SReceiptController extends BaseController {
 		sReceiptService.delete(sReceipt);
 		addMessage(redirectAttributes, "删除收款表成功");
 		return "redirect:"+Global.getAdminPath()+"/ps/sReceipt/?repage";
+	}
+
+	@RequiresPermissions("ps:sReceipt:view")
+	@RequestMapping(value = "tcAdd")
+	public String tcAdd(SReceipt sReceipt) {
+		String btcr=sReceipt.getCreateBy().getId();   //被提成人
+		String userId=sReceipt.getCreateBy().getId(); //购买人用户名
+		String shje=sReceipt.getRevenueMoney();		//实际收款
+		String reId=sReceipt.getId();				//收款单id
+		List<SProportionCommission> sProportionCommissionList=sProportionCommissionService.findList(new SProportionCommission());
+//		List<SMemberCommission> sMemberCommissionList=sMemberCommissionService.findList(new SMemberCommission());
+		for(int i=0;i<sProportionCommissionList.size();i++){
+				SMemberRelation sMemberRelation=new SMemberRelation();
+				sMemberRelation.setNewMember(new SMember(userId));
+				List<SMemberRelation> sMemberRelationList=sMemberRelationService.findList(sMemberRelation);
+				if(sMemberRelationList.size()!=0){
+					userId=sMemberRelationList.get(0).getOldMember().getId();
+					SMemberCommission sMemberCommission=new SMemberCommission();
+					sMemberCommission.setOldMemberId(userId);
+					sMemberCommission.setNewMemberId(btcr);
+					sMemberCommission.setReceipt(new SReceipt(reId));
+					Double sh=Double.parseDouble(shje);
+					Double tcbl=Double.parseDouble(sProportionCommissionList.get(i).getCommission());
+					Double tc=sh*tcbl/100;
+					sMemberCommission.setTotal(tc.toString());
+					sMemberCommissionService.save(sMemberCommission);
+					/**
+					 * 提成表添加完成，预留支付接口
+					 * */
+					sReceiptService.updateTc(sReceipt);//更新提成表提成状态
+				}
+		}
+		return "modules/ps/sReceiptList";
 	}
 
 }

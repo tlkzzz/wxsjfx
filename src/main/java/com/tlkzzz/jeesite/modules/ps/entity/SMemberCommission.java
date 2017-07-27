@@ -17,7 +17,7 @@ public class SMemberCommission extends DataEntity<SMemberCommission> {
 	private static final long serialVersionUID = 1L;
 	private String oldMemberId;		// 老会员ID
 	private String newMemberId;		// 被提成会员ID
-	private SOrder orderId;		// 订单ID
+	private SReceipt receipt;		// 订单ID
 	private String total;		// 提成金额
 	private String sort;		// 排序
 	
@@ -46,16 +46,15 @@ public class SMemberCommission extends DataEntity<SMemberCommission> {
 	public void setNewMemberId(String newMemberId) {
 		this.newMemberId = newMemberId;
 	}
-	
-	@Length(min=1, max=64, message="订单ID长度必须介于 1 和 64 之间")
-	public SOrder getOrderId() {
-		return orderId;
+
+	public SReceipt getReceipt() {
+		return receipt;
 	}
 
-	public void setOrderId(SOrder orderId) {
-		this.orderId = orderId;
+	public void setReceipt(SReceipt receipt) {
+		this.receipt = receipt;
 	}
-	
+
 	public String getTotal() {
 		return total;
 	}

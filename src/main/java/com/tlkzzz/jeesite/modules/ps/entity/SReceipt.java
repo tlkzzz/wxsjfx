@@ -22,8 +22,8 @@ public class SReceipt extends DataEntity<SReceipt> {
 	private String receivableMoney;		// 应收金额
 	private String revenueMoney;		// 实收金额
 	private Date receiptDate;		// 收款时间
-	private String zfState;			//支付状态
-	private String tcState;			//提成状态
+	private String zfState;			//支付状态   //0未支付 //1已支付
+	private String tcState;			//提成状态   //0未提成  // 1已提成
 
 	public SReceipt() {
 		super();

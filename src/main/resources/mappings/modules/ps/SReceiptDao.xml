@@ -99,7 +99,13 @@
 			#{delFlag}
 		)
 	</insert>
-	
+
+	<update id="updateTc">
+		UPDATE s_receipt SET
+		tc_state = '1'
+		WHERE id = #{id}
+	</update>
+
 	<update id="update">
 		UPDATE s_receipt SET 	
 			sn_key = #{snKey},
