@@ -66,7 +66,7 @@
 					<fmt:formatDate value="${sReceipt.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<shiro:hasPermission name="ps:sReceipt:edit"><td>
-					<c:if test="sReceipt.tcState==0">
+					<c:if test="${sReceipt.tcState=='0'}">
     				<a href="${ctx}/ps/sReceipt/tcAdd?id=${sReceipt.id}&revenueMoney=${sReceipt.revenueMoney}&cjr=${sReceipt.createBy.id}">提成</a>
 					</c:if><%--<a href="${ctx}/ps/sReceipt/delete?id=${sReceipt.id}" onclick="return confirmx('确认要删除该收款表吗？', this.href)">删除</a>--%>
 				</td></shiro:hasPermission>
