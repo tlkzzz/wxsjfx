@@ -146,6 +146,22 @@ public class SShopMallController extends BaseController{
         sMemberService.updateMobile(UserUtils.getUser().getId(),cacheMobile);
         return "true";
     }
+    /**
+     * 个人中心
+     * @param response
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "PersonalCenter")
+    public String PersonalCenter(HttpServletRequest request,HttpServletResponse response,Model model){
+        User user = UserUtils.getUser();
+       String name=user.getName();
+       String photo;
+        photo=user.getMember().getPhoto();
+        model.addAttribute("name",name);
+        model.addAttribute("photo",photo);
+        return "modules/shop/personalList";
+    }
 
     /**
      * shizx 收货地址添加页面调用方法
