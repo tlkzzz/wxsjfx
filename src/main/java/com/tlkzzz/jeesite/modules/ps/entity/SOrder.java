@@ -17,15 +17,16 @@ import javax.validation.constraints.NotNull;
 public class SOrder extends DataEntity<SOrder> {
 	
 	private static final long serialVersionUID = 1L;
-	private String orderNo;		// 订单编号
+	private String orderNo;			// 订单编号
 	private SReceipt receipt;		// 收款信息
-	private SGoods goods;		// 商品
-	private String specIds;		// 规格ids
-	private String num;		// 数量
-	private String price;		// 价格
+	private SAddress address;			// 收货地址
+	private SGoods goods;			// 商品
+	private String specIds;			// 规格ids
+	private String num;				// 数量
+	private String price;			// 价格
 	private String costPrice;		// 商品成本价
-	private String sort;		// 排序
-	private String ddbs;        //订单标识
+	private String sort;			// 排序
+	private String ddbs;        	//订单标识
 
 	public SOrder() {
 		super();
@@ -50,6 +51,14 @@ public class SOrder extends DataEntity<SOrder> {
 
 	public void setReceipt(SReceipt receipt) {
 		this.receipt = receipt;
+	}
+
+	public SAddress getAddress() {
+		return address;
+	}
+
+	public void setAddress(SAddress address) {
+		this.address = address;
 	}
 
 	@NotNull
