@@ -17,6 +17,9 @@ import java.util.List;
 @MyBatisDao
 public interface SShopDao extends CrudDao<SShop> {
 
+   public SShop getlist(String id,String name);
+
+
     /**
      * 通过ID修改规格ids和数量
      * @param sShop
@@ -35,5 +38,6 @@ public interface SShopDao extends CrudDao<SShop> {
      * @return
      */
     List<SShop> findConfirmOrderList(SShop sShop);
+
 
 }
