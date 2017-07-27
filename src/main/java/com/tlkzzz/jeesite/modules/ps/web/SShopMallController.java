@@ -55,6 +55,9 @@ public class SShopMallController extends BaseController{
     private SOrderService sOrderService;
     @Autowired
     private SReceiptService sReceiptService;
+    @Autowired
+    private SSpecService sSpecService;
+
 
     public String check(ModelAndView modelAndView) {
         if (StringUtils.isBlank(UserUtils.getUser().getId())){
@@ -335,6 +338,36 @@ public class SShopMallController extends BaseController{
         sOrder.setDdbs(bs);
         List<SOrder> sorderList=sOrderService.findList(sOrder);
         return sorderList;
+    }
+
+    @RequestMapping(value = "shoplist")
+    public String shoplist(SShop sShop, String id, HttpServletRequest request, HttpServletResponse response, Model model) {
+        id="c9b39e65d066410289672fbf3hd4cf04";
+        String name= UserUtils.getUser().getId();
+        SShop sShop1=new SShop();
+        sShop1=sOrderService.getlist(id,name);
+        if(StringUtils.isNotBlank(id) && sShop1==null) {
+            SGoods  sGoods=sGoodsService.get(id);
+            if(sGoods!=null&&sGoods.getGener()!=null)
+                sGoods.setGener(sGenreService.getAll(sGoods.getGener().getId()));
+            sGoods.getGener().setSpecClassList(sSpecClassService.findList(new SSpecClass()));
+            for(SSpecClass sc : sGoods.getGener().getSpecClassList()){
+                sc.setsSpecList(sSpecService.findList(new SSpec()));
+            }
+            sOrderService.savelist(sGoods);
+            model.addAttribute("sGoods",sGoods);
+        }
+        List<SShop>  sshoplist = sOrderService.findList(sShop);
+        model.addAttribute("generList", sSpecService.findList(new SSpec()));
+        model.addAttribute("sshoplist",sshoplist);
+        return "modules/shop/shoplist";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = {"delshopList"})
+    public String delshopList(String ids) {
+        sOrderService.deletes(new SShop(ids));
+        return "true";
     }
 
     @ResponseBody

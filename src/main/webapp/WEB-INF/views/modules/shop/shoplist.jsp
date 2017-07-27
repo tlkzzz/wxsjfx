@@ -190,7 +190,7 @@
 
         function deleted(id) {
             $.ajax({
-                url: "${ctx}/ps/sGoods/shopList",
+                url: "${ctx}/shop/delshopList",
                 type: "POST",
                 data:{
                     ids:id,
