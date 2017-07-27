@@ -10,6 +10,7 @@ import com.tlkzzz.jeesite.modules.ps.dao.SShopDao;
 import com.tlkzzz.jeesite.modules.ps.entity.SGoods;
 import com.tlkzzz.jeesite.modules.ps.entity.SReceipt;
 import com.tlkzzz.jeesite.modules.ps.entity.SShop;
+import com.tlkzzz.jeesite.modules.sys.utils.UserUtils;
 import org.h2.util.New;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,10 @@ public class SOrderService extends CrudService<SOrderDao, SOrder> {
 	public SOrder get(String id) {
 		return super.get(id);
 	}
-	
+
+	public SShop getlist(String id,String name) {
+		return shopDao.getlist(id,name);
+	}
 	public List<SOrder> findList(SOrder sOrder) {
 		return super.findList(sOrder);
 	}
@@ -51,6 +55,7 @@ public class SOrderService extends CrudService<SOrderDao, SOrder> {
 	}
 
 	public Page<SOrder> findPage(Page<SOrder> page, SOrder sOrder) {
+
 		return super.findPage(page, sOrder);
 	}
 
@@ -58,10 +63,16 @@ public class SOrderService extends CrudService<SOrderDao, SOrder> {
 	public void save(SOrder sOrder) {
 		super.save(sOrder);
 	}
-	
+
+
 	@Transactional(readOnly = false)
 	public void delete(SOrder sOrder) {
 		super.delete(sOrder);
+	}
+
+	@Transactional(readOnly = false)
+	public void deletes(SShop sShop) {
+		shopDao.delete(sShop);
 	}
 
 	public List<SShop> findList(SShop sShop) {
@@ -75,15 +86,11 @@ public class SOrderService extends CrudService<SOrderDao, SOrder> {
 	@Transactional(readOnly = false)
 	public void savelist(SGoods sGoods) {
         SShop sShop=new SShop();
+        sShop.preInsert();
         sShop.setGoods(sGoods);
         sShop.setOrderNo("M"+ new Date().getTime());
-        sShop.setSpecIds(sGoods.getSpecIds());
-        sShop.setCreateDate(sGoods.getCreateDate());
-        sShop.setCreateBy(sGoods.getCreateBy());
 		sShop.setNum("1");
 		sShop.setPrice(sGoods.getPrice());
-		sShop.setId("C"+new Date().getTime()+"1");
 		shopDao.insert(sShop);
 	}
-
 }
