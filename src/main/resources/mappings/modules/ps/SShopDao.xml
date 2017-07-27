@@ -6,9 +6,9 @@
 		a.id AS "id",
 		a.order_no AS "orderNo",
 		a.goods_id    AS "goods.id",
-		c.name     AS "goods.name",
-		c.image    AS "goods.image",
-		c.cost_price AS "goods.costPrice",
+		cc.name     AS "goods.name",
+		cc.image    AS "goods.image",
+		cc.cost_price AS "goods.costPrice",
 		a.spec_ids AS "specIds",
 		a.num AS "num",
 		a.price AS "price",
@@ -22,7 +22,9 @@
 	</sql>
 	
 	<sql id="sShopJoins">
-		LEFT JOIN s_goods c ON a.goods_id=c.id
+
+		LEFT JOIN s_goods cc ON a.goods_id=cc.id
+
 	</sql>
     
 	<select id="get" resultType="SShop">
@@ -32,8 +34,16 @@
 		<include refid="sShopJoins"/>
 		WHERE a.id = #{id}
 	</select>
-	
-	<select id="findList" resultType="SShop">
+
+
+    <select id="getlist" resultType="SShop" parameterType="java.lang.String">
+        SELECT
+        <include refid="sShopColumns"/>
+        FROM s_shop a
+        <include refid="sShopJoins"/>
+        WHERE a.goods_id = #{param1} AND  a.create_by = #{param2}
+    </select>
+    <select id="findList" resultType="SShop">
 		SELECT 
 			<include refid="sShopColumns"/>
 		FROM s_shop a

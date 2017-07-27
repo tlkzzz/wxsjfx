@@ -10,6 +10,7 @@ import com.tlkzzz.jeesite.common.utils.Encodes;
 import com.tlkzzz.jeesite.modules.ps.dao.SShopDao;
 import com.tlkzzz.jeesite.modules.ps.entity.*;
 import com.tlkzzz.jeesite.modules.ps.service.*;
+import com.tlkzzz.jeesite.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tlkzzz.jeesite.common.config.Global;
@@ -45,7 +47,8 @@ public class SGoodsController extends BaseController {
 	private SOrderService sOrderService;
 	@Autowired
 	private SSpecService sSpecService;
-
+	@Autowired
+	private SSpecClassService sSpecClassService;
 	@Autowired
 	private SShopDao shopDao;
 
@@ -76,17 +79,19 @@ public class SGoodsController extends BaseController {
 	@RequiresPermissions("ps:sGoods:view")
 	@RequestMapping(value = {"shoplist", ""})
 	public String shoplist(SShop sShop, String id, HttpServletRequest request, HttpServletResponse response, Model model) {
-
-		//		if(id.isEmpty()){
-//			return "";
-//		}
-
 		id="c9b39e65d066410289672fbf3hd4cf04";
-        if(StringUtils.isNotBlank(id)) {
+		String name= UserUtils.getUser().getId();
+		SShop sShop1=new SShop();
+		sShop1=sOrderService.getlist(id,name);
+        if(StringUtils.isNotBlank(id) && sShop1==null) {
 			SGoods sGoods=new SGoods();
 			sGoods=sGoodsService.get(id);
 			if(sGoods!=null&&sGoods.getGener()!=null)
 			sGoods.setGener(sGenreService.getAll(sGoods.getGener().getId()));
+			sGoods.getGener().setSpecClassList(sSpecClassService.findList(new SSpecClass()));
+			for(SSpecClass sc : sGoods.getGener().getSpecClassList()){
+				sc.setsSpecList(sSpecService.findList(new SSpec()));
+			}
 			sOrderService.savelist(sGoods);
 			model.addAttribute("sGoods",sGoods);
 		}
@@ -96,6 +101,12 @@ public class SGoodsController extends BaseController {
 		return "modules/shop/shoplist";
 	}
 
+	@ResponseBody
+	@RequestMapping(value = {"shopList"})
+	public String shopList(String ids) {
+		sOrderService.deletes(new SShop(ids));
+		return "true";
+	}
 	@RequiresPermissions("ps:sGoods:view")
 	@RequestMapping(value = "form")
 	public String form(SGoods sGoods, Model model) {
