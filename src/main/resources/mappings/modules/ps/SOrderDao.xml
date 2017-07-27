@@ -6,6 +6,9 @@
 		a.id AS "id",
 		a.order_no AS "orderNo",
 		a.receipt_id AS "receipt.id",
+		a.address_id AS "address.id",
+		sa.address AS "address.address",
+		sa.tel AS "address.tel",
 		a.goods_id AS "goods.id",
 		sg.name AS "goods.name",
 		sg.image AS "goods.image",
@@ -27,6 +30,7 @@
 	
 	<sql id="sOrderJoins">
 		LEFT JOIN s_goods sg ON sg.id=a.goods_id
+		LEFT JOIN s_address sa ON sa.id=a.address_id
 	</sql>
     
 	<select id="get" resultType="SOrder">
@@ -87,6 +91,7 @@
 			id,
 			order_no,
 			receipt_id,
+			address_id,
 			goods_id,
 			spec_ids,
 			num,
@@ -104,6 +109,7 @@
 			#{id},
 			#{orderNo},
 			#{receipt.id},
+			#{address.id},
 			#{goods.id},
 			#{specIds},
 			#{num},
@@ -124,6 +130,7 @@
 		UPDATE s_order SET 	
 			order_no = #{orderNo},
 			receipt_id = #{receipt.id},
+			address_id = #{address.id},
 			goods_id = #{goods.id},
 			spec_ids = #{specIds},
 			num = #{num},
