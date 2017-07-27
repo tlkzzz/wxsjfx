@@ -57,14 +57,14 @@
 				</div>
 				<div class="clearfix"></div>
 			</a>
-			<a href="gouwuche.html" target="jj">
+			<a href="shoplist" target="jj">
 				<div class="shopping color">
 					<p><img src="../static/images/btn-dibugouwuche-h.png"></p>
 					<p>购物车</p>
 				</div>
 				<div class="clearfix"></div>
 			</a>
-			<a href="gerenzhongxin.html" target="jj">
+			<a href="PersonalCenter" target="jj">
 				<div class="personal_center color">
 					<p><img src="../static/images/btn-dibugerenzhongxin-h.png"></p>
 					<p>个人中心</p>

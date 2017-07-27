@@ -38,17 +38,18 @@
             margin-bottom: 4%;
         }
         .head_touxiang{
-            width: 100px;
-            height: 100px;
+            width: 300px;
+            height: 300px;
             border-radius: 100%;
             background-color: #fff;
             text-align: center;
             line-height: 100px;
             margin: 0 auto;
+            overflow: hidden;
         }
         .member{
             width: 100%;
-            font-size: 0.8em;
+            font-size: 2em;
             font-family: "微软雅黑";
             text-align: center;
             color: #fff;
@@ -74,7 +75,7 @@
             width: 33.3333%;
             text-align: center;
             box-sizing: border-box;
-            font-size: 1em;
+            font-size: 2em;
             font-family: "微软雅黑";
             color: #8E8E8E;
             border-top: 1px solid #ccc;
@@ -104,7 +105,7 @@
             float: left;
             width: 25%;
             box-sizing: border-box;
-            font-size: .8em;
+            font-size: 2em;
             font-family: "微软雅黑";
             color: #8E8E8E;
             padding: 3% 0;
@@ -114,14 +115,14 @@
             margin-bottom: 2%;
         }
         .menu_img img{
-            width: 13%;
+            width: 20%;
             vertical-align: middle;
             margin-left: 1%;
         }
         /* 我的会员 */
         .my_member{
             padding: 4% 2%;
-            font-size: 1em;
+            font-size: 2em;
             font-family: "微软雅黑";
             color: #666;
             border-bottom: 1px solid #ddd;
@@ -140,7 +141,7 @@
         .member_shuzi{
             text-align: center;
             color: #f79353;
-            margin-bottom: .4rem;
+            margin-bottom:1rem;
         }
         /* 底部操作栏 */
         /*	.bottom{
@@ -183,10 +184,10 @@
     <a href="touxiang.html" style="text-decoration: none;color: #000;">
         <div class="personal">
             <div class="head">
-                <div class="head_touxiang"><img height="100" width="100"src="${photo}" /> </div>
+                <div class="head_touxiang"><img height="100%" width="100%"src="${photo}"/> </div>
                 <div class="member">
                     <p>会员号 : <span>${name}</span></p>
-                    <p><span>会员昵称 : <span>${name}</span></span><img src="images/btn-fanhui.png"></p>
+                    <p><span>会员昵称 : <span>${name}</span></span></p>
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -195,7 +196,7 @@
     <div class="clearfix"></div>
     <a href="wodedingdan.html">
         <div class="my_member" style="margin: 0;">
-            <span class="member_left"><img src="${ctxStatic}/images/wodedingdan.png" style="width: 8%;vertical-align: middle; margin-right: 4%;">我的订单</span>
+            <span class="member_left"><img src="${ctxStatic}/images/wodedingdan.png" style="width: 15%;vertical-align: middle; margin-right: 4%;">我的订单</span>
             <p class="member_right"><img src="${ctxStatic}/images/btn-fanhui-hui.png"></p>
         </div>
     </a>
@@ -223,7 +224,7 @@
 
     <!-- 菜单分栏 -->
     <div class="my_member" style="margin: 0;">
-        <span class="member_left"><img src="${ctxStatic}/images/wodezhanghu.png" style="width: 8%;vertical-align: middle;margin-right: 4%;">我的账户</span>
+        <span class="member_left"><img src="${ctxStatic}/images/wodezhanghu.png" style="width: 15%;vertical-align: middle;margin-right: 4%;">我的账户</span>
         <p class="member_right"><img src="${ctxStatic}/images/btn-fanhui-hui.png"></p>
     </div>
     <%--<div class="menu_box">--%>
@@ -249,19 +250,19 @@
     <%--</div>--%>
     <!-- 我的会员 -->
     <div class="my_member">
-        <span class="member_left"><img src="${ctxStatic}/images/wodehuiyuan.png" style="width: 8%;vertical-align: middle;margin-right: 4%;">我的会员</span>
+        <span class="member_left"><img src="${ctxStatic}/images/wodehuiyuan.png" style="width: 15%;vertical-align: middle;margin-right: 4%;">我的会员</span>
         <p class="member_right"><img src="${ctxStatic}/images/btn-fanhui-hui.png"></p>
     </div>
     <!-- 收货地址 -->
     <a href="${shop}/shdzList">
         <div class="my_member">
-            <span class="member_left"><img src="${ctxStatic}/images/shouhuodizhi.png" style="width: 8%;vertical-align: middle;margin-right: 4%;" >收货地址</span>
+            <span class="member_left"><img src="${ctxStatic}/images/shouhuodizhi.png" style="width: 15%;vertical-align: middle;margin-right: 4%;" >收货地址</span>
             <p class="member_right" ><img  src="${ctxStatic}/images/btn-fanhui-hui.png" ></p>
         </div>
     </a>
     <!-- 我的消费额 -->
     <div class="my_member">
-        <span class="member_left"><img src="${ctxStatic}/images/xiaofeie.png" style="width: 8%;vertical-align: middle;margin-right: 4%;">我的消费额:</span>
+        <span class="member_left"><img src="${ctxStatic}/images/xiaofeie.png" style="width: 15%;vertical-align: middle;margin-right: 4%;">我的消费额:</span>
         <p class="member_shuzi">0</p>
     </div>
 </div>

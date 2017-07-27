@@ -71,9 +71,6 @@
 			<a href="${shop}/goodsInfo?id=${goods.id}"><img src="${goods.image}"></a>
 			</c:if>
 		</c:forEach>
-		<%--<a href="xiangqing.html"><img src="${ctxStatic}/images/产品图/lunbo1.png"></a>
-		<a href="xiangqing.html"><img src="${ctxStatic}/images/产品图/lunbo2.png"></a>
-		<a href="xiangqing.html"><img src="${ctxStatic}/images/产品图/lunbo3.png"></a>--%>
 		<ul>
 			<li></li>
 			<li></li>
@@ -84,7 +81,7 @@
 	<script>
         $(document).ready(function () {
             $("#iframeTwo",window.parent.document)[0].contentWindow.home();
-//            window.parent.showSms();
+            //window.parent.showSms();
         });
         window.onload = function (){
             var oLazy = document.getElementById("container");

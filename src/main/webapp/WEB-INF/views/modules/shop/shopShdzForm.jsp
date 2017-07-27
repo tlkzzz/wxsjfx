@@ -14,45 +14,45 @@
     <div class="AUInfo-main">
         <ul>
             <li>
-                <p style="font-size: 0.9em;">收货人</p>
+                <p style="font-size: 2em;">收货人</p>
                 <input type="text" id="shr" placeholder="请输入真实姓名"   style="height: 45px;color: #ada2a2;border-bottom: 0px;text-align: left;padding: 0;margin: 0;background-color: transparent;">
             </li>
             <li>
-                <p style="font-size: 0.9em;">手机号码</p>
+                <p style="font-size: 2em;">手机号码</p>
                 <input type="text" id="sjhm" placeholder="请填写手机号码" style="height: 45px;color: #ada2a2;border-bottom: 0px;text-align: left;padding: 0;margin: 0;background-color: transparent;">
             </li>
             <li>
-                <p style="font-size: 0.9em;">确认手机号码</p>
+                <p style="font-size: 2em;">确认手机号码</p>
                 <input type="text" id="qrsjhm"  placeholder="请再次输入手机号码" style="height: 45px;color: #ada2a2;border-bottom: 0px;text-align: left;padding: 0;margin: 0;background-color: transparent;">
             </li>
             <li>
-                <p style="font-size: 0.9em;">省市区</p>
+                <p style="font-size: 2em;">省市区</p>
                 <input type="text" id="ssq" placeholder="请选择城市地址" style="height: 45px;color: #ada2a2;border-bottom: 0px;text-align: left;padding: 0;margin: 0;background-color: transparent;">
             </li>
             <li>
-                <p style="width: 100%;font-size: 0.9em;"><input type="text" id="xqdz" placeholder="请输入收货人的详情地址" style="height: 45px;color: #ada2a2;border: 0px;text-align: left;padding: 0;margin: 0;background-color: transparent;font-size: 0.9em;"></p>
+                <p style="width: 100%;font-size: 2em;"><input type="text" id="xqdz" placeholder="请输入收货人的详情地址" style="height: 45px;color: #ada2a2;border: 0px;text-align: left;padding: 0;margin: 0;background-color: transparent;font-size: 0.9em;"></p>
             </li>
             <li style="margin-top: 10px !important;border-bottom: none;background-color: transparent;">
-                <input type="checkbox" style="margin-left: 1rem;background-color: #fff;vertical-align: middle;"><span style="font-size: 0.6em;"> 是否默认为收货地址</span>
+                <input type="checkbox" style="margin-left: 1rem;background-color: #fff;vertical-align: middle;"><span style="font-size: 2em;"> 是否默认为收货地址</span>
             </li>
             <li id="dian" style="margin-top: 50px !important;border-bottom: none;background-color: transparent;">
-                <button class="save_ bt-border-r" id="save" onclick="savege();" style="font-size: 1.2em;">保 存 地 址</button>
+                <button class="save_ bt-border-r" id="save" onclick="savege();" style="font-size: 3em;">保 存 地 址</button>
             </li>
         </ul>
     </div>
     <div id="tan" style="position: absolute;top: 0; width: 100%;height: 100%;background-color: rgba(0,0,0,0.3);display: none;">
-        <div style="width: 70%;margin: 0 auto;background-color: #fff;margin-top: 50%;border-radius: 8px;padding: 1rem;font-size: .8em;">
-            <p style="text-align: center;margin-bottom: .8rem;">请确认收货信息</p>
+        <div style="width: 70%;margin: 0 auto;background-color: #fff;margin-top: 50%;border-radius: 8px;padding: 1rem;font-size: 2em;">
+            <p style="text-align: center;margin-bottom: .6rem;">请确认收货信息</p>
             <p style="float: left;width: 35%;margin-bottom: .4rem;">收货人：</p>
             <p style="margin-bottom: .4rem;"><input type="text" disabled="disabled" id="shouh"/></p>
-            <p style="float: left;width: 35%;margin-bottom: .4rem;">手机号码：</p>
+            <p style="float: left;width: 35%;margin-bottom: 1.6rem;">手机号码：</p>
             <p style="margin-bottom: .4rem;"><input type="text" disabled="disabled" id="shouj"/></p>
             <p style="float: left;width: 35%;margin-bottom: .4rem;">收货地址：</p>
             <p style="float: left;width: 65%; margin-bottom: .4rem;"><input type="text" disabled="disabled" id="shoudz"/></p>
             <p style="clear: both;"></p>
             <div style="width: 100%;margin-top: 3rem;">
                 <p id="qu" style="width: 50%;float: left;"><input type="button" value="取消" style="width: 100%;border: 0;margin: 0;background-color: transparent;color: #999;"></p>
-                <p style="width: 50%;float: right;"><a href="xinzengyige.html"><input type="button" onclick="tjSave();" value="确定" style="width: 100%;border: 0;margin: 0;background-color: transparent;color: #999;"></a></p>
+                <p style="width: 50%;float: right;"><a href="xinzengyige.html"><input type="button" onclick="tjSave();" value="确定" style="width: 100%;border: 0;font-size3em;margin: 0;background-color: transparent;color: #999;"></a></p>
                 <p style="clear: both;"></p>
             </div>
         </div>

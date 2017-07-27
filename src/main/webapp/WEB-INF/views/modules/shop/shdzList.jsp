@@ -17,7 +17,7 @@
 <div style="width: 100%;">
     <a href="bianjidizhi.html">
         <div style="width: 100%;">
-            <a href="${shopPath}/s/listss"><input type="button" value="新增一个收货地址" style="width: 100%;background-color:#84bd00;border: 0px solid;padding: 1rem 1rem;color: #fff;font-size: 1em;">
+            <a href="${shopPath}/s/listss"><input type="button" value="新增一个收货地址" style="width: 100%;background-color:#84bd00;border: 0px solid;padding: 3rem 3rem;color: #fff;font-size: 3em;">
             </a></div>
     </a>
 
