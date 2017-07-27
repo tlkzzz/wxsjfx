@@ -55,7 +55,6 @@ public class SGoods extends DataEntity<SGoods> {
 		this.gClass = gClass;
 	}
 
-	@NotNull(message = "类型不能为空")
 	public SGenre getGener() {
 		return gener;
 	}
