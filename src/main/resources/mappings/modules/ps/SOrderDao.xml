@@ -54,6 +54,9 @@
 			<if test="ddbs != null  and ddbs != ''">
 				AND a.ddbs = #{ddbs}
 			</if>
+			<if test="receipt != null and receipt.id != null and receipt.id != ''">
+				AND a.receipt_id = #{receipt.id}
+			</if>
 			<if test="createBy != null and createBy.id != null  and createBy.id != ''">
 				AND a.create_by = #{createBy.id}
 			</if>

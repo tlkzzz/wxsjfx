@@ -2,6 +2,7 @@ package com.tlkzzz.jeesite.modules.ps.service;
 
 import com.tlkzzz.jeesite.common.service.BaseService;
 import com.tlkzzz.jeesite.common.utils.StringUtils;
+import com.tlkzzz.jeesite.modules.ps.dao.SOrderDao;
 import com.tlkzzz.jeesite.modules.ps.dao.SShopDao;
 import com.tlkzzz.jeesite.modules.ps.dao.SSpecClassDao;
 import com.tlkzzz.jeesite.modules.ps.dao.SSpecDao;
@@ -23,6 +24,8 @@ import java.util.Random;
 public class SShopMallService  extends BaseService {
     @Autowired
     private SShopDao sShopDao;
+    @Autowired
+    private SOrderDao sOrderDao;
     @Autowired
     private SSpecDao sSpecDao;
     @Autowired
@@ -51,6 +54,7 @@ public class SShopMallService  extends BaseService {
      * @param nums
      * @return
      */
+    @Transactional(readOnly = false)
     public List<SShop> confirmOrder(String ids, String specIds, String nums){
         if(StringUtils.isBlank(ids)||StringUtils.isBlank(specIds)||StringUtils.isBlank(nums))return null;
         String[] idList = ids.split(",");
@@ -123,6 +127,24 @@ public class SShopMallService  extends BaseService {
             goods.getGener().setSpecClassList(specClassList);
         }
         return goods;
+    }
+
+    @Transactional(readOnly = false)
+    public SOrder savaOrderByShop(SShop sShop,SReceipt receipt,String addressId){
+        if(sShop==null||receipt==null||StringUtils.isBlank(addressId))return null;
+        SOrder order = new SOrder();
+        order.preInsert();
+        order.setDdbs("1");
+        order.setReceipt(receipt);
+        order.setAddress(new SAddress(addressId));
+        order.setOrderNo(sShop.getOrderNo());
+        order.setGoods(sShop.getGoods());
+        order.setNum(sShop.getNum());
+        order.setCostPrice(sShop.getGoods().getCostPrice());
+        order.setPrice(sShop.getPrice());
+        order.setSpecIds(sShop.getSpecIds());
+        sOrderDao.insert(order);
+        return order;
     }
 
 }

@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.tlkzzz.jeesite.modules.ps.dao.SShopDao;
 import com.tlkzzz.jeesite.modules.ps.entity.SGoods;
+import com.tlkzzz.jeesite.modules.ps.entity.SReceipt;
 import com.tlkzzz.jeesite.modules.ps.entity.SShop;
 import org.h2.util.New;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,18 @@ public class SOrderService extends CrudService<SOrderDao, SOrder> {
 	public List<SOrder> findList(SOrder sOrder) {
 		return super.findList(sOrder);
 	}
-	
+
+	/**
+	 * 通过收款对象ID查询该次收款的所有订单
+	 * @param receiptId
+	 * @return
+	 */
+	public List<SOrder> findListByReceiptId(String receiptId){
+		SOrder order = new SOrder();
+		order.setReceipt(new SReceipt(receiptId));
+		return super.findList(order);
+	}
+
 	public Page<SOrder> findPage(Page<SOrder> page, SOrder sOrder) {
 		return super.findPage(page, sOrder);
 	}
