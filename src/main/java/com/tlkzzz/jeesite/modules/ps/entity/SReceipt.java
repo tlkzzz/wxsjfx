@@ -18,7 +18,7 @@ import com.tlkzzz.jeesite.common.persistence.DataEntity;
 public class SReceipt extends DataEntity<SReceipt> {
 	
 	private static final long serialVersionUID = 1L;
-	private SOrder order;		// 订单
+	private String snKey;		// 微信支付回单号
 	private String receivableMoney;		// 应收金额
 	private String revenueMoney;		// 实收金额
 	private Date receiptDate;		// 收款时间
@@ -31,12 +31,12 @@ public class SReceipt extends DataEntity<SReceipt> {
 		super(id);
 	}
 
-	public SOrder getOrder() {
-		return order;
+	public String getOrder() {
+		return snKey;
 	}
 
-	public void setOrder(SOrder order) {
-		this.order = order;
+	public void setOrder(String snKey) {
+		this.snKey = snKey;
 	}
 	
 	public String getReceivableMoney() {
