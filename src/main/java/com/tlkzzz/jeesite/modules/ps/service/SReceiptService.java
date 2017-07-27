@@ -38,6 +38,17 @@ public class SReceiptService extends CrudService<SReceiptDao, SReceipt> {
 	public void save(SReceipt sReceipt) {
 		super.save(sReceipt);
 	}
+
+	@Transactional(readOnly = false)
+	public SReceipt insertByTotal(String total){
+		SReceipt receipt = new SReceipt();
+		receipt.preInsert();
+		receipt.setReceivableMoney(total);
+		receipt.setZfState("0");
+		receipt.setTcState("0");
+		dao.insert(receipt);
+		return receipt;
+	}
 	
 	@Transactional(readOnly = false)
 	public void delete(SReceipt sReceipt) {
