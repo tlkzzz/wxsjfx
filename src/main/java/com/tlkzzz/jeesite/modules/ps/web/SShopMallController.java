@@ -18,10 +18,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -51,7 +50,11 @@ public class SShopMallController extends BaseController{
     @Autowired
     private SShopMallService sShopMallService;
     @Autowired
+    private SSpecClassService sSpecClassService;
+    @Autowired
     private SOrderService sOrderService;
+    @Autowired
+    private SReceiptService sReceiptService;
 
     public String check(ModelAndView modelAndView) {
         if (StringUtils.isBlank(UserUtils.getUser().getId())){
@@ -102,11 +105,67 @@ public class SShopMallController extends BaseController{
         return "modules/shop/xiangqing";
     }
 
+    /**
+     * 订单确认方法
+     * @param ids 购物车id 列:id1,id2,
+     * @param specIds 规格ids 列:id1,id2,|id3,id4,
+     * @param nums 数量列表 列:num1,num2,
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "confirmOrder")
+    public String confirmOrder(String ids,String specIds,String nums,Model model){
+        List<SShop> shopList = new ArrayList<SShop>();
+        if(StringUtils.isBlank(ids)||StringUtils.isBlank(specIds)||StringUtils.isBlank(nums)){
+            SShop sShop = new SShop();
+            sShop.setCreateBy(UserUtils.getUser());
+            shopList = sOrderService.findConfirmOrderList(sShop);
+        }else {
+            shopList = sShopMallService.confirmOrder(ids, specIds, nums);
+        }
+        if(shopList.size()==0)return "redirect:"+Global.getShopPath()+"";//重定向到购物车
+        for(SShop s:shopList)
+            s.setGoods(sShopMallService.findSpecInfo(s.getGoods(),s.getSpecIds()));
+        model.addAttribute("orderTotal", sShopMallService.countOrderTotal(shopList));
+        model.addAttribute("addressList", sShopMallService.findAddressListByM());
+        model.addAttribute("orderList", shopList);
+        return "modules/shop/confirmOrder";
+    }
 
+    /**
+     * 支付订单方法
+     * @param addressId 收货地址ID
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "paymentOrder")
+    public String paymentOrder(String addressId,Model model){
+        if(StringUtils.isBlank(addressId)){
+            return "redirect:"+Global.getShopPath()+"/confirmOrder";//重定向到订单确认;
+        }
+        SShop sShop = new SShop();
+        sShop.setCreateBy(UserUtils.getUser());
+        List<SShop> shopList = sOrderService.findConfirmOrderList(sShop);
+        double total = sShopMallService.countOrderTotal(shopList);
+        if(shopList.size()<=0||total<=0)return "redirect:"+Global.getShopPath()+"";//重定向到购物车
+        SReceipt receipt = sReceiptService.insertByTotal(String.valueOf(total));
+        if(receipt==null)return "redirect:"+Global.getShopPath()+"/confirmOrder";//重定向到订单确认;
+        for(SShop ss: shopList){
+            sShopMallService.savaOrderByShop(ss,receipt,addressId);
+        }
+        return "modules/shop/paymentOver";
+    }
 
-    @RequestMapping(value = "smsVCode")
-    public String smsVCode(SGoods goods,Model model){
-        return "modules/shop/denglu";
+    @RequestMapping(value = "paymentOver")
+    public String paymentOver(String id, Model model){
+        if(StringUtils.isNotBlank(id)){
+            model.addAttribute("receipt", sReceiptService.get(id));
+            model.addAttribute("orderList", sOrderService.findListByReceiptId(id));
+            model.addAttribute("flag",true);
+        }else {
+            model.addAttribute("flag",false);
+        }
+        return "";
     }
 
     @ResponseBody
@@ -114,7 +173,6 @@ public class SShopMallController extends BaseController{
     public String sendSmsVCode(String mobile){
         User user = UserUtils.getUser();
         if(StringUtils.isNotBlank(mobile)&&user!=null&&StringUtils.isNotBlank(user.getId())){
-        //if(StringUtils.isNotBlank(mobile)){
             Date oldDate = (Date)UserUtils.getCache("SmsDate");
             Date date = new Date();
             if(oldDate!=null&&((date.getTime()-oldDate.getTime())/(1000*60))<1){
@@ -144,6 +202,7 @@ public class SShopMallController extends BaseController{
         if(StringUtils.isBlank(cacheMobile)||StringUtils.isBlank(cacheVcode))return "false";
         if(!mobile.equals(cacheMobile)||!vCode.equals(cacheVcode))return "false";
         sMemberService.updateMobile(UserUtils.getUser().getId(),cacheMobile);
+        UserUtils.clearCache(UserUtils.getUser().getMember());//清除当前会员缓存
         return "true";
     }
     /**
