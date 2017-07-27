@@ -5,6 +5,7 @@
 	<sql id="sOrderColumns">
 		a.id AS "id",
 		a.order_no AS "orderNo",
+		a.receipt_id AS "receipt.id",
 		a.goods_id AS "goods.id",
 		sg.name AS "goods.name",
 		sg.image AS "goods.image",
@@ -85,6 +86,7 @@
 		INSERT INTO s_order(
 			id,
 			order_no,
+			receipt_id,
 			goods_id,
 			spec_ids,
 			num,
@@ -101,6 +103,7 @@
 		) VALUES (
 			#{id},
 			#{orderNo},
+			#{receipt.id},
 			#{goods.id},
 			#{specIds},
 			#{num},
@@ -120,6 +123,7 @@
 	<update id="update">
 		UPDATE s_order SET 	
 			order_no = #{orderNo},
+			receipt_id = #{receipt.id},
 			goods_id = #{goods.id},
 			spec_ids = #{specIds},
 			num = #{num},
