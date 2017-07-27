@@ -148,7 +148,6 @@
     <script>
         $(document).ready(function() {
 //            var help = $('.je').text();
-
             var sum=0;
             var priceList = $('.htje');
             $.each($('.jjsl'),function (index,ele) {
@@ -157,9 +156,7 @@
                 sum += parseInt(a)*parseFloat(b);
 
             });
-           $('.je').text(sum);
-//        var b=    $('#jjsl').attr('class');
-            var arrPrePrice = [];//定义数组
+           $('#je').text(sum);
             //htje的值，为数组赋值
            /* .each(function () {
 //                index,ele
@@ -179,22 +176,52 @@
                 num = 1;
             }
             num = parseInt(num);
-          var a=   $("#sl_"+no).val(num);
-            var jjsl = $('.jjsl').val(num);
-         setje();
+               $("#sl_"+no).val(num);
+            var sl=$("#sl_"+no).val();
+            var htje= $("#htje").text();
+            var je=$("#je").text();
+            alert(je);
+            if(isNaN(sl)||sl<0){
+                sl=1;
+            }
+            var sum=(parseInt(htje)*parseInt(sl));
+            $("#je").text(sum);
         }
-         function setje() {
-             var htje = $('.htje').text();
-             var jjsl = $('.jjsl').val();
-//             var je =   $('.je').text();
-                var sum = parseInt(htje) * parseInt(jjsl)
-             $('.je').text(sum);
-//                alert( $('.je').text(sum));
 
-         }
-         function deleted(){
-             $('.shopping_cart').remove();
-             $('.je').text(0);
+        function deleted(id) {
+            $.ajax({
+                url: "${ctx}/ps/sGoods/shopList",
+                type: "POST",
+                data:{
+                    ids:id,
+                },
+                success: function(data){
+                    alert("删除成功");
+                    location.reload()
+                }
+            });
+        }
+
+
+         function submitForm() {
+             var ids = "";
+             var specIds = "";
+             var nums = "";
+             $("input[name='a']:checked").each(function () {
+                var id = $(this).val();
+                if(id!=""){
+                    var num = $("#sl_"+id).val();
+                    var specId = "";
+                    $("input[name='spec_"+id+"']:checked").each(function(){
+                        if($(this).val()!="")
+                            specId += $(this).val()+",";
+                    });
+                    ids += (id+",");
+                    specIds += (specId+"|");
+                    nums += (num+",");
+                }
+             });
+             alert(ids+"*-*"+specIds+"*-*"+nums);
          }
     </script>
 </head>
@@ -205,13 +232,13 @@
     <!-- 购物车商品 -->
     <div class="shopping_cart">
   <%--<input hidden="hidden" id="ddinfo" value="${shop.orderNo}" ></input>--%>
-        <div class="delete" onclick="deleted()">删除</div>
+        <div class="delete" onclick="deleted('${shop.id}')">删除</div>
 
         <div class="clearfix"></div>
 
         <div class="commodity">
             <div class="choose">
-                <input type="checkbox" value="0" name="a" onclick="this.value=(this.value==0)?1:0">
+                <input class="xuanzhe" type="checkbox" value="${shop.id}" name="a">
                 <%--<input type="radio" value="0" name="a" onclick="this.value=(this.value==0)?1:0">--%>
             </div>
 
@@ -222,21 +249,16 @@
             <div class="name_box">
                 <p class="name">商品名称<span>:${shop.goods.name}</span></p>
                 <p class="spec">
-                    <%--<c:forEach items="${sGoods.gener.specClassList}" var="specClass">--%>
-                    <span>规格 :${specClass.name} </span>
-                            <input type="checkbox" name="mm"  value="11111" onclick="chose(this)" />
+                    <c:forEach items="${sGoods.gener.specClassList}" var="specClass">
+                    <span>${specClass.name}:</span>
+                        <c:forEach items="${specClass.sSpecList}" var="spec">
+                            <input type="checkbox" name="spec_${shop.id}"  value="${spec.id}" onclick="chose($(this))" />
+                            <span>${spec.name}</span>
+                    </c:forEach></br>
+                    </c:forEach>
                 </p>
-                <%--</c:forEach>--%>
-            <%--<c:forEach items="${sGoods.gener.specClassList}" var="specClass">--%>
-                    <%--<span style="color: #666;font-size: 2.2em;">${specClass.name}:</span>--%>
-                    <%--<c:forEach items="${specClass.sSpecList}" var="spec">--%>
-                        <%--<span style="font-size: 2.2rem;">${spec.name}</span>--%>
-                    <%--</c:forEach>--%>
 
-                <%--</p>--%>
-                <%--</c:forEach>--%>
-
-                <p class="price">￥<span  class="htje">${shop.price}</span><s>￥339</s></p>
+                <p class="price">￥<span id="htje" class="htje">${shop.price}</span><s>￥339</s></p>
                 <p class="amount" >*<span id="aa"></span></p>
             </div>
 
@@ -245,9 +267,10 @@
                 <div class="quantity">购买数量</div>
                 <div class="button">
                     <div style="width: 100%;border: 1px solid #ccc;border-radius: 4px;">
-                        <input  onclick="jian(parseInt($('#sl_${shop.orderNo}').val())-1,'${shop.orderNo}')"   value="-" style="font-size: 1.2em;text-align: center;padding: 0;color: #999;width: 24%;border-right: 1px solid #ccc;">
-                        <input id="sl_${shop.orderNo}" class="jjsl"  type="text"  onchange="jian($(this).val())"  value="1" style="font-size: 1.01em;width: 40%; text-align: right;margin: 0;padding-right: 1%;">
-                        <input  onclick="jian(parseInt($('#sl_${shop.orderNo}').val())+1,'${shop.orderNo}')" value="+" style="font-size: 1.2em;text-align: center;padding: 0;margin: 0; color: #999;width: 24%;border-left: 1px solid #ccc;">
+                        <input  onclick="jian(parseInt($('#sl_${shop.id}').val())-1,'${shop.id}')"   value="-" style="font-size: 1.2em;text-align: center;padding: 0;color: #999;width: 24%;border-right: 1px solid #ccc;">
+                        <input id="sl_${shop.id}" class="jjsl"  type="text"  onchange="jian($(this).val())"  value="1" style="font-size: 1.01em;width: 40%; text-align: right;margin: 0;padding-right: 1%;">
+                        <input  onclick="jian(parseInt($('#sl_${shop.id}').val())+1,'${shop.id}')" value="+" style="font-size: 1.2em;text-align: center;padding: 0;margin: 0; color: #999;width: 24%;border-left: 1px solid #ccc;">
+
                     </div>
                 </div>
 
@@ -260,11 +283,16 @@
     <!-- 按钮 -->
     <div class="anniu">
         <div class="anniu_box">
-            <p style="margin-bottom: 2%;">商品总额：<span style="color: #f79353"  class="je" ></span></p>
+            <p style="margin-bottom: 2%;">商品总额：<span style="color: #f79353"  id="je"  ></span></p>
             <p>成为会员后，重复消费 <span style="color: #f79353">减20%</span>，相当于 <span style="color: #f79353">8</span> 折优惠</p>
         </div>
         <div class="anniu_jj">
-            <a href="dingdanqueren.html"><p><input type="button" value="立刻结算" class="jiesuan"></p></a>
+            <form id="saveForm" action="../rkOrderSave" method="post" >
+                <input type="hidden" id="ids" name="ids">
+                <input type="hidden" id="specIds" name="specIds">
+                <input type="hidden" id="nums" name="nums">
+                <input type="button" onclick="submitForm()" class="jiesuan" value="立刻结算" >
+            </form>
             <a href="chanpin.html" onClick="changeImage()"><p><input type="button" value="继续逛逛" class="guang"></p></a>
         </div>
     </div>
