@@ -18,6 +18,7 @@ public class SOrder extends DataEntity<SOrder> {
 	
 	private static final long serialVersionUID = 1L;
 	private String orderNo;		// 订单编号
+	private SReceipt receipt;		// 收款信息
 	private SGoods goods;		// 商品
 	private String specIds;		// 规格ids
 	private String num;		// 数量
@@ -42,7 +43,15 @@ public class SOrder extends DataEntity<SOrder> {
 	public void setOrderNo(String orderNo) {
 		this.orderNo = orderNo;
 	}
-	
+
+	public SReceipt getReceipt() {
+		return receipt;
+	}
+
+	public void setReceipt(SReceipt receipt) {
+		this.receipt = receipt;
+	}
+
 	@NotNull
 	public SGoods getGoods() {
 		return goods;
