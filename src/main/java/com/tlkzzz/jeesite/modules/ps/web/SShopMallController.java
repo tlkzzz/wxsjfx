@@ -269,7 +269,7 @@ public class SShopMallController extends BaseController{
         sGoodsComment.setComment(hf);
         sGoodsComment.setOrder(new SOrder(ids));
         List<SOrder> sorderList=sOrderService.findList(new SOrder(ids));
-        sGoodsComment.setGoods(new SGoods(sorderList.get(0).getsGoods().getId()));
+        sGoodsComment.setGoods(new SGoods(sorderList.get(0).getGoods().getId()));
         sGoodsCommentService.save(sGoodsComment);
         return "true";
     }

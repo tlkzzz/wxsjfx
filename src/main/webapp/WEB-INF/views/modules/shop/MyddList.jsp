@@ -232,9 +232,9 @@ function ss(data) {
             '<p style="width: 100%;"><p class="text_left">订单编号：'+data.orderNo+'</p><p class="text_right">'+dfk+dfh+dsh+dpj+'</p></p>'+
             '<p class="time">下单时间：'+data.createDate+'</p>'+
             '<div class="products">'+
-            '<div class="images"><img src="'+data.sGoods.image+'"></div>'+
+            '<div class="images"><img src="'+data.goods.image+'"></div>'+
             '<div class="name">'+
-            '<p class="products_name">'+data.sGoods.name+'</p>'+
+            '<p class="products_name">'+data.goods.name+'</p>'+
             '<p class="time">规格:'+data.specIds+'包</p>'+
             '<p class="price">￥'+data.price+'</p>'+
             '</div>'+
