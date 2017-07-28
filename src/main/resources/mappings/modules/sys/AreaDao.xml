@@ -30,6 +30,32 @@
 		<include refid="areaJoins"/>
 		WHERE a.id = #{id}
 	</select>
+
+	<select id="shengFindList" resultType="Area">
+		SELECT
+		<include refid="areaColumns"/>
+		FROM sys_area a
+		<include refid="areaJoins"/>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+		AND a.parent_id='1'
+		<!-- 数据范围过滤 -->
+		${sqlMap.dsf}
+		OR a.id = #{currentUser.office.area.id}
+		ORDER BY a.code
+	</select>
+
+	<select id="shiQuFindList" resultType="Area">
+		SELECT
+		<include refid="areaColumns"/>
+		FROM sys_area a
+		<include refid="areaJoins"/>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+		AND a.parent_id=#{parent.id}
+		<!-- 数据范围过滤 -->
+		${sqlMap.dsf}
+		OR a.id = #{currentUser.office.area.id}
+		ORDER BY a.code
+	</select>
 	
 	<select id="findList" resultType="Area">
 		SELECT

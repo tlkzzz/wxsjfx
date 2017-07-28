@@ -11,6 +11,7 @@ import com.tlkzzz.jeesite.modules.ps.entity.*;
 import com.tlkzzz.jeesite.modules.ps.service.*;
 import com.tlkzzz.jeesite.modules.sys.entity.Area;
 import com.tlkzzz.jeesite.modules.sys.entity.User;
+import com.tlkzzz.jeesite.modules.sys.service.AreaService;
 import com.tlkzzz.jeesite.modules.sys.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -57,6 +58,8 @@ public class SShopMallController extends BaseController{
     private SReceiptService sReceiptService;
     @Autowired
     private SSpecService sSpecService;
+    @Autowired
+    private AreaService areaService;
 
 
     public String check(ModelAndView modelAndView) {
@@ -230,8 +233,19 @@ public class SShopMallController extends BaseController{
      * shizx 收货地址添加页面调用方法
      * */
     @RequestMapping(value = {"listss"})
-    public String listss() {
+    public String listss(Model model) {
+        List<Area> areaList=areaService.shengFindList(new Area());
+        model.addAttribute("areaList",areaList);
         return "modules/shop/shopShdzForm";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = {"shiqu"})
+    public List<Area> shiqu(String ids) {
+        Area area=new Area();
+        area.setParent(new Area(ids));
+        List<Area> areaList=areaService.shiQuFindList(area);
+        return areaList;
     }
 
     /**
@@ -381,5 +395,6 @@ public class SShopMallController extends BaseController{
         sGoodsCommentService.save(sGoodsComment);
         return "true";
     }
+
     /**         商城代码结束          **/
 }

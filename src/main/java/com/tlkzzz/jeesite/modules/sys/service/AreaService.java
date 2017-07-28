@@ -26,6 +26,10 @@ public class AreaService extends TreeService<AreaDao, Area> {
 		return UserUtils.getAreaList();
 	}
 
+	public List<Area> shengFindList(Area area){ return dao.shengFindList(area);}
+
+	public List<Area> shiQuFindList(Area area){ return dao.shiQuFindList(area);}
+
 	@Transactional(readOnly = false)
 	public void save(Area area) {
 		super.save(area);
