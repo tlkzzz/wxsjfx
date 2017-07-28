@@ -15,7 +15,8 @@ public class SWithDraw extends DataEntity<SWithDraw> {
 	
 	private static final long serialVersionUID = 1L;
 	private String money;		// 提现金额
-	
+	private String state;		// 提现状态(1:申请,2:提现成功)
+
 	public SWithDraw() {
 		super();
 	}
@@ -31,5 +32,12 @@ public class SWithDraw extends DataEntity<SWithDraw> {
 	public void setMoney(String money) {
 		this.money = money;
 	}
-	
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
 }
