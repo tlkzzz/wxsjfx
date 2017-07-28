@@ -17,20 +17,22 @@ import com.tlkzzz.jeesite.common.persistence.DataEntity;
 public class SMember extends DataEntity<SMember> {
 	
 	private static final long serialVersionUID = 1L;
-	private String name;		// 会员名称
+	private String name;			// 会员名称
 	private String loginName;		// 登录名称
 	private String password;		// 密码
 	private String trueName;		// 真实姓名
 	private String loginKey;		// 三方登录凭证
 	private String memberType;		// 会员类型(改为性别)
-	private String photo;		// 头像
-	private String email;		// 邮箱
-	private String tel;		// 电话
-	private String mobile;		// 手机
-	private String loginIp;		// 最后登录IP
-	private Date loginDate;		// 最后登录时间
+	private String balance;			// 账户余额
+	private String withDraw;		// 提现金额
+	private String photo;			// 头像
+	private String email;			// 邮箱
+	private String tel;				// 电话
+	private String mobile;			// 手机
+	private String loginIp;			// 最后登录IP
+	private Date loginDate;			// 最后登录时间
 	private String loginFlag;		// 是否允许登录标志
-	private String sort;		// 排序
+	private String sort;			// 排序
 	
 	public SMember() {
 		super();
@@ -93,7 +95,25 @@ public class SMember extends DataEntity<SMember> {
 	public void setMemberType(String memberType) {
 		this.memberType = memberType;
 	}
-	
+
+	@Length(min=0, max=11, message="账户余额长度必须介于 0 和 11 之间")
+	public String getBalance() {
+		return balance;
+	}
+
+	public void setBalance(String balance) {
+		this.balance = balance;
+	}
+
+	@Length(min=0, max=11, message="提现金额长度必须介于 0 和 11 之间")
+	public String getWithDraw() {
+		return withDraw;
+	}
+
+	public void setWithDraw(String withDraw) {
+		this.withDraw = withDraw;
+	}
+
 	public String getPhoto() {
 		return photo;
 	}
