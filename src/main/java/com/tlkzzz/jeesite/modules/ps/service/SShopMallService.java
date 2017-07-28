@@ -145,6 +145,7 @@ public class SShopMallService  extends BaseService {
         order.setPrice(sShop.getPrice());
         order.setSpecIds(sShop.getSpecIds());
         sOrderDao.insert(order);
+        sShopDao.delete(sShop);
         return order;
     }
 
