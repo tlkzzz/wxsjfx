@@ -122,12 +122,16 @@
         $(".content").slideUp(3000);
 
     }
-    function showSms() {
+    function showSms(flag) {
+	    <c:if test="${empty user.member.tel}">
 		var ele = $("#SMS");
 		if(!ele)return;
-		if(ele.css("display")=="none"){
+		if(flag){
 		    ele.css("display","block");
+		}else{
+            ele.css("display","none");
 		}
+		</c:if>
     }
 </script>
 </head>
@@ -148,11 +152,11 @@
 		</div>
 		<div style="width: 80%;margin: 2rem auto;">
 			<p><input id="vCode" type="text" placeholder="请输入验证码" style="font-size:2rem;width: 65%;box-sizing: border-box;float: left;margin-right: 2%;color: #999;padding: 1rem;"></p>
-			<p><input type="button" onclick="sendSmsVCode($(this))" value="获取验证码" style="width: 33%;box-sizing: border-box;color: #fff;padding: 1.1rem 0;font-size: 2em;text-align: center; background-color: #84bd00;border: 0;border-radius: 4px;"></p>
+			<p><input type="button" onclick="sendSmsVCode($(this))" value="获取验证码" style=" -webkit-appearance: none;width: 33%;box-sizing: border-box;color: #fff;padding: 1rem 0;font-size: 2em;text-align: center; background-color: #84bd00;border: 0;border-radius: 4px;"></p>
 			<p style="clear: both;"></p>
 		</div>
 		<div style="width: 80%;margin: 0 auto;">
-			<p><input type="button" value="确定" onclick="checkSmsVCode($(this))" style="font-size:2rem;width: 100%;box-sizing: border-box;color: #fff;background-color: #84bd00;border: 0;padding: 2rem 1rem;margin-bottom: 2rem;"></p>
+			<p><input type="button" value="确定" onclick="checkSmsVCode($(this))" style=" -webkit-appearance: none;font-size:2rem;width: 100%;box-sizing: border-box;color: #fff;background-color: #84bd00;border: 0;padding: 2rem 1rem;margin-bottom: 2rem;"></p>
 		</div>
 		<div style="clear: both;"></div>
 	</div>
