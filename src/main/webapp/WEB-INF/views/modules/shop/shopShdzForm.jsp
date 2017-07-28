@@ -33,14 +33,9 @@
             </li>
             <li style="width: 100%;padding: 6% 4% 0;box-sizing: border-box;">
                 <p style="font-size: 3em;float: left;text-align: right;">省市区:</p>
-                <input type="text" id="ssq" placeholder="请选择城市地址" style="border-bottom: 1px solid #666;color: #ada2a2;text-align: left;padding: 0;margin: 0;background-color: transparent;">
-            <li>
-                <p style="font-size: 2em;">省市区</p>
-                <%--<input type="text" id="ssq" placeholder="请选择城市地址" style="height: 45px;color: #ada2a2;border-bottom: 0px;text-align: left;padding: 0;margin: 0;background-color: transparent;">--%>
-
                 <select onchange="sheng(this.value);" name="level1" id="level1" style="width:100px;">
                     <%--<option value="请选择省份" selected>--%>
-                        <option value="">请选择</option>
+                    <option value="">请选择</option>
                     <c:forEach items="${areaList}" var="area">
                         <option value="${area.id}">${area.name}</option>
                     </c:forEach>
@@ -123,7 +118,7 @@
                 ssq:ssq
             },
             success: function(data){
-                $("#myDiv").html('<h2>'+data+'</h2>');
+                window.location.href="http://localhost:8080/s/shdzList";
             }
         });
     }
@@ -137,7 +132,7 @@
             },
             success: function(data){
                for(var i=0;i<data.length;i++){
-                   alert(data[0].name);
+//                   alert(data[0].name);
                    var s=document.getElementById("level2");
                    s.add(new Option(data[i].name,data[i].id));
                }
@@ -153,7 +148,7 @@
             },
             success: function(data){
                 for(var i=0;i<data.length;i++){
-                    alert(data[0].name);
+//                    alert(data[0].name);
                     var s=document.getElementById("level3");
                     s.add(new Option(data[i].name,data[i].id));
                 }
