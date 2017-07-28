@@ -152,6 +152,12 @@
 			#{delFlag}
 		)
 	</insert>
+
+	<update id="balanceUp">
+		UPDATE s_member SET
+		balance = #{balance}
+		WHERE id = #{id}
+	</update>
 	
 	<update id="update">
 		UPDATE s_member SET 	

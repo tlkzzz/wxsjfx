@@ -7,9 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.tlkzzz.jeesite.modules.ps.entity.*;
-import com.tlkzzz.jeesite.modules.ps.service.SMemberCommissionService;
-import com.tlkzzz.jeesite.modules.ps.service.SMemberRelationService;
-import com.tlkzzz.jeesite.modules.ps.service.SProportionCommissionService;
+import com.tlkzzz.jeesite.modules.ps.service.*;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +21,6 @@ import com.tlkzzz.jeesite.common.config.Global;
 import com.tlkzzz.jeesite.common.persistence.Page;
 import com.tlkzzz.jeesite.common.web.BaseController;
 import com.tlkzzz.jeesite.common.utils.StringUtils;
-import com.tlkzzz.jeesite.modules.ps.service.SReceiptService;
 
 import java.util.List;
 
@@ -44,6 +41,8 @@ public class SReceiptController extends BaseController {
 	private SMemberRelationService sMemberRelationService;
 	@Autowired
 	private SProportionCommissionService sProportionCommissionService;
+	@Autowired
+	private SMemberService sMemberService;
 	
 	@ModelAttribute
 	public SReceipt get(@RequestParam(required=false) String id) {
@@ -119,6 +118,14 @@ public class SReceiptController extends BaseController {
 					/**
 					 * 提成表添加完成，预留支付接口
 					 * */
+					SMember sMember=new SMember();
+					sMember.setId(userId);
+					List<SMember> sMemberList=sMemberService.findList(sMember);
+					String ye=sMemberList.get(0).getBalance();
+					Double yue=Double.parseDouble(ye);
+					Double balance=yue+tc;
+					sMember.setBalance(balance.toString());
+					sMemberService.balanceUp(sMember);
 					sReceiptService.updateTc(sReceipt);//更新提成表提成状态
 				}
 		}
