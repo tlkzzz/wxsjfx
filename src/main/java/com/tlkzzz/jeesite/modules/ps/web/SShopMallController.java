@@ -222,6 +222,7 @@ public class SShopMallController extends BaseController{
         photo=user.getMember().getPhoto();
         model.addAttribute("name",name);
         model.addAttribute("photo",photo);
+        model.addAttribute("user",user);
         return "modules/shop/personalList";
     }
 
@@ -343,8 +344,8 @@ public class SShopMallController extends BaseController{
     @RequestMapping(value = "shoplist")
     public String shoplist(SShop sShop, String id, HttpServletRequest request, HttpServletResponse response, Model model) {
         id="c9b39e65d066410289672fbf3hd4cf04";
-        String name= UserUtils.getUser().getId();
-        if(StringUtils.isNotBlank(id) && sOrderService.getlist(id,name)==null) {
+        User user = UserUtils.getUser();
+        if(StringUtils.isNotBlank(id)&&StringUtils.isNotBlank(user.getId())&&sOrderService.getlist(id,user.getId())==null) {
             SGoods  sGoods=sGoodsService.get(id);
             if(sGoods!=null&&sGoods.getGener()!=null)
                 sGoods.setGener(sGenreService.getAll(sGoods.getGener().getId()));
@@ -358,6 +359,7 @@ public class SShopMallController extends BaseController{
         List<SShop>  sshoplist = sOrderService.findList(sShop);
         model.addAttribute("generList", sSpecService.findList(new SSpec()));
         model.addAttribute("sshoplist",sshoplist);
+        model.addAttribute("user",user);
         return "modules/shop/shoplist";
     }
 
