@@ -73,8 +73,8 @@
         var mobile = $("#mobile").val();
         var vCode = $("#vCode").val();
         if(mobile==""){$("#mobile").focus();return;}
-        if(vCode==""){$("#vCode").focus();return;}
         if(!checkMobile(mobile)){$("#mobile").focus();return;}
+        if(vCode==""){$("#vCode").focus();return;}
         ele.attr("disabled",true);
         $.get("${shop}/checkSmsVCode?mobile="+mobile+"&vCode="+vCode,function (data) {
 			if(data&&data=="true"){
@@ -120,7 +120,6 @@
 		$("#message").text(context);
         $(".content").fadeIn(1000);
         $(".content").slideUp(3000);
-
     }
     function showSms(flag) {
 	    <c:if test="${empty user.member.tel}">
