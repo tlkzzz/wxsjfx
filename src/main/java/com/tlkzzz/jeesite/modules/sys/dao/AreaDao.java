@@ -7,6 +7,8 @@ import com.tlkzzz.jeesite.common.persistence.TreeDao;
 import com.tlkzzz.jeesite.common.persistence.annotation.MyBatisDao;
 import com.tlkzzz.jeesite.modules.sys.entity.Area;
 
+import java.util.List;
+
 /**
  * 区域DAO接口
  * @author tlkzzz
@@ -14,5 +16,7 @@ import com.tlkzzz.jeesite.modules.sys.entity.Area;
  */
 @MyBatisDao
 public interface AreaDao extends TreeDao<Area> {
-	
+	public List<Area> shengFindList(Area area);
+
+    public List<Area> shiQuFindList(Area area);
 }

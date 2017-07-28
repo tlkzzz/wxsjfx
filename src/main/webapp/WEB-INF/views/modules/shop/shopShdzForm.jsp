@@ -34,6 +34,23 @@
             <li style="width: 100%;padding: 6% 4% 0;box-sizing: border-box;">
                 <p style="font-size: 3em;float: left;text-align: right;">省市区:</p>
                 <input type="text" id="ssq" placeholder="请选择城市地址" style="border-bottom: 1px solid #666;color: #ada2a2;text-align: left;padding: 0;margin: 0;background-color: transparent;">
+            <li>
+                <p style="font-size: 2em;">省市区</p>
+                <%--<input type="text" id="ssq" placeholder="请选择城市地址" style="height: 45px;color: #ada2a2;border-bottom: 0px;text-align: left;padding: 0;margin: 0;background-color: transparent;">--%>
+
+                <select onchange="sheng(this.value);" name="level1" id="level1" style="width:100px;">
+                    <%--<option value="请选择省份" selected>--%>
+                        <option value="">请选择</option>
+                    <c:forEach items="${areaList}" var="area">
+                        <option value="${area.id}">${area.name}</option>
+                    </c:forEach>
+                </select>
+                <select onchange="shi(this.value);" name="level2" id="level2" style="width:100px;">
+                    <option value="">请选择</option>
+                </select>
+                <select name="level3" id="level3" style="width:100px;">
+                    <option value="">请选择</option>
+                </select>
             </li>
             <li style="width: 100%;padding: 6% 4% 0;box-sizing: border-box;">
                 <p style="text-align: right;"><input type="text" id="xqdz" placeholder="请输入收货人的详情地址" style="width: 100%;border: 1px solid #ada2a2;color: #ada2a2;text-align: left;padding: 0;margin: 0;background-color: transparent;font-size: 3em;"></p>
@@ -59,6 +76,8 @@
             <div style="width: 100%;margin-top: 3rem;">
                 <p id="qu" style="width: 50%;float: left;"><input type="button" value="取消" style="width: 100%;border: 0;font-size:3em;margin: 0;background-color: transparent;color: #999;"></p>
                 <p style="width: 50%;float: right;"><a href="xinzengyige.html"><input type="button" onclick="tjSave();" value="确定" style="width: 100%;border: 0;font-size:3em;margin: 0;background-color: transparent;color: #999;"></a></p>
+
+
                 <p style="clear: both;"></p>
             </div>
         </div>
@@ -93,7 +112,7 @@
         var sjhm=document.getElementById('sjhm').value;
         var qrsjhm=document.getElementById('qrsjhm').value;
         var xqdz=document.getElementById('xqdz').value;
-        var ssq=document.getElementById('ssq').value;
+        var ssq=document.getElementById('level3').value;
         $.ajax({
             type: "POST",
             url: "http://localhost:8080/s/shdzSave",
@@ -105,6 +124,39 @@
             },
             success: function(data){
                 $("#myDiv").html('<h2>'+data+'</h2>');
+            }
+        });
+    }
+
+    function sheng(data) {
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/s/shiqu",
+            data:{
+                ids:data,
+            },
+            success: function(data){
+               for(var i=0;i<data.length;i++){
+                   alert(data[0].name);
+                   var s=document.getElementById("level2");
+                   s.add(new Option(data[i].name,data[i].id));
+               }
+            }
+        });
+    }
+    function shi(data) {
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/s/shiqu",
+            data:{
+                ids:data,
+            },
+            success: function(data){
+                for(var i=0;i<data.length;i++){
+                    alert(data[0].name);
+                    var s=document.getElementById("level3");
+                    s.add(new Option(data[i].name,data[i].id));
+                }
             }
         });
     }
