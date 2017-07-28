@@ -173,7 +173,7 @@
     <script>
        $(document).ready(function () {
            $("#iframeTwo",window.parent.document)[0].contentWindow.personal_center();
-           <c:if test="${empty user.member.tel}">window.parent.showSms();</c:if>
+           <c:if test="${empty user.member.tel}">window.parent.showSms(true);</c:if>
        })
 
     </script>
