@@ -126,7 +126,7 @@ public class SShopMallController extends BaseController{
         }else {
             shopList = sShopMallService.confirmOrder(ids, specIds, nums);
         }
-        if(shopList.size()==0)return "redirect:"+Global.getShopPath()+"";//重定向到购物车
+        if(shopList.size()==0)return "redirect:"+Global.getShopPath()+"/shoplist";//重定向到购物车
         for(SShop s:shopList)
             s.setGoods(sShopMallService.findSpecInfo(s.getGoods(),s.getSpecIds()));
         model.addAttribute("orderTotal", sShopMallService.countOrderTotal(shopList));
@@ -150,13 +150,13 @@ public class SShopMallController extends BaseController{
         sShop.setCreateBy(UserUtils.getUser());
         List<SShop> shopList = sOrderService.findConfirmOrderList(sShop);
         double total = sShopMallService.countOrderTotal(shopList);
-        if(shopList.size()<=0||total<=0)return "redirect:"+Global.getShopPath()+"";//重定向到购物车
+        if(shopList.size()<=0||total<=0)return "redirect:"+Global.getShopPath()+"/shoplist";//重定向到购物车
         SReceipt receipt = sReceiptService.insertByTotal(String.valueOf(total));
         if(receipt==null)return "redirect:"+Global.getShopPath()+"/confirmOrder";//重定向到订单确认;
         for(SShop ss: shopList){
             sShopMallService.savaOrderByShop(ss,receipt,addressId);
         }
-        return "modules/shop/paymentOver";
+        return "redirect:"+Global.getShopPath()+"/paymentOver";//重定向到支付并提交支付信息
     }
 
     @RequestMapping(value = "paymentOver")
@@ -168,7 +168,7 @@ public class SShopMallController extends BaseController{
         }else {
             model.addAttribute("flag",false);
         }
-        return "";
+        return "modules/shop/paymentOver";
     }
 
     @ResponseBody
