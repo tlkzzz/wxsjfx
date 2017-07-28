@@ -154,9 +154,6 @@
     <script src="${ctxStatic}/jquery/jquery-1.9.1.js" type="text/javascript"></script>
     <script>
         $(document).ready(function() {
-            $("#iframeTwo",window.parent.document)[0].contentWindow.shopping();
-            <c:if test="${empty user.member.tel}">window.parent.showSms();</c:if>
-//            var help = $('.je').text();
             var sum=0;
             var priceList = $('.htje');
             $.each($('.jjsl'),function (index,ele) {
@@ -166,40 +163,55 @@
 
             });
            $('#je').text(sum);
-            //htje的值，为数组赋值
-           /* .each(function () {
-//                index,ele
-//            $('.htje').text();
-//                alert(ele.text());
-                arrPrePrice.push($(this).html());
-            });*/
-            /*for(var i=0;i<arrPrePrice.length;i++){
-
-                var sum =sum+a*arrPrePrice[i];
-            }*/
-
+            $("#iframeTwo",window.parent.document)[0].contentWindow.shopping(true);
+            <c:if test="${empty user.member.tel}">window.parent.showSms();</c:if>
         });
 
         function jian(num , no) {
-            if(isNaN(num)||num<0){
+            if (isNaN(num) || num < 0) {
                 num = 1;
             }
             num = parseInt(num);
-               $("#sl_"+no).val(num);
-            var sl=$("#sl_"+no).val();
-            var htje= $("#htje").text();
-            var je=$("#je").text();
-            alert(je);
-            if(isNaN(sl)||sl<0){
-                sl=1;
-            }
-            var sum=(parseInt(htje)*parseInt(sl));
-            $("#je").text(sum);
+            $("#sl_" + no).val(num);
+            setNum(no);
         }
+            function setNum(no) {
+                var s1 = $("#sl_" + no).val() - 1;
+                if (isNaN(s1) || s1 < 0) {
+                    s1 = 1;
+                }
+                var htje = $("#htje_" + no).text();
+                var je = $("#je").text();
+                if (s1 >= 2) {
+                    s1=1;
+                }
+                    var sum = 0;
+                    sum = parseInt(s1) * parseInt(htje) + parseInt(je);
+//                sum=parseInt(sum)+parseInt(je);
+                    $("#je").text(sum);
+                }
+
+//            var sl = $("#sl_" + no).val() - 1;
+//            var htje = $("#htje_" + no).text();
+//            alert(htje);
+//            var je = $("#je").text();
+//            if (isNaN(sl) || sl < 0) {
+//                sl = 1;
+//            }
+//            var sum = 0;
+//            if (sum <= 0) {
+//            sum = (parseInt(htje) * parseInt(sl)) + parseInt(je);
+//        }else {
+//                sum = parseInt(sum) + (parseInt(htje) * parseInt(sl));
+//            }
+//             alert(sum);
+//            $("#je").text(sum);
+//        }
 
         function deleted(id) {
+            alert(1111);
             $.ajax({
-                url: "${ctx}/shop/delshopList",
+                url: "${shop}/delshopList",
                 type: "POST",
                 data:{
                     ids:id,
@@ -279,7 +291,7 @@
                     </c:forEach>
                 </p>
 
-                <p class="price">￥<span id="htje" class="htje">${shop.price}</span><s>￥339</s></p>
+                <p class="price">￥<span id="htje_${shop.id}" class="htje">${shop.price}</span><s>￥339</s></p>
                 <p class="amount" >*<span id="aa"></span></p>
             </div>
 
