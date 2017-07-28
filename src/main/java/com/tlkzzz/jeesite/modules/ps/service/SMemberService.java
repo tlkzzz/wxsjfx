@@ -74,6 +74,11 @@ public class SMemberService extends CrudService<SMemberDao, SMember> {
 	}
 
 	@Transactional(readOnly = false)
+	public void balanceUp(SMember sMember) {
+		dao.balanceUp(sMember);
+	}
+
+	@Transactional(readOnly = false)
 	public void updateMobile(String id,String mobile) {
 		dao.updateMobile(id,mobile);
 	}

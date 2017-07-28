@@ -27,4 +27,10 @@ public interface SMemberDao extends CrudDao<SMember> {
      * @return
      */
     SMember getByKey(String loginKey);
+
+    /**
+     * 提成更新账户余额
+     * */
+
+    public void balanceUp(SMember sMember);
 }

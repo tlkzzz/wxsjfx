@@ -33,17 +33,17 @@
             </li>
             <li style="width: 100%;padding: 6% 4% 0;box-sizing: border-box;">
                 <p style="font-size: 3em;float: left;text-align: right;">省市区:</p>
-                <select onchange="sheng(this.value);" name="level1" id="level1" style="width:100px;">
+                <select onchange="sheng(this.value);" name="level1" id="level1" style="width:20%;height:80px;font-size:3em;-webkit-appearance:none;margin-right: 2%;">
                     <%--<option value="请选择省份" selected>--%>
                     <option value="">请选择</option>
                     <c:forEach items="${areaList}" var="area">
                         <option value="${area.id}">${area.name}</option>
                     </c:forEach>
                 </select>
-                <select onchange="shi(this.value);" name="level2" id="level2" style="width:100px;">
+                <select onchange="shi(this.value);" name="level2" id="level2" style="width:20%;height:80px;font-size:3em;-webkit-appearance:none;margin-right: 2%;">
                     <option value="">请选择</option>
                 </select>
-                <select name="level3" id="level3" style="width:100px;">
+                <select name="level3" id="level3" style="width:20%;height:80px;font-size:3em;-webkit-appearance:none;margin-right: 2%;">
                     <option value="">请选择</option>
                 </select>
             </li>
