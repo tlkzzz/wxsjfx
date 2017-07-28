@@ -70,6 +70,7 @@ public class SShopMallService  extends BaseService {
             shop.setNum(String.valueOf((num<1)?1:num));
             shop.setOrderFlag("1");
             sShopDao.updateInfo(shop);
+            shopList.add(shop);
         }
         return shopList;
     }
