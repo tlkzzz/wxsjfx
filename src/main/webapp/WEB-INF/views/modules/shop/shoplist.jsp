@@ -20,6 +20,7 @@
         input{
             background-color: transparent;
             border: 0;
+            -webkit-appearance: none;
         }
         .bg{
             background-color: #ececec;
@@ -45,7 +46,8 @@
         /* 删除 */
         .delete{
             float: right;
-            margin-bottom: 2%;
+            font-size: 2em;
+            margin-bottom: 4%;
         }
         /* 商品 */
         .commodity{
@@ -59,13 +61,16 @@
             width: 10%;
             vertical-align: middle;
         }
+        .choose input{
+            width: 50%;
+            height: 3%;
+        }
         /* 商品图片*/
         .product{
             width: 30%;
         }
         .product div{
             width: 80%;
-            height: 90%;
             color: #fff;
             text-align: center;
             line-height: 80px;
@@ -77,17 +82,17 @@
         }
         .name{
             color: #333;
-            font-size: 1em;
+            font-size: 3em;
             margin-bottom: 2%;
         }
         .spec{
             color: #999;
-            font-size: 0.9em;
+            font-size: 2em;
             margin-bottom: 10%;
         }
         .price{
             color: #999;
-            font-size: 0.9em;
+            font-size: 2em;
             float: left;
         }
         .price span{
@@ -108,11 +113,11 @@
         .quantity{
             float: left;
             color: #999;
-            font-size: 1em;
+            font-size: 2em;
         }
         .button{
             float: right;
-            width: 40%;
+            width: 30%;
         }
         .anniu{
             width: 100%;
@@ -120,7 +125,7 @@
         .anniu_box{
             width: 100%;
             text-align: center;
-            font-size: 1em;
+            font-size: 3em;
             color: #999;
         }
         .anniu_jj{
@@ -129,19 +134,21 @@
         }
         .anniu_jj input{
             border: 1px solid #ccc;
-            padding: 3% 12%;
+            padding: 5% 12%;
             border-radius: 4px;
-            margin-top: 4%;
+            margin-top: 7%;
         }
         .jiesuan{
             background-color: #84bd00;
             color: #fff;
-            font-size: 1em;
+            font-size: 3em;
+            padding: 5%;
+            margin-bottom: 0;
         }
         .guang{
             color: #999;
             margin-bottom: 4%;
-            font-size: 1em;
+            font-size: 3em;
         }
     </style>
     <script src="${ctxStatic}/jquery/jquery-1.9.1.js" type="text/javascript"></script>
@@ -201,7 +208,9 @@
                 }
             });
         }
-
+        function message(text) {
+            window.parent.Message(text)
+        }
 
          function submitForm() {
              var ids = "";
@@ -221,6 +230,16 @@
                     nums += (num+",");
                 }
              });
+             if(ids==""){message("未选择商品");return false;}
+             if(specIds==""){message("未选择规格");return false;}
+             if(nums==""){message("未拿到商品数量");return false;}
+            if( ids!="" || specIds!="" ||nums!=""){
+                $("#ids").val(ids);
+                $("#specIds").val(specIds);
+                $("#nums").val(nums);
+                $("#saveForm").submit();
+                return true;
+            }
              alert(ids+"*-*"+specIds+"*-*"+nums);
          }
     </script>
@@ -238,12 +257,12 @@
 
         <div class="commodity">
             <div class="choose">
-                <input class="xuanzhe" type="checkbox" value="${shop.id}" name="a">
+                <input class="xuanzhe" type="checkbox" value="${shop.id}" name="a" style="border: 1px solid #ccc;">
                 <%--<input type="radio" value="0" name="a" onclick="this.value=(this.value==0)?1:0">--%>
             </div>
 
             <div class="product">
-                <div>商品图片  <img src="${shop.goods.image}" />  </div>
+                <div><img src="${shop.goods.image}" style="width: 100%;"/>  </div>
             </div>
 
             <div class="name_box">
@@ -267,9 +286,9 @@
                 <div class="quantity">购买数量</div>
                 <div class="button">
                     <div style="width: 100%;border: 1px solid #ccc;border-radius: 4px;">
-                        <input  onclick="jian(parseInt($('#sl_${shop.id}').val())-1,'${shop.id}')"   value="-" style="font-size: 1.2em;text-align: center;padding: 0;color: #999;width: 24%;border-right: 1px solid #ccc;">
-                        <input id="sl_${shop.id}" class="jjsl"  type="text"  onchange="jian($(this).val())"  value="1" style="font-size: 1.01em;width: 40%; text-align: right;margin: 0;padding-right: 1%;">
-                        <input  onclick="jian(parseInt($('#sl_${shop.id}').val())+1,'${shop.id}')" value="+" style="font-size: 1.2em;text-align: center;padding: 0;margin: 0; color: #999;width: 24%;border-left: 1px solid #ccc;">
+                        <input  onclick="jian(parseInt($('#sl_${shop.id}').val())-1,'${shop.id}')"   value="-" style="font-size: 2em;text-align: center;padding: 0 4%;color: #999;width: 24%;border-right: 1px solid #ccc;">
+                        <input id="sl_${shop.id}" class="jjsl"  type="text"  onchange="jian($(this).val())"  value="1" style="font-size: 2em;width: 40%; text-align: right;margin: 0;padding-right: 1%;">
+                        <input  onclick="jian(parseInt($('#sl_${shop.id}').val())+1,'${shop.id}')" value="+" style="font-size: 2em;text-align: center;padding: 0;margin: 0; color: #999;width: 24%;border-left: 1px solid #ccc;">
 
                     </div>
                 </div>
@@ -284,15 +303,15 @@
     <div class="anniu">
         <div class="anniu_box">
             <p style="margin-bottom: 2%;">商品总额：<span style="color: #f79353"  id="je"  ></span></p>
-            <p>成为会员后，重复消费 <span style="color: #f79353">减20%</span>，相当于 <span style="color: #f79353">8</span> 折优惠</p>
+            <%--<p>成为会员后，重复消费 <span style="color: #f79353">减20%</span>，相当于 <span style="color: #f79353">8</span> 折优惠</p>--%>
         </div>
         <div class="anniu_jj">
-            <form id="saveForm" action="../rkOrderSave" method="post" >
+<form id="saveForm" action="${shop}/confirmOrder" method="post" >
                 <input type="hidden" id="ids" name="ids">
                 <input type="hidden" id="specIds" name="specIds">
                 <input type="hidden" id="nums" name="nums">
                 <input type="button" onclick="submitForm()" class="jiesuan" value="立刻结算" >
-            </form>
+       </form>
             <a href="chanpin.html" onClick="changeImage()"><p><input type="button" value="继续逛逛" class="guang"></p></a>
         </div>
     </div>
