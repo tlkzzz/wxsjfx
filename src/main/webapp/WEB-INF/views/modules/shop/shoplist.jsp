@@ -20,7 +20,7 @@
         input{
             background-color: transparent;
             border: 0;
-            -webkit-appearance: none;
+
         }
         .bg{
             background-color: #ececec;
@@ -154,6 +154,7 @@
     <script src="${ctxStatic}/jquery/jquery-1.9.1.js" type="text/javascript"></script>
     <script>
         $(document).ready(function() {
+            <c:if test="${empty user.member.tel}">window.parent.showSms();</c:if>
 //            var help = $('.je').text();
             var sum=0;
             var priceList = $('.htje');
@@ -246,9 +247,9 @@
 </head>
 
 <body style="background-color: #eee;">
-<c:forEach items="${sshoplist}" var="shop">
 <div class="bg">
     <!-- 购物车商品 -->
+    <c:forEach items="${sshoplist}" var="shop">
     <div class="shopping_cart">
   <%--<input hidden="hidden" id="ddinfo" value="${shop.orderNo}" ></input>--%>
         <div class="delete" onclick="deleted('${shop.id}')">删除</div>
@@ -257,7 +258,7 @@
 
         <div class="commodity">
             <div class="choose">
-                <input class="xuanzhe" type="checkbox" value="${shop.id}" name="a" style="border: 1px solid #ccc;">
+                <input class="xuanzhe" type="checkbox" value="${shop.id}" name="a">
                 <%--<input type="radio" value="0" name="a" onclick="this.value=(this.value==0)?1:0">--%>
             </div>
 
@@ -306,12 +307,12 @@
             <%--<p>成为会员后，重复消费 <span style="color: #f79353">减20%</span>，相当于 <span style="color: #f79353">8</span> 折优惠</p>--%>
         </div>
         <div class="anniu_jj">
-<form id="saveForm" action="${shop}/confirmOrder" method="post" >
+            <form id="saveForm" action="${shop}/confirmOrder" method="post" >
                 <input type="hidden" id="ids" name="ids">
                 <input type="hidden" id="specIds" name="specIds">
                 <input type="hidden" id="nums" name="nums">
-                <input type="button" onclick="submitForm()" class="jiesuan" value="立刻结算" >
-       </form>
+                <input type="button" onclick="submitForm()" class="jiesuan" value="立刻结算"  style=" -webkit-appearance: none;">
+            </form>
             <a href="chanpin.html" onClick="changeImage()"><p><input type="button" value="继续逛逛" class="guang"></p></a>
         </div>
     </div>
