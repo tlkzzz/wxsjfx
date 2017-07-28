@@ -9,6 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>个人中心</title>
+    <script type="text/javascript" src="${ctxStatic}/shop/jquery-1.9.1.js"></script>
     <style>
         /* 公共 */
         body{
@@ -224,10 +225,12 @@
     </div>
 
     <!-- 菜单分栏 -->
-    <div class="my_member" style="margin: 0;">
-        <span class="member_left"><img src="${ctxStatic}/images/wodezhanghu.png" style="width: 15%;vertical-align: middle;margin-right: 4%;">我的账户</span>
-        <p class="member_right"><img src="${ctxStatic}/images/btn-fanhui-hui.png"></p>
-    </div>
+    <a href="${shop}/withDrawList">
+        <div class="my_member" style="margin: 0;">
+            <span class="member_left"><img src="${ctxStatic}/images/wodezhanghu.png" style="width: 15%;vertical-align: middle;margin-right: 4%;">我的账户</span>
+            <p class="member_right"><img src="${ctxStatic}/images/btn-fanhui-hui.png"></p>
+        </div>
+    </a>
     <%--<div class="menu_box">--%>
         <%--<div class="menu2">--%>
             <%--<div class="menu_code">--%>
