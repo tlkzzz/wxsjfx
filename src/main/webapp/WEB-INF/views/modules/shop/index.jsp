@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
 <meta charset="utf-8">
@@ -51,7 +52,7 @@
 		/*1.7倍行间距*/
 	}
 </style>
-<script type="text/javascript" src="static/shop/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="${ctxStatic}/shop/jquery-1.9.1.js"></script>
 <script type="text/javascript">
 	var countTime = 60;
 	function sendSmsVCode(ele) {
@@ -60,7 +61,7 @@
 		if(!checkMobile(mobile)){$("#mobile").focus();return;}
 		if(ele.attr("disabled"))return;
 		$("#vCode").focus();countTime=60;
-		$.get("s/sendSmsVCode?mobile="+mobile,function (data){
+		$.get("${shop}/sendSmsVCode?mobile="+mobile,function (data){
 			if(data||data=="true"){
 				ele.css("color","#999");
 				ele.attr("disabled",true);
@@ -75,7 +76,7 @@
         if(vCode==""){$("#vCode").focus();return;}
         if(!checkMobile(mobile)){$("#mobile").focus();return;}
         ele.attr("disabled",true);
-        $.get("s/checkSmsVCode?mobile="+mobile+"&vCode="+vCode,function (data) {
+        $.get("${shop}/checkSmsVCode?mobile="+mobile+"&vCode="+vCode,function (data) {
 			if(data&&data=="true"){
 			    showSms();
 			}else {
@@ -126,21 +127,20 @@
 		if(!ele)return;
 		if(ele.css("display")=="none"){
 		    ele.css("display","block");
-		}else {
-		    ele.css("display","none");
 		}
     }
 </script>
 </head>
 <body>
 <div style="position: relative;width: 100%;height: 100%;">
-	<iframe name="jj" frameborder="0" marginheight="0" marginwidth="0" src="s/home" style="width: 100%;height: 90%;"></iframe>
-	<iframe id="iframeTwo" scrolling="no" frameborder="0" marginheight="0" marginwidth="0" src="s/foot" style="width: 100%;height: 10%;position: fixed;bottom: 0;left: 0;"></iframe>
+	<iframe name="jj" frameborder="0" marginheight="0" marginwidth="0" src="${shop}/home" style="width: 100%;height: 90%;"></iframe>
+	<iframe id="iframeTwo" scrolling="no" frameborder="0" marginheight="0" marginwidth="0" src="${shop}/foot" style="width: 100%;height: 10%;position: fixed;bottom: 0;left: 0;"></iframe>
 </div>
 <div class="content" style="display: none;">
 	<p id="message"></p>
 </div>
-<div id="SMS" style="width: 100%;height: 100%;background-color: rgba(255,255,255,.8);padding: 50% 0;position: fixed;top: 0;left: 0;display: none">
+<c:if test="${empty user.member.tel}">
+<div id="SMS" style="width: 100%;background-color: rgba(255,255,255,.8);padding: 50% 0 40%;position: fixed;top: 0;left: 0;display: none">
 	<div style="width: 70%;margin: 0 auto;padding: 1rem 0;border-radius: 8px;background-color: #fff;box-shadow: 0 0 20px #999;">
 		<div style="text-align: center; color: #666;font-size: 3rem;"><p>验证手机号码</p></div>
 		<div style="width: 80%;margin: 0 auto;">
@@ -157,5 +157,6 @@
 		<div style="clear: both;"></div>
 	</div>
 </div>
+</c:if>
 </body>
 </html>
