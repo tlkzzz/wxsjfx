@@ -1,6 +1,8 @@
 @charset "utf-8";
 /* CSS Document */
 .AUInfo-main{
+    width: 100%;
+    height: 100%;
 }
 .AUInfo-main ul li{
 background-color: #fff;
@@ -9,8 +11,6 @@ background-color: #fff;
     border-bottom: 1px #e1e1e1 solid;
 }
 ul li:first-child input {
-	
-	width: 86%;
     height: 45px;
     background: #E6E9EE;
     text-indent:10%;
@@ -20,7 +20,6 @@ ul li:first-child input {
    
 }
 ul li >input:not(:first-child) {
-    width: 60%;
     height: 1.40625rem;
     border: 1px solid #CED0D4;
     text-indent: 5%;
