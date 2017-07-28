@@ -160,7 +160,7 @@
 <body>
 <div style="width: 100%;">
     <div class="box">
-        <div class="text" style="color: #84bd00;"><p>全部</p></div>
+        <div class="text" onclick="qb();" style="color: #84bd00;"><p>全部</p></div>
         <div class="text" onclick="ff();"><p>待付款</p></div>
         <div class="text" onclick="fa();"><p>待发货</p></div>
         <div class="text" onclick="sh();"><p>待收货</p></div>
@@ -278,6 +278,10 @@ function ss(data) {
                 alert("回复成功");
             }
         });
+    }
+    function qb() {
+        $(".dingdan_box").remove();
+        ss();
     }
     function ff() {
         $(".dingdan_box").remove();
