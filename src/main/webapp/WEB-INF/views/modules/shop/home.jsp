@@ -182,7 +182,6 @@
                             '</div></div></a></div>';
 						$("#container").append(text);
                     })
-                    alert("1234");
                 })
             }
 //        }
