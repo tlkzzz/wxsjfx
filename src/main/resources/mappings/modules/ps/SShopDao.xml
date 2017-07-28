@@ -156,8 +156,7 @@
 	</update>
 
 	<update id="delete">
-		UPDATE s_shop SET
-			del_flag = #{DEL_FLAG_DELETE}
+		DELETE FROM s_shop
 		WHERE id = #{id}
 	</update>
 	

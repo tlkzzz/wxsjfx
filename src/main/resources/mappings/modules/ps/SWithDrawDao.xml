@@ -16,7 +16,7 @@
 	</sql>
 	
 	<sql id="sWithDrawJoins">
-		LEFT JOIN s_member sm ON sm.id=a.create_bys
+		LEFT JOIN s_member sm ON sm.id=a.create_by
 	</sql>
     
 	<select id="get" resultType="SWithDraw">
