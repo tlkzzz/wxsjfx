@@ -5,6 +5,7 @@
 	<sql id="sWithDrawColumns">
 		a.id AS "id",
 		a.money AS "money",
+		a.state AS "state",
 		a.remarks AS "remarks",
 		a.create_by AS "createBy.id",
 		sm.name AS "createBy.name",
@@ -69,6 +70,7 @@
 		INSERT INTO s_with_draw(
 			id,
 			money,
+			state,
 			remarks,
 			create_by,
 			create_date,
@@ -78,6 +80,7 @@
 		) VALUES (
 			#{id},
 			#{money},
+			#{state},
 			#{remarks},
 			#{createBy.id},
 			#{createDate},
@@ -90,6 +93,7 @@
 	<update id="update">
 		UPDATE s_with_draw SET 	
 			money = #{money},
+			state = #{state},
 			remarks = #{remarks},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate}
