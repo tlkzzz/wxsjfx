@@ -218,16 +218,16 @@
 			<p class="right"><a href="${shop}/shoplist" style="text-decoration: none;color: #006a92;">订单修改</a></p>
 			<p class="clearfix"></p>
 		</div>
-		<c:forEach items="${orderList}" var="shop">
+		<c:forEach items="${orderList}" var="sShop">
 		<div class="er">
-			<div class="tutu"><img src="${shop.goods.image}"></div>
+			<div class="tutu"><img src="${sShop.goods.image}"></div>
 			<div class="shangpin">
-				<p>${shop.goods.name}</p>
-				<c:forEach items="${shop.goods.gener.specClassList}" var="specClass">
+				<p>${sShop.goods.name}</p>
+				<c:forEach items="${sShop.goods.gener.specClassList}" var="specClass">
 				<p style="font-size: 0.8em;margin-top: 0.4rem;color: #999;">${specClass.name}:<c:forEach items="${specClass.sSpecList}" var="spec">${spec.name}&nbsp;</c:forEach></p>
 				</c:forEach>
-				<p style="float: left;font-size: 0.8em;color: #f79323; margin-top:1rem;">￥${shop.price}</p>
-				<p style="float: right;font-size: 0.8em;margin-top: 1rem;margin-right: 1rem;">*${shop.num}</p>
+				<p style="float: left;font-size: 0.8em;color: #f79323; margin-top:1rem;">￥${sShop.price}</p>
+				<p style="float: right;font-size: 0.8em;margin-top: 1rem;margin-right: 1rem;">*${sShop.num}</p>
 				<p class="clearfix"></p>
 			</div>
 		</div>
@@ -257,12 +257,10 @@
 		</div>
 	</div>
 	<!-- 支付按钮 -->
-	<a href="zhifuchenggong.html">
 	<div style="width: 80%; margin: 2rem auto !important;border-radius: 8px;">
-		<input type="hidden" id="addressId">
-		<input type="button" value="立即支付" style="width: 100%;border: 0;background-color: #84bd00;padding: 1rem 2rem;border-radius: 8px;color: #fff;font-size: 1.2em;">
+		<input type="hidden" id="addressId" value="${(empty addressList)?"":addressList[0].id}">
+		<input type="button" value="立即支付" onclick="submitForm()" style="width: 100%;border: 0;background-color: #84bd00;padding: 1rem 2rem;border-radius: 8px;color: #fff;font-size: 1.2em;">
 	</div>
-	</a>
 	<script>
 		$(".add_box").click(function(){
 			$(".box").toggle();
@@ -270,6 +268,14 @@
 		function change(){
 			$("#iframeTwo",window.parent.document)[0].contentWindow.personal_center();
 		}
+		function submitForm() {
+			var addressId = $("#addressId").val();
+			if(addressId==""){
+			    window.parent.Message("请选择送货地址!");
+			    return;
+			}
+			window.location.href = "${shop}/paymentOrder?addressId="+addressId;
+        }
 	</script>
 </div>
 </body>
