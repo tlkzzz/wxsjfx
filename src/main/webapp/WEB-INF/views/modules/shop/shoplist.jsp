@@ -326,7 +326,7 @@
                 <input type="hidden" id="nums" name="nums">
                 <input type="button" onclick="submitForm()" class="jiesuan" value="立刻结算"  style=" -webkit-appearance: none;">
             </form>
-            <a href="chanpin.html" onClick="changeImage()"><p><input type="button" value="继续逛逛" class="guang"></p></a>
+            <a href="${shop}/home" onClick="changeImage()"><p><input type="button" value="继续逛逛" class="guang"></p></a>
         </div>
     </div>
 
