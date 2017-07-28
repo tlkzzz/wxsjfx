@@ -344,9 +344,7 @@ public class SShopMallController extends BaseController{
     public String shoplist(SShop sShop, String id, HttpServletRequest request, HttpServletResponse response, Model model) {
         id="c9b39e65d066410289672fbf3hd4cf04";
         String name= UserUtils.getUser().getId();
-        SShop sShop1=new SShop();
-        sShop1=sOrderService.getlist(id,name);
-        if(StringUtils.isNotBlank(id) && sShop1==null) {
+        if(StringUtils.isNotBlank(id) && sOrderService.getlist(id,name)==null) {
             SGoods  sGoods=sGoodsService.get(id);
             if(sGoods!=null&&sGoods.getGener()!=null)
                 sGoods.setGener(sGenreService.getAll(sGoods.getGener().getId()));
