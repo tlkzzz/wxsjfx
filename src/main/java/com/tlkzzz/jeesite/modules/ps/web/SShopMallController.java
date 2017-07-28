@@ -147,7 +147,7 @@ public class SShopMallController extends BaseController{
     @RequestMapping(value = "paymentOrder")
     public String paymentOrder(String addressId,Model model){
         if(StringUtils.isBlank(addressId)){
-            return "redirect:"+Global.getShopPath()+"/confirmOrder";//重定向到订单确认;
+            return "redirect:"+Global.getShopPath()+"/goodsInfo";//重定向到订单确认;
         }
         SShop sShop = new SShop();
         sShop.setCreateBy(UserUtils.getUser());
@@ -221,8 +221,19 @@ public class SShopMallController extends BaseController{
     public String PersonalCenter(HttpServletRequest request,HttpServletResponse response,Model model){
         User user = UserUtils.getUser();
        String name=user.getName();
-       String photo;
+        String photo;
+        Double num=0.0;
         photo=user.getMember().getPhoto();
+        SReceipt sReceipt=new SReceipt();
+        sReceipt.setCreateBy( UserUtils.getUser());
+        List<SReceipt> list=sReceiptService.findList(sReceipt);
+        if(StringUtils.isNotBlank(sReceipt.getRevenueMoney())){
+            for(int i=0;i<list.size();i++){
+                sReceipt=list.get(i);
+                num+=Double.parseDouble(sReceipt.getRevenueMoney());
+            }
+        }
+        model.addAttribute("num",num);
         model.addAttribute("name",name);
         model.addAttribute("photo",photo);
         model.addAttribute("user",user);
@@ -357,7 +368,9 @@ public class SShopMallController extends BaseController{
 
     @RequestMapping(value = "shoplist")
     public String shoplist(SShop sShop, String id, HttpServletRequest request, HttpServletResponse response, Model model) {
-        id="c9b39e65d066410289672fbf3hd4cf04";
+        if(StringUtils.isBlank(id)){
+            return "redirect:"+Global.getShopPath()+"/home";//重定向到主页;
+        }
         User user = UserUtils.getUser();
         if(StringUtils.isNotBlank(id)&&StringUtils.isNotBlank(user.getId())&&sOrderService.getlist(id,user.getId())==null) {
             SGoods  sGoods=sGoodsService.get(id);
