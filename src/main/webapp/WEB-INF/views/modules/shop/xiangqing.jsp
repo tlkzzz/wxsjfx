@@ -6,6 +6,9 @@
 <title>产品详情页</title>
 <script src="${ctxStatic}/shop/jquery-1.9.1.js"></script>
 <style>
+	input{
+		-webkit-appearance: none;
+	}
 	/* 轮播区域 */
 	.lunbo{
 		position: relative;

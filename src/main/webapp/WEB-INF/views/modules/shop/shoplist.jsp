@@ -190,24 +190,6 @@
 //                sum=parseInt(sum)+parseInt(je);
                     $("#je").text(sum);
                 }
-
-//            var sl = $("#sl_" + no).val() - 1;
-//            var htje = $("#htje_" + no).text();
-//            alert(htje);
-//            var je = $("#je").text();
-//            if (isNaN(sl) || sl < 0) {
-//                sl = 1;
-//            }
-//            var sum = 0;
-//            if (sum <= 0) {
-//            sum = (parseInt(htje) * parseInt(sl)) + parseInt(je);
-//        }else {
-//                sum = parseInt(sum) + (parseInt(htje) * parseInt(sl));
-//            }
-//             alert(sum);
-//            $("#je").text(sum);
-//        }
-
         function deleted(id) {
             alert(1111);
             $.ajax({
@@ -254,7 +236,7 @@
                 $("#saveForm").submit();
                 return true;
             }
-             alert(ids+"*-*"+specIds+"*-*"+nums);
+//             alert(ids+"*-*"+specIds+"*-*"+nums);
          }
     </script>
 </head>
