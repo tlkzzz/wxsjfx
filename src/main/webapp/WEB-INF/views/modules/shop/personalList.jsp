@@ -171,9 +171,10 @@
         }
     </style>
     <script>
-       function shouhuo() {
-           alert(11111);
-       }
+       $(document).ready(function () {
+           $("#iframeTwo",window.parent.document)[0].contentWindow.personal_center();
+           <c:if test="${empty user.member.tel}">window.parent.showSms();</c:if>
+       })
 
     </script>
 </head>
