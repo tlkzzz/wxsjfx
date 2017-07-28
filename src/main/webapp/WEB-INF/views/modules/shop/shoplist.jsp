@@ -163,8 +163,8 @@
 
             });
            $('#je').text(sum);
-            $("#iframeTwo",window.parent.document)[0].contentWindow.shopping(true);
-            <c:if test="${empty user.member.tel}">window.parent.showSms();</c:if>
+            $("#iframeTwo",window.parent.document)[0].contentWindow.shopping();
+            <c:if test="${empty user.member.tel}">window.parent.showSms(true);</c:if>
         });
 
         function jian(num , no) {
@@ -244,36 +244,36 @@
 <body style="background-color: #eee;">
 <div class="bg">
     <!-- 购物车商品 -->
-    <c:forEach items="${sshoplist}" var="shop">
+    <c:forEach items="${sshoplist}" var="sShop">
     <div class="shopping_cart">
-  <%--<input hidden="hidden" id="ddinfo" value="${shop.orderNo}" ></input>--%>
-        <div class="delete" onclick="deleted('${shop.id}')">删除</div>
+  <%--<input hidden="hidden" id="ddinfo" value="${sShop.orderNo}" ></input>--%>
+        <div class="delete" onclick="deleted('${sShop.id}')">删除</div>
 
         <div class="clearfix"></div>
 
         <div class="commodity">
             <div class="choose">
-                <input class="xuanzhe" type="checkbox" value="${shop.id}" name="a">
+                <input class="xuanzhe" type="checkbox" value="${sShop.id}" name="a">
                 <%--<input type="radio" value="0" name="a" onclick="this.value=(this.value==0)?1:0">--%>
             </div>
 
             <div class="product">
-                <div><img src="${shop.goods.image}" style="width: 100%;"/>  </div>
+                <div><img src="${sShop.goods.image}" style="width: 100%;"/>  </div>
             </div>
 
             <div class="name_box">
-                <p class="name">商品名称<span>:${shop.goods.name}</span></p>
+                <p class="name">商品名称<span>:${sShop.goods.name}</span></p>
                 <p class="spec">
                     <c:forEach items="${sGoods.gener.specClassList}" var="specClass">
                     <span>${specClass.name}:</span>
                         <c:forEach items="${specClass.sSpecList}" var="spec">
-                            <input type="checkbox" name="spec_${shop.id}"  value="${spec.id}" onclick="chose($(this))" />
+                            <input type="checkbox" name="spec_${sShop.id}"  value="${spec.id}" onclick="chose($(this))" />
                             <span>${spec.name}</span>
                     </c:forEach></br>
                     </c:forEach>
                 </p>
 
-                <p class="price">￥<span id="htje_${shop.id}" class="htje">${shop.price}</span><s>￥339</s></p>
+                <p class="price">￥<span id="htje_${sShop.id}" class="htje">${sShop.price}</span><s>￥339</s></p>
                 <p class="amount" >*<span id="aa"></span></p>
             </div>
 
@@ -282,9 +282,9 @@
                 <div class="quantity">购买数量</div>
                 <div class="button">
                     <div style="width: 100%;border: 1px solid #ccc;border-radius: 4px;">
-                        <input  onclick="jian(parseInt($('#sl_${shop.id}').val())-1,'${shop.id}')"   value="-" style="font-size: 2em;text-align: center;padding: 0 4%;color: #999;width: 24%;border-right: 1px solid #ccc;">
-                        <input id="sl_${shop.id}" class="jjsl"  type="text"  onchange="jian($(this).val())"  value="1" style="font-size: 2em;width: 40%; text-align: right;margin: 0;padding-right: 1%;">
-                        <input  onclick="jian(parseInt($('#sl_${shop.id}').val())+1,'${shop.id}')" value="+" style="font-size: 2em;text-align: center;padding: 0;margin: 0; color: #999;width: 24%;border-left: 1px solid #ccc;">
+                        <input  onclick="jian(parseInt($('#sl_${sShop.id}').val())-1,'${sShop.id}')"   value="-" style="font-size: 2em;text-align: center;padding: 0 4%;color: #999;width: 24%;border-right: 1px solid #ccc;">
+                        <input id="sl_${sShop.id}" class="jjsl"  type="text"  onchange="jian($(this).val())"  value="1" style="font-size: 2em;width: 40%; text-align: right;margin: 0;padding-right: 1%;">
+                        <input  onclick="jian(parseInt($('#sl_${sShop.id}').val())+1,'${sShop.id}')" value="+" style="font-size: 2em;text-align: center;padding: 0;margin: 0; color: #999;width: 24%;border-left: 1px solid #ccc;">
 
                     </div>
                 </div>
