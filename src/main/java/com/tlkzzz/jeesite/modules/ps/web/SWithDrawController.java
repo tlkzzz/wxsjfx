@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tlkzzz.jeesite.common.config.Global;
@@ -70,6 +71,18 @@ public class SWithDrawController extends BaseController {
 		sWithDrawService.save(sWithDraw);
 		addMessage(redirectAttributes, "保存提现记录成功");
 		return "redirect:"+Global.getAdminPath()+"/ps/sWithDraw/?repage";
+	}
+
+	@ResponseBody
+	@RequiresPermissions("ps:sWithDraw:edit")
+	@RequestMapping(value = "withDrawPass")
+	public String withDrawPass(SWithDraw sWithDraw){
+		if(sWithDraw==null||StringUtils.isBlank(sWithDraw.getId()))return "false";
+		/**		微信转账代码开始		**/
+
+		/**		微信转账代码结束		**/
+		sWithDraw.setState("2");//成功提现
+		return "true";
 	}
 	
 	@RequiresPermissions("ps:sWithDraw:edit")
