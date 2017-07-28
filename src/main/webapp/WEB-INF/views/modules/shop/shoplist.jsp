@@ -154,6 +154,7 @@
     <script src="${ctxStatic}/jquery/jquery-1.9.1.js" type="text/javascript"></script>
     <script>
         $(document).ready(function() {
+            $("#iframeTwo",window.parent.document)[0].contentWindow.shopping();
             <c:if test="${empty user.member.tel}">window.parent.showSms();</c:if>
 //            var help = $('.je').text();
             var sum=0;
