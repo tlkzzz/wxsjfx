@@ -182,7 +182,7 @@
 <body>
 <div class="bg">
     <!-- 个人中心头像 -->
-    <a href="touxiang.html" style="text-decoration: none;color: #000;">
+    <a href="${photo}" style="text-decoration: none;color: #000;">
         <div class="personal">
             <div class="head">
                 <div class="head_touxiang"><img height="100%" width="100%"src="${photo}"/> </div>
@@ -195,7 +195,7 @@
         </div>
     </a>
     <div class="clearfix"></div>
-    <a href="wodedingdan.html">
+    <a href="${shop}/myDdList">
         <div class="my_member" style="margin: 0;">
             <span class="member_left"><img src="${ctxStatic}/images/wodedingdan.png" style="width: 15%;vertical-align: middle; margin-right: 4%;">我的订单</span>
             <p class="member_right"><img src="${ctxStatic}/images/btn-fanhui-hui.png"></p>
@@ -264,7 +264,7 @@
     <!-- 我的消费额 -->
     <div class="my_member">
         <span class="member_left"><img src="${ctxStatic}/images/xiaofeie.png" style="width: 15%;vertical-align: middle;margin-right: 4%;">我的消费额:</span>
-        <p class="member_shuzi">0</p>
+        <p class="member_shuzi"><span>${num}</span></p>
     </div>
 </div>
 </body>
