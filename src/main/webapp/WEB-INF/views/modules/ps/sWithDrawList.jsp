@@ -37,7 +37,9 @@
 			<tr>
 				<th>提现会员</th>
 				<th>提现金额</th>
+				<th>申请时间</th>
 				<th>提现时间</th>
+				<th>状态</th>
 				<th>备注</th>
 				<shiro:hasPermission name="ps:sWithDraw:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
@@ -53,6 +55,12 @@
 				</td>
 				<td>
 					<fmt:formatDate value="${sWithDraw.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+				</td>
+				<td>
+					<fmt:formatDate value="${sWithDraw.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+				</td>
+				<td>
+					${fns:getDictLabel(sWithDraw.state, "withDrawState", "")}
 				</td>
 				<td>
 					${sWithDraw.remarks}
