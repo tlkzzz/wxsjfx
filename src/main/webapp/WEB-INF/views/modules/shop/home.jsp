@@ -81,7 +81,7 @@
 	<script>
         $(document).ready(function () {
             $("#iframeTwo",window.parent.document)[0].contentWindow.home();
-            //window.parent.showSms();
+            window.parent.showSms(false);
         });
         window.onload = function (){
             var oLazy = document.getElementById("container");
