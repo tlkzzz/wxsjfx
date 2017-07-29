@@ -167,15 +167,15 @@
             <c:if test="${empty user.member.tel}">window.parent.showSms(true);</c:if>
         });
 
-        function jian(num , no) {
+        function jia(num , no) {
             if (isNaN(num) || num < 0) {
                 num = 1;
             }
             num = parseInt(num);
             $("#sl_" + no).val(num);
-            setNum(no);
+            jiaNum(no);
         }
-            function setNum(no) {
+            function jiaNum(no) {
                 var s1 = $("#sl_" + no).val() - 1;
                 if (isNaN(s1) || s1 < 0) {
                     s1 = 1;
@@ -187,9 +187,39 @@
                 }
                     var sum = 0;
                     sum = parseInt(s1) * parseInt(htje) + parseInt(je);
-//                sum=parseInt(sum)+parseInt(je);
                     $("#je").text(sum);
                 }
+
+        function jian(num,no) {
+            if (isNaN(num) || num < 0) {
+                num = 1;
+            }
+            num = parseInt(num);
+            $("#sl_" + no).val(num);
+            jianNum(no);
+        }
+        function jianNum(no) {
+            var s1 = $("#sl_" + no).val();
+            if (isNaN(s1) || s1 < 0) {
+                s1 = 1;
+            }
+            if(s1>=2){
+                s1=1
+            }
+            var htje = $("#htje_" + no).text();
+            var je = $("#je").text();
+            var sum = 0;
+            if(s1<=0) {
+                $("#je").text();
+                $("#sl_" + no).val(1);
+                return false;
+           }else {
+                sum = parseInt(je) - parseInt(s1) * parseInt(htje);
+                $("#je").text(sum);
+                return true;
+            }
+        }
+
         function deleted(id) {
             alert(1111);
             $.ajax({
@@ -236,7 +266,6 @@
                 $("#saveForm").submit();
                 return true;
             }
-//             alert(ids+"*-*"+specIds+"*-*"+nums);
          }
     </script>
 </head>
@@ -284,7 +313,7 @@
                     <div style="width: 100%;border: 1px solid #ccc;border-radius: 4px;">
                         <input  onclick="jian(parseInt($('#sl_${sShop.id}').val())-1,'${sShop.id}')"   value="-" style="font-size: 2em;text-align: center;padding: 0 4%;color: #999;width: 24%;border-right: 1px solid #ccc;">
                         <input id="sl_${sShop.id}" class="jjsl"  type="text"  onchange="jian($(this).val())"  value="1" style="font-size: 2em;width: 40%; text-align: right;margin: 0;padding-right: 1%;">
-                        <input  onclick="jian(parseInt($('#sl_${sShop.id}').val())+1,'${sShop.id}')" value="+" style="font-size: 2em;text-align: center;padding: 0;margin: 0; color: #999;width: 24%;border-left: 1px solid #ccc;">
+                        <input  onclick="jia(parseInt($('#sl_${sShop.id}').val())+1,'${sShop.id}')" value="+" style="font-size: 2em;text-align: center;padding: 0;margin: 0; color: #999;width: 24%;border-left: 1px solid #ccc;">
 
                     </div>
                 </div>
