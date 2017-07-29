@@ -16,15 +16,14 @@
 		padding: 0;
 	}
 	.content {
-		width: 90%;
+		width: 100%;
 		position: absolute;
 		overflow: hidden;
-		top: 25%;
-		left: 5%;
-		border-radius: 10px;
+		left: 0;
+		bottom:10%;
 		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 		z-index: 100;
-		padding: 1rem 1rem;
+		padding: 1em 0;
 		box-sizing: border-box;
 		/*不会把盒子撑开*/
 	}
@@ -40,7 +39,7 @@
 		-webkit-filter: blur(10px);
 		filter: blur(10px);
 		margin: -30px;  /*消除边缘透明*/
-		background: rgba(255,255,255,.4) center top;
+		background: rgba(0,0,0,1) center top;
 		background-size: cover;
 		/*平铺*/
 		background-attachment: fixed;
@@ -48,7 +47,9 @@
 	}
 	.content p {
 		font-size: 3rem;
-		line-height: 1.7;
+		text-align: center;
+		color: #fff;
+		margin: 0;
 		/*1.7倍行间距*/
 	}
 </style>

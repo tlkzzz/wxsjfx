@@ -32,21 +32,21 @@
 	}
 	.box_add{
 		float: left;
-		margin: .8rem 0;
+		margin: 2rem 0;
 	}
 	.name{
-		font-size: 1em;
+		font-size: 3em;
 		color: #000;
-		margin-top: .8rem;
+		margin-top: 2rem;
 	}
 	.add{
-		font-size: 0.6em;
+		font-size: 2em;
 		color: #999;
 	}
 	.tel{
-		font-size: 1em;
+		font-size: 3em;
 		color: #000;
-		margin: .8rem 0;
+		margin-top: -10%;
 		margin-left: 4rem;
 		vertical-align: middle;
 	}
@@ -60,7 +60,7 @@
 	}
 	.choose{
 		width: 100%;
-		padding: 1rem 0;
+		padding: 2rem 0;
 		border-bottom: 1px solid #fff;
 	}
 	.text{
@@ -69,7 +69,7 @@
 		margin: 0 1rem;
 	}
 	.text p{
-		font-size: 0.8em;
+		font-size:2em;
 		color: #fff;
 	}
 	.img img{
@@ -78,8 +78,8 @@
 	.jia{
 		width: 100%;
 		text-align: center;
-		padding: .8rem 0;
-		font-size: .8em;
+		padding: 1rem 0;
+		font-size:2em;
 		color: #fff;
 	}
 	.jia img{
@@ -100,15 +100,15 @@
 	}
 	.left{
 		float: left;
-		font-size: 0.8em;
-		padding: .8rem;
+		font-size: 2em;
+		padding: 2rem;
 		color: #999;
 	}
 	.right{
 		float: right;
-		font-size: 0.8em;
+		font-size: 2em;
 		color: #006a92;
-		padding: .8rem;
+		padding: 2rem;
 	}
 	.er{
 		width: 100%;
@@ -118,21 +118,21 @@
 	.tutu{
 		width: 30%;
 		float: left;
-		margin-right: .4rem;
+		margin-right: 1rem;
 	}
 	.tutu img{
 		width: 100%;
 		display: block;
 	}
 	.shangpin{
-		font-size: 1em;
+		font-size: 3em;
 		color: #000;
 		padding-top: 1rem;
 	}
 	.dis_box{
 		width: 100%;
-		font-size: .9em;
-		padding: .8rem 0;
+		font-size: 2em;
+		padding: 2rem 0;
 		border-bottom: 1px solid #ccc;
 	}
 	.dis{
@@ -175,7 +175,7 @@
 		</div>
 		<div class="box_add">
 			<c:if test="${fn:length(addressList)>0}">
-			<p style="margin: .8rem 0 .4rem;">
+			<p>
 				<span class="name" id="jsr">${addressList[0].shr}</span>
 				<span class="tel" id="tel">${addressList[0].tel}</span>
 			</p>
@@ -252,14 +252,14 @@
 			<p class="dis_ch" style="margin-right: .8rem; color: #f79323;">￥${(empty orderTotal)?0:orderTotal}</p>
 			<p class="clearfix"></p>
 		</div>
-		<div style="padding-top: .4rem;padding-bottom: .2rem; border-bottom: 1px solid #ccc;">
-			<textarea style="width: 100%;height: 70px;margin: 0;border: 0;padding: .4rem;box-sizing: border-box;font-size: 0.8em;line-height: 18px;" placeholder="备注：公司指定快递，少数偏远地区以及村、组快件需自提，快递物流时效为一个月，请在发货后7天内及时查询物流信息，新旧包装随机发货，不支持制定包装。"></textarea>
+		<div style="padding-top: 1rem;padding-bottom: 1rem; border-bottom: 1px solid #ccc;">
+			<textarea style="width: 100%;height: 70px;margin: 0;border: 0;padding: 1rem;box-sizing: border-box;font-size: 2em;line-height: 1.2em;" placeholder="备注：公司指定快递，少数偏远地区以及村、组快件需自提，快递物流时效为一个月，请在发货后7天内及时查询物流信息，新旧包装随机发货，不支持制定包装。"></textarea>
 		</div>
 	</div>
 	<!-- 支付按钮 -->
-	<div style="width: 80%; margin: 2rem auto !important;border-radius: 8px;">
+	<div style="width: 90%; margin: 2rem auto !important;border-radius: 8px;">
 		<input type="hidden" id="addressId" value="${(empty addressList)?"":addressList[0].id}">
-		<input type="button" value="立即支付" onclick="submitForm()" style="width: 100%;border: 0;background-color: #84bd00;padding: 1rem 2rem;border-radius: 8px;color: #fff;font-size: 1.2em;">
+		<input type="button" value="立即支付" onclick="submitForm()" style="width: 100%;border: 0;background-color: #84bd00;padding: 2rem 2rem;border-radius: 8px;color: #fff;font-size: 4em;">
 	</div>
 	<script>
 		$(".add_box").click(function(){

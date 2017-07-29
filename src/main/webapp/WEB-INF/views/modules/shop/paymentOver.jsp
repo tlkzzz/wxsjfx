@@ -14,11 +14,11 @@
 <body style="margin: 0;">
 <div>
 	<div style="width: 100%;text-align: center;margin-top: 3rem;">
-		<p><img src="${ctxStatic}/images/zhifuwancheng.png"></p>
-		<p style="font-size: 1.2rem;font-weight: bold;margin: 1rem 0;">支付成功！</p>
+		<p><img src="${ctxStatic}/images/zhifuwancheng.png" style="width: 40%;"></p>
+		<p style="font-size: 3rem;font-weight: bold;margin: 1rem 0;">支付成功！</p>
 	</div>
 	<div style="width: 100%;margin-top: 2rem;">
-		<div style="width: 80%;margin: 0 auto;font-size: .8rem;">
+		<div style="width: 80%;margin: 0 auto;font-size: 2rem;">
 			<p style="margin-bottom: 1rem;">
 				<span style="font-weight: bold;">商品名称：</span>
 				<span><c:forEach items="${orderList}" var="order" varStatus="sta">${order.goods.name}${(sta.last)?"":","}</c:forEach></span>
@@ -33,7 +33,7 @@
 	<div style="width: 100%;margin-top: 2rem;">
 		<p style="width: 80%;margin: 0 auto 2rem;">
 			<a href="${shop}">
-			<input type="button" value="返回首页" style="width: 100%;background-color: #86bd00;border: 0;color: #fff;border-radius: 4px;padding: 1rem;font-size: 1rem;">
+			<input type="button" value="返回首页" style="width: 100%;background-color: #86bd00;border: 0;color: #fff;border-radius: 4px;padding: 2rem;font-size: 4rem;">
 			</a>
 		</p>
 	</div>

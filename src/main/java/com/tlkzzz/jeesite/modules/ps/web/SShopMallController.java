@@ -62,6 +62,8 @@ public class SShopMallController extends BaseController{
     private AreaService areaService;
     @Autowired
     private SMemberCommissionService sMemberCommissionService;
+    @Autowired
+    private SWithDrawService sWithDrawService;
 
 
     public String check(ModelAndView modelAndView) {
@@ -72,9 +74,10 @@ public class SShopMallController extends BaseController{
     }
     /**         商城代码开始          **/
     @RequestMapping(value = {"index",""})
-    public String index(){/**首页**/
+    public String index(Model model){/**首页**/
         SMember member = sMemberService.saveUserByJson("{\"openid\":\"oI-t8wHURtTZVlvYAHCzvqPO81CM\",\"nickname\":\"国服卡牌\",\"sex\":1,\"language\":\"zh_CN\",\"city\":\"长沙\",\"province\":\"湖南\",\"country\":\"中国\",\"headimgurl\":\"http://wx.qlogo.cn/mmhead/PiajxSqBRaEKmEB9icvchLClMf608zv19X72ya8h6eaQpPwm3nRFmJeA/0\",\"privilege\":[],\"unionid\":\"oGjjfspNk16U8ENVjjd93QYzU4ro\"}");
         if(member!=null&&StringUtils.isNotBlank(member.getId()))UserUtils.setMemberId(member.getId());
+        model.addAttribute("user",UserUtils.getUser());
         return "modules/shop/index";
     }
     @RequestMapping(value = "foot")
@@ -102,6 +105,10 @@ public class SShopMallController extends BaseController{
      */
     @RequestMapping(value = "goodsInfo")
     public String goodsInfo(SGoods goods,Model model){
+        goods = sGoodsService.get(goods);
+        if(goods==null||StringUtils.isBlank(goods.getId())){
+            return "redirect:"+Global.getShopPath();//重定向到首页
+        }
         SGoodsComment goodsComment = new SGoodsComment();
         goodsComment.setGoods(goods);
         goods = sGoodsService.get(goods);
@@ -149,7 +156,7 @@ public class SShopMallController extends BaseController{
     @RequestMapping(value = "paymentOrder")
     public String paymentOrder(String addressId,Model model){
         if(StringUtils.isBlank(addressId)){
-            return "redirect:"+Global.getShopPath()+"/goodsInfo";//重定向到订单确认;
+            return "redirect:"+Global.getShopPath()+"/confirmOrder";//重定向到订单确认;
         }
         SShop sShop = new SShop();
         sShop.setCreateBy(UserUtils.getUser());
@@ -379,9 +386,6 @@ public String huiyuan(HttpServletRequest request, HttpServletResponse response, 
 
     @RequestMapping(value = "shoplist")
     public String shoplist(SShop sShop, String id, HttpServletRequest request, HttpServletResponse response, Model model) {
-//        if(StringUtils.isBlank(id)){
-//            return "redirect:"+Global.getShopPath()+"/home";//重定向到主页;
-//        }
         User user = UserUtils.getUser();
         if(StringUtils.isNotBlank(id)&&StringUtils.isNotBlank(user.getId())&&sOrderService.getlist(id,user.getId())==null) {
             SGoods  sGoods=sGoodsService.get(id);
@@ -417,6 +421,27 @@ public String huiyuan(HttpServletRequest request, HttpServletResponse response, 
         List<SOrder> sorderList=sOrderService.findList(new SOrder(ids));
         sGoodsComment.setGoods(new SGoods(sorderList.get(0).getGoods().getId()));
         sGoodsCommentService.save(sGoodsComment);
+        return "true";
+    }
+
+    @RequestMapping(value = "withDrawList")
+    public String withDrawList(Model model){
+        SWithDraw withDraw = new SWithDraw();
+        withDraw.setState("2");//提现成功的
+        withDraw.setCreateBy(UserUtils.getUser());
+        model.addAttribute("user",withDraw.getCreateBy());
+        model.addAttribute("withDrawList",sWithDrawService.findList(withDraw));
+        return "modules/shop/withDraw";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "withDrawApply")
+    public String withDrawApply(SWithDraw withDraw){
+        User user = UserUtils.getUser();
+        if(user==null||StringUtils.isBlank(user.getId()))return "false";
+        if(withDraw==null||StringUtils.isBlank(withDraw.getMoney()))return "false";
+        withDraw.setState("1");//申请提现
+        sWithDrawService.save(withDraw);
         return "true";
     }
 
