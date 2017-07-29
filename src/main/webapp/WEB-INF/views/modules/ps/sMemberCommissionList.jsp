@@ -57,7 +57,7 @@
 					${sMemberCommission.newMemberId}
 				</td>
 				<td>
-					${sMemberCommission.sOrder.orderId}
+					${sMemberCommission.receipt.revenueMoney}
 				</td>
 				<td>
 					<fmt:formatNumber value="${sMemberCommission.total}" pattern="#.####"/>

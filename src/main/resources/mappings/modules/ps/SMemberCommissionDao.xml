@@ -7,7 +7,7 @@
 		a.old_member_id AS "oldMemberId",
 		a.new_member_id AS "newMemberId",
 		a.receipt_id AS "receipt.id",
-		c.order_No AS "orderId.order_No",
+		cc.revenue_money AS "receipt.revenueMoney",
 		a.total AS "total",
 		a.sort AS "sort",
 		a.remarks AS "remarks",
@@ -19,7 +19,7 @@
 	</sql>
 	
 	<sql id="sMemberCommissionJoins">
-		LEFT JOIN s_order c ON a.order_id=c.id
+		LEFT JOIN s_receipt cc ON a.receipt_id=cc.id
 	</sql>
     
 	<select id="get" resultType="SMemberCommission">

@@ -54,7 +54,7 @@
 				    ${sOrder.orderNo}
 				</td>
 				<td>
-					${sOrder.goodsId}
+					${sOrder.goods.name}
 				</td>
 				<td>
 					${sOrder.specIds}

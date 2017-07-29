@@ -17,7 +17,7 @@ public class SMemberCommission extends DataEntity<SMemberCommission> {
 	private static final long serialVersionUID = 1L;
 	private String oldMemberId;		// 老会员ID
 	private String newMemberId;		// 被提成会员ID
-	private SReceipt receipt;		// 订单ID
+	private SReceipt receipt;		// 收款ID
 	private String total;		// 提成金额
 	private String sort;		// 排序
 	

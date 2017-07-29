@@ -60,6 +60,8 @@ public class SShopMallController extends BaseController{
     private SSpecService sSpecService;
     @Autowired
     private AreaService areaService;
+    @Autowired
+    private SMemberCommissionService sMemberCommissionService;
 
 
     public String check(ModelAndView modelAndView) {
@@ -277,7 +279,16 @@ public class SShopMallController extends BaseController{
         sAddressService.save(sAddress);
         return "modules/shop/shdzList";
     }
-
+/**
+ * 会员提成
+ */
+@RequestMapping(value = {"huiyuan"})
+public String huiyuan(HttpServletRequest request, HttpServletResponse response, Model model) {
+     SMemberCommission sMemberCommission=new SMemberCommission();
+     List<SMemberCommission> list=sMemberCommissionService.findList(sMemberCommission);
+     model.addAttribute("list",list);
+    return "modules/shop/huiyuanList";
+}
     /**
      * shizx 地址页面
      * */
@@ -368,9 +379,9 @@ public class SShopMallController extends BaseController{
 
     @RequestMapping(value = "shoplist")
     public String shoplist(SShop sShop, String id, HttpServletRequest request, HttpServletResponse response, Model model) {
-        if(StringUtils.isBlank(id)){
-            return "redirect:"+Global.getShopPath()+"/home";//重定向到主页;
-        }
+//        if(StringUtils.isBlank(id)){
+//            return "redirect:"+Global.getShopPath()+"/home";//重定向到主页;
+//        }
         User user = UserUtils.getUser();
         if(StringUtils.isNotBlank(id)&&StringUtils.isNotBlank(user.getId())&&sOrderService.getlist(id,user.getId())==null) {
             SGoods  sGoods=sGoodsService.get(id);
