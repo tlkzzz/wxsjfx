@@ -183,7 +183,7 @@
 	
 	<update id="updateMobile" parameterType="java.lang.String">
 		UPDATE s_member SET 
-			mobile = #{param2}
+			tel = #{param2}
 		WHERE id = #{param1}
 	</update>
 
