@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -167,6 +169,7 @@ public class SShopMallController extends BaseController{
         SReceipt receipt = sReceiptService.insertByTotal(String.valueOf(total));
         if(receipt==null)return "redirect:"+Global.getShopPath()+"/confirmOrder";//重定向到订单确认;
         for(SShop ss: shopList){
+
             sShopMallService.savaOrderByShop(ss,receipt,addressId);
         }
         return "redirect:"+Global.getShopPath()+"/paymentOver";//重定向到支付并提交支付信息
@@ -291,13 +294,12 @@ public class SShopMallController extends BaseController{
  */
 @RequestMapping(value = {"huiyuan"})
 public String huiyuan(HttpServletRequest request, HttpServletResponse response, Model model) {
-     SMemberCommission sMemberCommission=new SMemberCommission();
-     List<SMemberCommission> list=sMemberCommissionService.findList(sMemberCommission);
-    User user = UserUtils.getUser();
-    String photo;
-    photo=user.getMember().getPhoto();
-    model.addAttribute("photo",photo);
-    model.addAttribute("list",list);
+//     SMemberCommission sMemberCommission=new SMemberCommission();
+//     List<SMemberCommission> list=sMemberCommissionService.findList(sMemberCommission);
+    SMemberRelation sMemberRelation = new SMemberRelation();
+   sMemberRelation.setOldMember(new SMember(UserUtils.getUser().getId()));
+   List<SMemberRelation> smlist=sMemberRelationService.findList(sMemberRelation);
+    model.addAttribute("smlist",smlist);
     return "modules/shop/huiyuanList";
 }
     /**
