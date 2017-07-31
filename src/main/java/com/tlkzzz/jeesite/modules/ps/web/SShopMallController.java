@@ -34,7 +34,6 @@ import java.util.Random;
 @Controller
 @RequestMapping(value = "${shopPath}")
 public class SShopMallController extends BaseController{
-    private String url = "";
 
     @Autowired
     private SGoodsService sGoodsService;
@@ -63,20 +62,16 @@ public class SShopMallController extends BaseController{
     @Autowired
     private SMemberCommissionService sMemberCommissionService;
     @Autowired
+    private SMemberRelationService sMemberRelationService;
+    @Autowired
     private SWithDrawService sWithDrawService;
 
-
-    public String check(ModelAndView modelAndView) {
-        if (StringUtils.isBlank(UserUtils.getUser().getId())){
-            url =  "redirect:"+ Global.getAdminPath();
-        }
-        return url;
-    }
     /**         商城代码开始          **/
     @RequestMapping(value = {"index",""})
     public String index(Model model){/**首页**/
-        SMember member = sMemberService.saveUserByJson("{\"openid\":\"oI-t8wHURtTZVlvYAHCzvqPO81CM\",\"nickname\":\"国服卡牌\",\"sex\":1,\"language\":\"zh_CN\",\"city\":\"长沙\",\"province\":\"湖南\",\"country\":\"中国\",\"headimgurl\":\"http://wx.qlogo.cn/mmhead/PiajxSqBRaEKmEB9icvchLClMf608zv19X72ya8h6eaQpPwm3nRFmJeA/0\",\"privilege\":[],\"unionid\":\"oGjjfspNk16U8ENVjjd93QYzU4ro\"}");
-        if(member!=null&&StringUtils.isNotBlank(member.getId()))UserUtils.setMemberId(member.getId());
+        String oldId = UserUtils.getCache("QRScan_Member_ID").toString();
+        if(StringUtils.isNotBlank(oldId))sMemberRelationService.saveByOldId(oldId);
+        UserUtils.removeCache("QRScan_Member_ID");
         model.addAttribute("user",UserUtils.getUser());
         return "modules/shop/index";
     }
@@ -88,6 +83,11 @@ public class SShopMallController extends BaseController{
     public String home(HttpServletRequest request,HttpServletResponse response,Model model){
         model.addAttribute("page",sGoodsService.findPage(new Page<SGoods>(request,response),new SGoods()));
         return "modules/shop/home";
+    }
+    @RequestMapping(value = "QRScan")
+    public String QRScan(String oldId){
+        if(StringUtils.isNotBlank(oldId))UserUtils.putCache("QRScan_Member_ID",oldId);
+        return "redirect:"+Global.getAdminPath()+"/wx/wxuser/toCode";//重定向到登录
     }
 
     @ResponseBody
@@ -458,6 +458,15 @@ public String huiyuan(HttpServletRequest request, HttpServletResponse response, 
         withDraw.setState("1");//申请提现
         sWithDrawService.save(withDraw);
         return "true";
+    }
+
+    @RequestMapping(value = "getQR")
+    public void getQR(HttpServletRequest request,HttpServletResponse response){
+        User user = UserUtils.getUser();
+        if(user==null||StringUtils.isBlank(user.getId()))return;
+        String URL = request.getScheme()+"--://"+ request.getServerName()+":"+request.getServerPort()+
+                request.getContextPath()+Global.getShopPath()+"/QRScan?oldId="+UserUtils.getUser().getId();
+        sShopMallService.buildQRcode(response,URL,300,300);
     }
 
     /**         商城代码结束          **/
