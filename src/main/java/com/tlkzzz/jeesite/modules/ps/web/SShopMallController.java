@@ -293,7 +293,11 @@ public class SShopMallController extends BaseController{
 public String huiyuan(HttpServletRequest request, HttpServletResponse response, Model model) {
      SMemberCommission sMemberCommission=new SMemberCommission();
      List<SMemberCommission> list=sMemberCommissionService.findList(sMemberCommission);
-     model.addAttribute("list",list);
+    User user = UserUtils.getUser();
+    String photo;
+    photo=user.getMember().getPhoto();
+    model.addAttribute("photo",photo);
+    model.addAttribute("list",list);
     return "modules/shop/huiyuanList";
 }
     /**
