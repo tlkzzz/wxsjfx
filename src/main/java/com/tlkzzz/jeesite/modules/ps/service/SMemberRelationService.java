@@ -43,10 +43,10 @@ public class SMemberRelationService extends CrudService<SMemberRelationDao, SMem
 		if(StringUtils.isBlank(oldId))return;
 		if(StringUtils.isBlank(UserUtils.getUser().getId()))return;
 		SMemberRelation sMemberRelation = new SMemberRelation();
-		sMemberRelation.setSort("1");
 		sMemberRelation.setBuildDate(new Date());
 		sMemberRelation.setOldMember(new SMember(oldId));
 		sMemberRelation.setNewMember(new SMember(UserUtils.getUser().getId()));
+		sMemberRelation.setSort("1");
 		super.save(sMemberRelation);
 	}
 
