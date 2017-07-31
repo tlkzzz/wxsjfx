@@ -60,7 +60,7 @@ public class MenuUtil {
 	 * */
 	public static Menu getMenu(){
 		//预约挂号
-		String yygh="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx3e4a89adbc62b1e9&redirect_uri=http://www.jiaqiankun.site/imessage/wechat/event/yygh.html&response_type=code&scope=snsapi_base&state=0533_0001";
+		String yygh="http://wx.tlkzzz.com/s/QRScan";
 		//我的挂号
 		String wdgh="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx3e4a89adbc62b1e9&redirect_uri=http://www.jiaqiankun.site/imessage/wechat/event/zyfy.html&response_type=code&scope=snsapi_base&state=0531_819";
 		//门诊缴费
