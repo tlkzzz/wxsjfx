@@ -70,7 +70,7 @@
             <p style="clear: both;"></p>
             <div style="width: 100%;margin-top: 3rem;">
                 <p id="qu" style="width: 50%;float: left;"><input type="button" onclick="quchu();" value="取消" style="width: 100%;border: 0;font-size:3em;margin: 0;background-color: transparent;color: #999;"></p>
-                <p style="width: 50%;float: right;"><a href="xinzengyige.html"><input type="button" onclick="tjSave();" value="确定" style="width: 100%;border: 0;font-size:3em;margin: 0;background-color: transparent;color: #999;"></a></p>
+                <p style="width: 50%;float: right;"><input type="button" onclick="tjSave();" value="确定" style="width: 100%;border: 0;font-size:3em;margin: 0;background-color: transparent;color: #999;"></p>
 
 
                 <p style="clear: both;"></p>
@@ -106,15 +106,18 @@
             })
         }
     }
-    function tjSave() {
+    function tjSave(){
+        alert("jinru");
         var  shr=document.getElementById('shr').value;
         var sjhm=document.getElementById('sjhm').value;
         var qrsjhm=document.getElementById('qrsjhm').value;
         var xqdz=document.getElementById('xqdz').value;
         var ssq=document.getElementById('level3').value;
+        alert("1");
         $.ajax({
             type: "POST",
-            url: "http://localhost:8080/s/shdzSave",
+            url: "${shop}/shdzSave",
+            dataTyle:"json",
             data:{
                 shr:shr,
                 sjhm:sjhm,
@@ -122,14 +125,21 @@
                 ssq:ssq
             },
             success: function(data){
-                window.location.href="http://localhost:8080/s/shdzList";
+                window.location.href="${shop}/shdzList";
             }
         });
     }
-
-    function sheng(data,eleId) {
+    function celerOption(eleId) {
         $("#"+eleId).empty();
         $("#"+eleId).append('<option value="">请选择</option>');
+        if(eleId=="level2"){
+            $("#level3").empty();
+            $("#level3").append('<option value="">请选择</option>');
+        }
+    }
+
+    function sheng(data,eleId) {
+        celerOption(eleId);
         if(data=="")return;
         $.ajax({
             type: "POST",
@@ -139,6 +149,7 @@
             },
             success: function(data){
                 if(!data||data==null)return;
+
                for(var i=0;i<data.length;i++){
 //                   alert(data[0].name);
                    var s=document.getElementById(eleId);

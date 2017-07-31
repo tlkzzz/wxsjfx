@@ -13,6 +13,7 @@ import com.tlkzzz.jeesite.modules.ps.dao.SShopDao;
 import com.tlkzzz.jeesite.modules.ps.dao.SSpecClassDao;
 import com.tlkzzz.jeesite.modules.ps.dao.SSpecDao;
 import com.tlkzzz.jeesite.modules.ps.entity.*;
+import com.tlkzzz.jeesite.modules.sys.service.AreaService;
 import com.tlkzzz.jeesite.modules.sys.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,16 @@ public class SShopMallService  extends BaseService {
     private SSpecClassDao sSpecClassDao;
     @Autowired
     private SAddressService sAddressService;
+    @Autowired
+    private SMemberService sMemberService;
+    @Autowired
+    private SReceiptService sReceiptService;
+    @Autowired
+    private SMemberCommissionService sMemberCommissionService;
+    @Autowired
+    private SMemberRelationService sMemberRelationService;
+    @Autowired
+    private SProportionCommissionService sProportionCommissionService;
     /**
      * 获取指定位数的随机数
      * @return
@@ -176,4 +187,48 @@ public class SShopMallService  extends BaseService {
         }
     }
 
+
+    public String tcAdd(SReceipt sReceipt) {
+        if(StringUtils.isNotBlank(sReceipt.getId())){
+        String btcr=sReceipt.getCreateBy().getId();   //被提成人
+        String userId=sReceipt.getCreateBy().getId(); //购买人用户名
+        String shje=sReceipt.getRevenueMoney();		//实际收款
+        String reId=sReceipt.getId();				//收款单id
+        List<SProportionCommission> sProportionCommissionList=sProportionCommissionService.findList(new SProportionCommission());
+//		List<SMemberCommission> sMemberCommissionList=sMemberCommissionService.findList(new SMemberCommission());
+        for(int i=0;i<sProportionCommissionList.size();i++){
+            SMemberRelation sMemberRelation=new SMemberRelation();
+            sMemberRelation.setNewMember(new SMember(userId));
+            List<SMemberRelation> sMemberRelationList=sMemberRelationService.findList(sMemberRelation);
+            if(sMemberRelationList.size()!=0){
+                userId=sMemberRelationList.get(0).getOldMember().getId();
+                SMemberCommission sMemberCommission=new SMemberCommission();
+                sMemberCommission.setOldMemberId(userId);
+                sMemberCommission.setNewMemberId(btcr);
+                sMemberCommission.setReceipt(new SReceipt(reId));
+                Double sh=Double.parseDouble(shje);
+                Double tcbl=Double.parseDouble(sProportionCommissionList.get(i).getCommission());
+                Double tc=sh*tcbl/100;
+                sMemberCommission.setTotal(tc.toString());
+                sMemberCommissionService.save(sMemberCommission);
+                /**
+                 * 提成表添加完成，预留支付接口
+                 * */
+                SMember sMember=new SMember();
+                sMember.setId(userId);
+                List<SMember> sMemberList=sMemberService.findList(sMember);
+                String ye=sMemberList.get(0).getBalance();
+                Double yue=Double.parseDouble(ye);
+                Double balance=yue+tc;
+                sMember.setBalance(balance.toString());
+                sMemberService.balanceUp(sMember);
+                sReceiptService.updateTc(sReceipt);//更新提成表提成状态
+            }
+        }
+            return "true";
+    }else{
+            return "false";
+        }
+
+    }
 }

@@ -2,6 +2,7 @@ package com.tlkzzz.jeesite.modules.ps.web;
 
 
 import com.tlkzzz.jeesite.common.config.Global;
+import com.tlkzzz.jeesite.common.mapper.JsonMapper;
 import com.tlkzzz.jeesite.common.persistence.Page;
 import com.tlkzzz.jeesite.common.utils.Encodes;
 import com.tlkzzz.jeesite.common.utils.JuheSmsUtils;
@@ -274,6 +275,7 @@ public class SShopMallController extends BaseController{
     /**
      *  shizx收货地址保存方法
      **/
+    @ResponseBody
     @RequestMapping(value = {"shdzSave"})
     public String shdzSave(HttpServletRequest request, HttpServletResponse response, Model model) {
         String shr=request.getParameter("shr");
@@ -328,6 +330,15 @@ public String huiyuan(HttpServletRequest request, HttpServletResponse response, 
     public String scshList(String ids) {
         sAddressService.delete(new SAddress(ids));
         return "true";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = {"areaIdList"})
+    public String areaIdList(String areaId) {
+        SAddress sAddress=new SAddress();
+        sAddress.setArea(new Area(areaId));
+        List<SAddress> sAddressList=sAddressService.findList(sAddress);
+        return JsonMapper.toJsonString(sAddressList.get(0));
     }
 
 

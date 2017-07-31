@@ -29,7 +29,7 @@
         <c:if test="${sAddress.isDefault=='1'}">
             <p style="float: left;"><input type="radio" checked  value="${sAddress.id}" onclick="ra('${sAddress.id}');" style="vertical-align: middle;margin: 0;padding: 0;margin-right: .4rem;margin-left: 1rem;"><span style="font-size: 1.5em;text-align: center;">默认地址</span></p>
         </c:if>
-        <c:if test="${sAddress.isDefault=='0'}">
+        <c:if test="${sAddress.isDefault==null||sAddress.isDefault=='0'}">
             <p style="float: left;"><input type="radio"  value="${sAddress.id}" onclick="ra('${sAddress.id}');" style="vertical-align: middle;margin: 0;padding: 0;margin-right: .4rem;margin-left: 1rem;"><span style="font-size: 1.5em;text-align: center;">设为默认</span></p>
         </c:if>
     <p style="float: right;font-size: 2em;margin-right: 2rem;margin-top: .2rem;"><input type="button" value="删除" onclick="sc('${sAddress.id}');" style="font-size:0.8em;margin: 0;background-color: transparent;color: #999;"></p>
@@ -82,13 +82,14 @@
 
     function sc(data) {
         $.ajax({
-            url: "http://localhost:8080/s/scshList",
+            url: "${shop}/scshList",
             type: "POST",
             data:{
               ids:data,
             },
             success: function(data){
                 alert("删除成功");
+                window.location.href="${shop}/shdzList";
             }
         });
     }
@@ -112,14 +113,14 @@
     function ra(data) {
         alert(data);
         $.ajax({
-            url: "http://localhost:8080/s/updateIs",
+            url: "${shop}/updateIs",
             type: "POST",
             data:{
                 ids:data,
             },
             success: function(data){
                 alert("设置成功");
-                window.location.href="http://localhost:8080/s/shdzList?";
+                window.location.href="${shop}/shdzList";
             }
         });
 //        window.location.href="http://localhost:8080/s/updateIs?data="+data;
