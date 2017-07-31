@@ -21,13 +21,13 @@
 
 <body>
 <div style="width: 100%;height: 100%;">
-<c:forEach items="${list}" var="sMemberCommission">
+<c:forEach items="${smlist}" var="sMember">
 	<ul style="width: 100%;height: 100%;">
 		<li style="width: 100%;margin-bottom: 2%;padding: 2% 4%;border-bottom: 1px solid #ccc;box-sizing: border-box;">
-			<img height="100%" width="100%"src="${photo}"/>
+			<img height="100%" width="100%"src="${sMember.newMember.photo}"/>
 			<div style="width: 80%;margin-left: 22%;padding-top: 2rem;">
-				<p style="margin-bottom: 2%;font-size: 3em;">用户名称:<span>${sMemberCommission.newMemberId}</span></p>
-				<p style="color: #666;font-size: 2.4em;">注册时间:<span><fmt:formatDate value="${sMemberCommission.createDate}" pattern="yyyy-MM-dd"/></span></p>
+				<p style="margin-bottom: 2%;font-size: 3em;">用户名称:<span>${sMember.newMember.name}</span></p>
+				<p style="color: #666;font-size: 2.4em;">注册时间:<span><fmt:formatDate value="${sMemberCommission.buildDate}" pattern="yyyy-MM-dd"/></span></p>
 			</div>
 			<div style="clear: both;"></div>
 		</li>
