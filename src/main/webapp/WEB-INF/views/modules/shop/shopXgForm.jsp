@@ -18,6 +18,7 @@
 <body>
     <c:forEach items="${sAddressList}" var="ss">
     <input id="asddid" hidden value="${ss.id}"/>
+    <input id="parent" hidden value="${ss.area.id}"/>
 <div style="background-color: #eee;width: 100%;height: 100%;">
     <div class="AUInfo-main">
         <ul style="width:100%;height: 100%;">
@@ -37,14 +38,14 @@
             <li>
                 <p style="font-size: 3em;float: left;text-align: right;margin-top: 2em;">省市区</p>
                 <%--<input value="${ss.area}" type="text" id="ssq" placeholder="请选择城市地址" style="width:20%;height:80px;font-size:3em;-webkit-appearance:none;margin-right: 2%;">--%>
-                <select onchange="sheng(this.value);" name="level1" id="level1" style="width:20%;height:80px;font-size:3em;-webkit-appearance:none;margin-right: 2%;">
+                <select onchange="sheng(this.value,'level2');" name="level1" id="level1" style="width:20%;height:80px;font-size:3em;-webkit-appearance:none;margin-right: 2%;">
                         <%--<option value="请选择省份" selected>--%>
                     <option value="">请选择</option>
                     <c:forEach items="${areaList}" var="area">
-                        <option value="${area.id}">${area.name}</option>
+                            <option value="${area.id}" >${area.name}</option>
                     </c:forEach>
                 </select>
-                <select onchange="shi(this.value);" name="level2" id="level2" style="width:20%;height:80px;font-size:3em;-webkit-appearance:none;margin-right: 2%;">
+                <select onchange="sheng(this.value,'level3');" name="level2" id="level2" style="width:20%;height:80px;font-size:3em;-webkit-appearance:none;margin-right: 2%;">
                     <option value="">请选择</option>
                 </select>
                 <select name="level3" id="level3" style="width:20%;height:80px;font-size:3em;-webkit-appearance:none;margin-right: 2%;">
@@ -84,13 +85,16 @@
     </div>
 </div>
 <script type="text/javascript">
-    $.ready(function () {
+    $(document).ready(function () {
         $("#dian").click(function(){
             $("#tan").show()
         })
         $("#qu").click(function(){
             $("#tan").hide()
         })
+        $("#level1").val('${sAddressList[0].area.parent.parent.id}');
+        $("#level2").append('<option value="${sAddressList[0].area.parent.id}" selected="selected">${sAddressList[0].area.parent.name}</option>');
+        $("#level3").append('<option value="${sAddressList[0].area.id}" selected="selected">${sAddressList[0].area.name}</option>');
     })
 
     function quchu() {
@@ -121,7 +125,7 @@
         var ssq=document.getElementById('ssq').value;
         $.ajax({
             type: "POST",
-            url: "http://localhost:8080/s/xgdzSave",
+            url: "${shop}/xgdzSave",
             data:{
                 ids:idss,
                 shr:shr,
@@ -130,42 +134,59 @@
                 ssq:ssq
             },
             success: function(data){
-               window.location.href='http://localhost:8080/s/shdzList';
+               window.location.href='${shop}/shdzList';
             }
         });
     }
-    function sheng(data) {
+    function celerOption(eleId) {
+        $("#"+eleId).empty();
+        $("#"+eleId).append('<option value="">请选择</option>');
+        if(eleId=="level2"){
+            $("#level3").empty();
+            $("#level3").append('<option value="">请选择</option>');
+        }
+    }
+    function sheng(data,eleId) {
+        celerOption(eleId);
+        if(data=="")return;
         $.ajax({
             type: "POST",
-            url: "http://localhost:8080/s/shiqu",
+            url: "${shop}/shiqu",
             data:{
                 ids:data,
             },
             success: function(data){
+                if(!data||data==null)return;
+
                 for(var i=0;i<data.length;i++){
 //                   alert(data[0].name);
-                    var s=document.getElementById("level2");
+                    var s=document.getElementById(eleId);
                     s.add(new Option(data[i].name,data[i].id));
                 }
             }
         });
     }
-    function shi(data) {
+
+    function parent() {
+        var sss=document.getElementById("parent").value;
+//        alert(sss);
         $.ajax({
             type: "POST",
-            url: "http://localhost:8080/s/shiqu",
-            data:{
-                ids:data,
-            },
+            url: "${shop}/areaIdList",
+            data:{areaId:sss},
+            dataType:"json",
             success: function(data){
-                for(var i=0;i<data.length;i++){
-//                    alert(data[0].name);
-                    var s=document.getElementById("level3");
-                    s.add(new Option(data[i].name,data[i].id));
-                }
+                alert(data[0].area.id);
+                alert(data[0].area.name);
+                alert(data[0].area.parent.id);
+                alert(data[0].area.parent.name);
+                alert(data[0].area.parent.parent.id);
+                alert(data[0].area.parent.parent.name);
+                $("#level3").append('<option selected = "selected" value="'+data[0].area.id+'">'+data[0].area.name+'</option>');
             }
         });
     }
+//    window.onload=parent;
 </script>
 </body>
 
