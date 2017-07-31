@@ -69,7 +69,7 @@
             <p style="float: left; margin-bottom: .4rem;"><input type="text" disabled="disabled" id="shoudz"/></p>
             <p style="clear: both;"></p>
             <div style="width: 100%;margin-top: 3rem;">
-                <p id="qu" style="width: 50%;float: left;"><input type="button" value="取消" style="width: 100%;border: 0;font-size:3em;margin: 0;background-color: transparent;color: #999;"></p>
+                <p id="qu" style="width: 50%;float: left;"><input type="button" onclick="quchu();" value="取消" style="width: 100%;border: 0;font-size:3em;margin: 0;background-color: transparent;color: #999;"></p>
                 <p style="width: 50%;float: right;"><a href="xinzengyige.html"><input type="button" onclick="tjSave();" value="确定" style="width: 100%;border: 0;font-size:3em;margin: 0;background-color: transparent;color: #999;"></a></p>
 
 
@@ -87,6 +87,10 @@
             $("#tan").hide()
         })
     })
+    function quchu() {
+        $("#tan").hide();
+    }
+
     function savege() {
         var sjhm=document.getElementById('sjhm').value;
         var qrsjhm=document.getElementById('qrsjhm').value;

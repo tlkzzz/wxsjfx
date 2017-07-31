@@ -300,7 +300,11 @@ public String huiyuan(HttpServletRequest request, HttpServletResponse response, 
      * shizx 地址页面
      * */
     @RequestMapping(value = {"shdzList"})
-    public String shdzList() {
+    public String shdzList(Model model) {
+        SAddress sAddress=new SAddress();
+        sAddress.setMember(new SMember(UserUtils.getUser().getId()));
+        List<SAddress> sAddressList=sAddressService.findList(sAddress);
+        model.addAttribute("sAddressList",sAddressList);
         return "modules/shop/shdzList";
     }
 
@@ -326,6 +330,8 @@ public String huiyuan(HttpServletRequest request, HttpServletResponse response, 
         String ids=request.getParameter("data");
         SAddress sAddress=new SAddress(ids);
         List<SAddress> sAddressList=sAddressService.findList(sAddress);
+        List<Area> areaList=areaService.shengFindList(new Area());
+        model.addAttribute("areaList",areaList);
         model.addAttribute("sAddressList",sAddressList);
         return "modules/shop/shopXgForm";
     }
@@ -366,7 +372,12 @@ public String huiyuan(HttpServletRequest request, HttpServletResponse response, 
      * shizx 我的订单详情页面
      * */
     @RequestMapping(value = {"myDdList"})
-    public String myDdList() {
+    public String myDdList(String data,Model model) {
+        SOrder sOrder=new SOrder();
+        sOrder.setCreateBy(new User(UserUtils.getUser().getId()));
+        sOrder.setDdbs(data);
+        List<SOrder> sorderList=sOrderService.findList(sOrder);
+        model.addAttribute("sorderList",sorderList);
         return "modules/shop/MyddList";
     }
 

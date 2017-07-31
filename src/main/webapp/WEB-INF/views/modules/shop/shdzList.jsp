@@ -19,13 +19,29 @@
             <a href="${shop}/listss"><input type="button" value="新增一个收货地址" style="width: 100%;background-color:#84bd00;border: 0px solid;padding: 3rem 3rem;color: #fff;font-size: 3em; -webkit-appearance: none;">
             </a></div>
 
-    <div calss=".carddiv" style="width: 100%;background-color: #fff;"></div>
-
+    <c:forEach items="${sAddressList}" var="sAddress">
+    <p style="float: left;margin: .6rem 1rem;font-size: 3em;color: #333;">${sAddress.shr}</p>
+    <p style="float: left;margin: .6rem 1rem;font-size: 3em;color: #333;">${sAddress.tel}</p>
+    <div style="clear: both;"></div>
+    <p style="margin-left: 1rem; font-size: 2em;color: #999;">${sAddress.area.name}${sAddress.address}</p>
+    <hr style="border-top: 1px solid #ccc;">
+    <div style="width: 100%;padding-bottom: 2em;margin-bottom: 0.6em">
+        <c:if test="${sAddress.isDefault=='1'}">
+            <p style="float: left;"><input type="radio" checked  value="${sAddress.id}" onclick="ra('${sAddress.id}');" style="vertical-align: middle;margin: 0;padding: 0;margin-right: .4rem;margin-left: 1rem;"><span style="font-size: 1.5em;text-align: center;">默认地址</span></p>
+        </c:if>
+        <c:if test="${sAddress.isDefault=='0'}">
+            <p style="float: left;"><input type="radio"  value="${sAddress.id}" onclick="ra('${sAddress.id}');" style="vertical-align: middle;margin: 0;padding: 0;margin-right: .4rem;margin-left: 1rem;"><span style="font-size: 1.5em;text-align: center;">设为默认</span></p>
+        </c:if>
+    <p style="float: right;font-size: 2em;margin-right: 2rem;margin-top: .2rem;"><input type="button" value="删除" onclick="sc('${sAddress.id}');" style="font-size:0.8em;margin: 0;background-color: transparent;color: #999;"></p>
+    <p style="float: right;font-size: 2em;margin-right: 2rem;margin-top: .2rem;"><input type="button" value="修改" onclick="xg('${sAddress.id}');" style="font-size:0.8em;margin: 0;background-color: transparent;color: #999;"></p>
+    <p style="clear: both;"></p>
+    </c:forEach>
+</div>
 </div>
 </body>
 <script type="text/javascript">
     $(document).ready(function () {
-        ddd();
+//        ddd();
     })
 
     function ddd() {
@@ -77,7 +93,7 @@
         });
     }
     function xg(data) {
-//        alert(data);
+        alert(data);
 //        $.ajax({
 //            url: "http://localhost:8080/s/xgshList",
 //            type: "POST",

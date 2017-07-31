@@ -69,6 +69,9 @@
 					<c:if test="${sReceipt.tcState=='0'}">
     				<a href="${ctx}/ps/sReceipt/tcAdd?id=${sReceipt.id}&revenueMoney=${sReceipt.revenueMoney}&cjr=${sReceipt.createBy.id}">提成</a>
 					</c:if><%--<a href="${ctx}/ps/sReceipt/delete?id=${sReceipt.id}" onclick="return confirmx('确认要删除该收款表吗？', this.href)">删除</a>--%>
+					<c:if test="${sReceipt.tcState=='1'}">
+						已提成
+					</c:if>
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>

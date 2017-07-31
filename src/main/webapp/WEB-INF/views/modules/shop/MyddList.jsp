@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>我的订单ss</title>
+    <title>我的订单</title>
     <script src="${ctxStatic}/shop/jquery-1.9.1.js"></script>
     <style>
         body,p{
@@ -23,7 +23,7 @@
             width: 20%;
             float: left;
             text-align: center;
-            font-size:2rem;
+            font-size:2.4rem;
             color: #999;
             padding: 2rem 0;
         }
@@ -32,20 +32,20 @@
             height: 3px;
             font-size: 0px;/*ie6*/
             position: absolute;
-            top: 6rem;
+            top: 6.3rem;
             left: 0px;
             background-color:  #84bd00;
         }
 
         .dingdan_box{
             width: 100%;
-            margin-top: .8rem;
-            padding: .4rem;
+            margin-top: 1rem;
+            padding: 2rem;
             background-color: #fff;
             border-top: 1px solid #ccc;
             border-bottom: 1px solid #ccc;
             box-sizing: border-box;
-            margin-bottom: .4rem;
+            margin-bottom: 1rem;
         }
         .text_left{
             text-align: left;
@@ -61,15 +61,16 @@
         .time{
             color: #999;
             font-size: 2rem;
-            margin-top: .2rem;
+            margin-top: 1rem;
         }
         .products{
             width: 100%;
-            margin: .4rem 0;
+            margin: 1rem 0;
         }
         .images{
-            width: 25%;
+            width: 20%;
             height: 200px;
+            float: left;
             overflow: hidden;
         }
         .images img{
@@ -79,12 +80,13 @@
             margin-right: 1rem;
         }
         .name{
-            width: 100%;
-            padding: .8rem 0;
+            width: 80%;
+            padding: 1rem 0;
+            margin-left: 22%;
         }
         .products_name{
             text-align: left;
-            font-size: 2rem;
+            font-size: 2.4rem;
             font-weight: bold;
         }
         .price{
@@ -99,17 +101,19 @@
             border: 1px solid #999;
             background-color: transparent;
             border-radius: 4px;
-            padding: .2rem .8rem;
+            padding: 1rem 1rem;
             color: #999;
             font-size: 2rem;
+            margin-right: .4em;
         }
         .button2{
             border: 0;
             background-color: #86bd00;
             border-radius: 4px;
-            padding: .2rem 1.4rem;
+            padding: 1rem 2rem;
             color: #fff;
             font-size: 2rem;
+            -webkit-appearance:none;
         }
         .button3{
             border: 0;
@@ -127,34 +131,38 @@
             background-color: rgba(0,0,0,0.4)
         }
         .bg{
-            width: 50%;
-            height: 25%;
+            width: 70%;
             position: absolute;
-            left: 25%;
+            left: 15%;
             top: 30%;
             background-color: #fff;
         }
         .queding{
             text-align: center;
             margin-top: 25%;
+            font-size: 3.4em;
         }
         .anniu{
             width: 100%;
             margin-top: 20%;
             text-align: center;
+            margin-bottom: 10%;
         }
         .anniu1,.anniu2{
             width: 45%;
-            padding: .4rem 0;
+            padding: 2rem 0;
             border: 0;
             color: #fff;
+            font-size: 2em;
             border-radius: 4px;
         }
         .anniu1{
             background-color: #999;
+            -webkit-appearance:none;
         }
         .anniu2{
             background-color: #86bd00;
+            -webkit-appearance:none;
         }
     </style>
 </head>
@@ -171,28 +179,61 @@
         <div style="clear: both;"></div>
     </div>
     <div id="ddiv">
-
+<c:forEach items="${sorderList}" var="sorder">
     <div class="dingdan_box">
-        <p style="width: 100%;"><p class="text_left">订单编号：ABCDABCDABCDABCD</p><p class="text_right">待付款</p></p>
-        <p class="time">下单时间：2017.07.18</p>
+        <p style="width: 100%;"><p class="text_left">订单编号：${sorder.orderNo}</p><p class="text_right">
+        <c:if test="${sorder.ddbs=='1'}">
+        待付款
+        </c:if>
+        <c:if test="${sorder.ddbs=='2'}">
+            待发货
+        </c:if>
+        <c:if test="${sorder.ddbs=='3'}">
+            待收货
+        </c:if>
+        <c:if test="${sorder.ddbs=='4'}">
+            待评价
+        </c:if>
+        </p></p>
+        <p class="time">下单时间：${sorder.createDate}</p>
         <div class="products">
             <div class="images"><img src="images/btn-dibushouye.png" style="width: 100%;"></div>
             <div class="name">
-                <p class="products_name">商品名称商品名称商品名称商品名称商品名称商品名称商品名称</p>
-                <p class="time">规格:1*10包</p>
-                <p class="price">￥50.00</p>
+                <p class="products_name">${sorder.goods.name}</p>
+                <p class="time">规格:${sorder.specIds}包</p>
+                <p class="price">￥${sorder.price}</p>
             </div>
             <div style="clear: both;"></div>
             <div class="button_group">
-				<span>
+                <c:if test="${sorder.ddbs=='1'}">
+                    <span>
 					<input type="button" value="取消订单" class="button1">
 					<input type="button" value="去付款" class="button2">
 				</span>
+                </c:if>
+                <c:if test="${sorder.ddbs=='2'}">
+                    <span>
+					<input type="button" value="确认收货" onclick="qrsh();" class="button3">
+				</span>
+                </c:if>
+                <c:if test="${sorder.ddbs=='3'}">
+                    <span>
+					<input type="button" value="催促卖家发货" onclick="ccfh();" class="button3">
+				</span>
+                </c:if>
+                <c:if test="${sorder.ddbs=='4'}">
+                    <span>
+					<div style="width: 100%;">
+            <textarea id="${sorder.id}" style="width: 100%;height: 70px;margin: 0;border: 1px solid #ddd;padding: .4rem;box-sizing: border-box;font-size: 0.8em;line-height: 18px;" placeholder="评价内容"></textarea>
+            </div><input type="button" onclick="tjpj('${sorder.id}');" value="提交评价"  class="button3">
+				</span>
+                </c:if>
+
             </div>
         </div>
         <div style="clear: both;"></div>
     </div>
-
+</c:forEach>
 
 
     <%--<div calss=".carddiv">--%>
@@ -315,23 +356,23 @@ function ss(data) {
     }
     function qb() {
         $(".dingdan_box").remove();
-        ss();
+        window.location.href="http://localhost:8080/s/myDdList";
     }
     function ff() {
         $(".dingdan_box").remove();
-       ss(1);
+        window.location.href="http://localhost:8080/s/myDdList?data=1";
     }
     function fa() {
         $(".dingdan_box").remove();
-        ss(2);
+        window.location.href="http://localhost:8080/s/myDdList?data=2";
     }
     function sh() {
         $(".dingdan_box").remove();
-        ss(3);
+        window.location.href="http://localhost:8080/s/myDdList?data=3";
     }
     function pin() {
         $(".dingdan_box").remove();
-        ss(4);
+        window.location.href="http://localhost:8080/s/myDdList?data=4";
     }
 </script>
 </body>
