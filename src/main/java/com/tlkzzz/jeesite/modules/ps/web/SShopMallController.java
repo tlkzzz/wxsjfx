@@ -69,8 +69,9 @@ public class SShopMallController extends BaseController{
     /**         商城代码开始          **/
     @RequestMapping(value = {"index",""})
     public String index(Model model){/**首页**/
-        String oldId = UserUtils.getCache("QRScan_Member_ID").toString();
-        if(StringUtils.isNotBlank(oldId))sMemberRelationService.saveByOldId(oldId);
+        UserUtils.setMemberId("af9fcf50158e45cc9768a8b973c16579");
+        String oldId = String.valueOf(UserUtils.getCache("QRScan_Member_ID"));
+        if(StringUtils.isNotBlank(oldId)&&!"null".equals(oldId))sMemberRelationService.saveByOldId(oldId);
         UserUtils.removeCache("QRScan_Member_ID");
         model.addAttribute("user",UserUtils.getUser());
         return "modules/shop/index";
@@ -195,8 +196,7 @@ public class SShopMallController extends BaseController{
             }
             String s = sShopMallService.random(6);
             String code = "#name#="+user.getName()+"&#code#="+s;
-            //if(JuheSmsUtils.getRequest(mobile,code)){
-            if(true){
+            if(JuheSmsUtils.getRequest(mobile,code)){
                 UserUtils.putCache("SmsVCode",s);
                 UserUtils.putCache("SmsMobile",mobile.trim());
                 UserUtils.putCache("SmsDate",new Date());
@@ -464,7 +464,7 @@ public String huiyuan(HttpServletRequest request, HttpServletResponse response, 
     public void getQR(HttpServletRequest request,HttpServletResponse response){
         User user = UserUtils.getUser();
         if(user==null||StringUtils.isBlank(user.getId()))return;
-        String URL = request.getScheme()+"--://"+ request.getServerName()+":"+request.getServerPort()+
+        String URL = request.getScheme()+"://"+ request.getServerName()+":"+request.getServerPort()+
                 request.getContextPath()+Global.getShopPath()+"/QRScan?oldId="+UserUtils.getUser().getId();
         sShopMallService.buildQRcode(response,URL,300,300);
     }
