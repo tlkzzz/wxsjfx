@@ -1,5 +1,6 @@
 package com.tlkzzz.jeesite.modules.wx.web;
 
+import com.tlkzzz.jeesite.common.config.Global;
 import com.tlkzzz.jeesite.common.mapper.JsonMapper;
 import com.tlkzzz.jeesite.common.utils.StringUtils;
 import com.tlkzzz.jeesite.common.web.BaseController;
@@ -82,7 +83,7 @@ public class WxUserController extends BaseController {
 //                    WeixinUserInfo snsUserInfo= getUserInfo(t,o);
 //                }
                 System.out.println("session中获取的access——tooken：" + session.getAttribute("access_token"));
-                return "modules/wx/success";
+                return "redirect:"+ Global.getShopPath();//重定向到商城首页
             } catch (IOException e) {
                 int errorCode = jsonObject.getInt("errcode");
                 String errorMsg = jsonObject.getString("errmsg");
