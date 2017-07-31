@@ -253,10 +253,12 @@
         <%--</div>--%>
     <%--</div>--%>
     <!-- 我的会员 -->
+    <a href="${shop}/huiyuan">
     <div class="my_member">
         <span class="member_left"><img src="${ctxStatic}/images/wodehuiyuan.png" style="width: 15%;vertical-align: middle;margin-right: 4%;">我的会员</span>
         <p class="member_right"><img src="${ctxStatic}/images/btn-fanhui-hui.png"></p>
     </div>
+    </a>
     <!-- 收货地址 -->
     <a href="${shop}/shdzList">
         <div class="my_member">
