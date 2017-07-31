@@ -1,10 +1,16 @@
 package com.tlkzzz.jeesite.modules.wx.web;
 
+import com.tlkzzz.jeesite.common.mapper.JsonMapper;
+import com.tlkzzz.jeesite.common.utils.StringUtils;
 import com.tlkzzz.jeesite.common.web.BaseController;
+import com.tlkzzz.jeesite.modules.ps.entity.SMember;
+import com.tlkzzz.jeesite.modules.ps.service.SMemberService;
+import com.tlkzzz.jeesite.modules.sys.utils.UserUtils;
 import com.tlkzzz.jeesite.modules.wx.entity.WeixinUserInfo;
 import com.tlkzzz.jeesite.modules.wx.util.WeiXinUtil;
 import com.tlkzzz.jeesite.modules.wx.util.WxConfig;
 import net.sf.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -22,7 +28,8 @@ import java.io.IOException;
 public class WxUserController extends BaseController {
     public static final String AppID = "wx4ac0452ec50187c7";
     public static final String AppSecret = "7639a52231050886e150d0c53f33a7cd";
-
+    @Autowired
+    private SMemberService sMemberService;
 
     //微信授权登录传入code
     @RequestMapping(value = "toCode")    //实际访问的url地址
@@ -105,6 +112,8 @@ public class WxUserController extends BaseController {
         WeixinUserInfo snsUserInfo = null;
         try {
             jsonObject = WeiXinUtil.doGetStr(url);
+            SMember member = sMemberService.saveUserByJson(jsonObject.toString());
+            if(member!=null&& StringUtils.isNotBlank(member.getId())) UserUtils.setMemberId(member.getId());
             snsUserInfo = new WeixinUserInfo();
             // 用户的标识
             snsUserInfo.setOpenId(jsonObject.getString("openid"));
