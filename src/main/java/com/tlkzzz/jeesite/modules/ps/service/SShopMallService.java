@@ -1,5 +1,11 @@
 package com.tlkzzz.jeesite.modules.ps.service;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
 import com.tlkzzz.jeesite.common.service.BaseService;
 import com.tlkzzz.jeesite.common.utils.StringUtils;
 import com.tlkzzz.jeesite.modules.ps.dao.SOrderDao;
@@ -12,7 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Random;
 
@@ -147,6 +157,23 @@ public class SShopMallService  extends BaseService {
         sOrderDao.insert(order);
         sShopDao.delete(sShop);
         return order;
+    }
+
+    public void buildQRcode(HttpServletResponse response,String URL,int width,int height){
+        width=(width<=0)?200:width;height=(height<=0)?200:height;
+        Hashtable hints= new Hashtable();
+        hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
+        BitMatrix bitMatrix = null;
+        try {
+            bitMatrix = new MultiFormatWriter().encode(URL, BarcodeFormat.QR_CODE, width, height,hints);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+        try {
+            MatrixToImageWriter.writeToStream(bitMatrix, "png", response.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
