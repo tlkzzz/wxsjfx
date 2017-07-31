@@ -3,8 +3,12 @@
  */
 package com.tlkzzz.jeesite.modules.ps.service;
 
+import java.util.Date;
 import java.util.List;
 
+import com.tlkzzz.jeesite.common.utils.StringUtils;
+import com.tlkzzz.jeesite.modules.ps.entity.SMember;
+import com.tlkzzz.jeesite.modules.sys.utils.UserUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +38,18 @@ public class SMemberRelationService extends CrudService<SMemberRelationDao, SMem
 		return super.findPage(page, sMemberRelation);
 	}
 	
+	@Transactional(readOnly = false)
+	public void saveByOldId(String oldId) {
+		if(StringUtils.isBlank(oldId))return;
+		if(StringUtils.isBlank(UserUtils.getUser().getId()))return;
+		SMemberRelation sMemberRelation = new SMemberRelation();
+		sMemberRelation.setSort("1");
+		sMemberRelation.setBuildDate(new Date());
+		sMemberRelation.setOldMember(new SMember(oldId));
+		sMemberRelation.setNewMember(new SMember(UserUtils.getUser().getId()));
+		super.save(sMemberRelation);
+	}
+
 	@Transactional(readOnly = false)
 	public void save(SMemberRelation sMemberRelation) {
 		super.save(sMemberRelation);
