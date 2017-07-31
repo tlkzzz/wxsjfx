@@ -55,7 +55,7 @@
 		<c:forEach items="${page.list}" var="sAddress">
 			<tr>
 				<td><a href="${ctx}/ps/sAddress/form?id=${sAddress.id}">
-					${sAddress.member.id}
+					${sAddress.member.name}
 				</a></td>
 				<td>
 					${sAddress.area.name}
