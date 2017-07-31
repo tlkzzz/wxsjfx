@@ -35,7 +35,7 @@
                 <input value="${ss.tel}" type="text" id="qrsjhm"  placeholder="请再次输入手机号码" style="border-bottom: 1px solid #666;color: #ada2a2;text-align: left;padding: 0;margin: 0;background-color: transparent;">
             </li>
             <li>
-                <p style="width: 100%;padding: 6% 4% 0;box-sizing: border-box;">省市区</p>
+                <p style="font-size: 3em;float: left;text-align: right;margin-top: 2em;">省市区</p>
                 <%--<input value="${ss.area}" type="text" id="ssq" placeholder="请选择城市地址" style="width:20%;height:80px;font-size:3em;-webkit-appearance:none;margin-right: 2%;">--%>
                 <select onchange="sheng(this.value);" name="level1" id="level1" style="width:20%;height:80px;font-size:3em;-webkit-appearance:none;margin-right: 2%;">
                         <%--<option value="请选择省份" selected>--%>
