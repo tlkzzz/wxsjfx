@@ -2,6 +2,7 @@ package com.tlkzzz.jeesite.modules.ps.web;
 
 
 import com.tlkzzz.jeesite.common.config.Global;
+import com.tlkzzz.jeesite.common.mapper.JsonMapper;
 import com.tlkzzz.jeesite.common.persistence.Page;
 import com.tlkzzz.jeesite.common.utils.Encodes;
 import com.tlkzzz.jeesite.common.utils.JuheSmsUtils;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -69,8 +72,9 @@ public class SShopMallController extends BaseController{
     /**         商城代码开始          **/
     @RequestMapping(value = {"index",""})
     public String index(Model model){/**首页**/
-        String oldId = UserUtils.getCache("QRScan_Member_ID").toString();
-        if(StringUtils.isNotBlank(oldId))sMemberRelationService.saveByOldId(oldId);
+        UserUtils.setMemberId("af9fcf50158e45cc9768a8b973c16579");
+        String oldId = String.valueOf(UserUtils.getCache("QRScan_Member_ID"));
+        if(StringUtils.isNotBlank(oldId)&&!"null".equals(oldId))sMemberRelationService.saveByOldId(oldId);
         UserUtils.removeCache("QRScan_Member_ID");
         model.addAttribute("user",UserUtils.getUser());
         return "modules/shop/index";
@@ -166,6 +170,7 @@ public class SShopMallController extends BaseController{
         SReceipt receipt = sReceiptService.insertByTotal(String.valueOf(total));
         if(receipt==null)return "redirect:"+Global.getShopPath()+"/confirmOrder";//重定向到订单确认;
         for(SShop ss: shopList){
+
             sShopMallService.savaOrderByShop(ss,receipt,addressId);
         }
         return "redirect:"+Global.getShopPath()+"/paymentOver";//重定向到支付并提交支付信息
@@ -174,9 +179,15 @@ public class SShopMallController extends BaseController{
     @RequestMapping(value = "paymentOver")
     public String paymentOver(String id, Model model){
         if(StringUtils.isNotBlank(id)){
-            model.addAttribute("receipt", sReceiptService.get(id));
-            model.addAttribute("orderList", sOrderService.findListByReceiptId(id));
-            model.addAttribute("flag",true);
+            SReceipt receipt = sReceiptService.get(id);
+            if(receipt!=null) {
+                sShopMallService.tcAdd(receipt);
+                model.addAttribute("receipt", receipt);
+                model.addAttribute("orderList", sOrderService.findListByReceiptId(id));
+                model.addAttribute("flag", true);
+            }else {
+                model.addAttribute("flag",false);
+            }
         }else {
             model.addAttribute("flag",false);
         }
@@ -195,8 +206,7 @@ public class SShopMallController extends BaseController{
             }
             String s = sShopMallService.random(6);
             String code = "#name#="+user.getName()+"&#code#="+s;
-            //if(JuheSmsUtils.getRequest(mobile,code)){
-            if(true){
+            if(JuheSmsUtils.getRequest(mobile,code)){
                 UserUtils.putCache("SmsVCode",s);
                 UserUtils.putCache("SmsMobile",mobile.trim());
                 UserUtils.putCache("SmsDate",new Date());
@@ -271,6 +281,7 @@ public class SShopMallController extends BaseController{
     /**
      *  shizx收货地址保存方法
      **/
+    @ResponseBody
     @RequestMapping(value = {"shdzSave"})
     public String shdzSave(HttpServletRequest request, HttpServletResponse response, Model model) {
         String shr=request.getParameter("shr");
@@ -291,13 +302,12 @@ public class SShopMallController extends BaseController{
  */
 @RequestMapping(value = {"huiyuan"})
 public String huiyuan(HttpServletRequest request, HttpServletResponse response, Model model) {
-     SMemberCommission sMemberCommission=new SMemberCommission();
-     List<SMemberCommission> list=sMemberCommissionService.findList(sMemberCommission);
-    User user = UserUtils.getUser();
-    String photo;
-    photo=user.getMember().getPhoto();
-    model.addAttribute("photo",photo);
-    model.addAttribute("list",list);
+//     SMemberCommission sMemberCommission=new SMemberCommission();
+//     List<SMemberCommission> list=sMemberCommissionService.findList(sMemberCommission);
+    SMemberRelation sMemberRelation = new SMemberRelation();
+   sMemberRelation.setOldMember(new SMember(UserUtils.getUser().getId()));
+   List<SMemberRelation> smlist=sMemberRelationService.findList(sMemberRelation);
+    model.addAttribute("smlist",smlist);
     return "modules/shop/huiyuanList";
 }
     /**
@@ -326,6 +336,15 @@ public String huiyuan(HttpServletRequest request, HttpServletResponse response, 
     public String scshList(String ids) {
         sAddressService.delete(new SAddress(ids));
         return "true";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = {"areaIdList"})
+    public String areaIdList(String areaId) {
+        SAddress sAddress=new SAddress();
+        sAddress.setArea(new Area(areaId));
+        List<SAddress> sAddressList=sAddressService.findList(sAddress);
+        return JsonMapper.toJsonString(sAddressList.get(0));
     }
 
 
@@ -464,7 +483,7 @@ public String huiyuan(HttpServletRequest request, HttpServletResponse response, 
     public void getQR(HttpServletRequest request,HttpServletResponse response){
         User user = UserUtils.getUser();
         if(user==null||StringUtils.isBlank(user.getId()))return;
-        String URL = request.getScheme()+"--://"+ request.getServerName()+":"+request.getServerPort()+
+        String URL = request.getScheme()+"://"+ request.getServerName()+":"+request.getServerPort()+
                 request.getContextPath()+Global.getShopPath()+"/QRScan?oldId="+UserUtils.getUser().getId();
         sShopMallService.buildQRcode(response,URL,300,300);
     }

@@ -5,7 +5,15 @@
 	<sql id="sMemberRelationColumns">
 		a.id AS "id",
 		a.old_member_id AS "oldMember.id",
+		oldMem.name AS "oldMember.name",
+		oldMem.photo AS "oldMember.photo",
+		oldMem.email AS "oldMember.email",
+		oldMem.tel AS "oldMember.tel",
 		a.new_member_id AS "newMember.id",
+		newMem.name AS "newMember.name",
+		newMem.photo AS "newMember.photo",
+		newMem.email AS "newMember.email",
+		newMem.tel AS "newMember.tel",
 		a.build_date AS "buildDate",
 		a.sort AS "sort",
 		a.remarks AS "remarks",
@@ -17,6 +25,8 @@
 	</sql>
 	
 	<sql id="sMemberRelationJoins">
+		LEFT JOIN s_member oldMem on oldMem.id=a.old_member_id
+		LEFT JOIN s_member newMem on newMem.id=a.new_member_id
 	</sql>
     
 	<select id="get" resultType="SMemberRelation">
@@ -38,7 +48,7 @@
 				AND a.old_member_id = #{oldMember.id}
 			</if>
 			<if test="oldMember != null and oldMember.name != null and oldMember.name != ''">
-				AND a.old_member_id LIKE
+				AND oldMem.name LIKE
 					<if test="dbName == 'oracle'">'%'||#{oldMember.name}||'%'</if>
 					<if test="dbName == 'mssql'">'%'+#{oldMember.name}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{oldMember.name},'%')</if>
@@ -47,7 +57,7 @@
 				AND a.new_member_id = #{newMember.id}
 			</if>
 			<if test="newMember != null and newMember.name != null and newMember.name != ''">
-				AND a.new_member_id LIKE
+				AND newMem.name LIKE
 					<if test="dbName == 'oracle'">'%'||#{newMember.name}||'%'</if>
 					<if test="dbName == 'mssql'">'%'+#{newMember.name}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{newMember.name},'%')</if>
