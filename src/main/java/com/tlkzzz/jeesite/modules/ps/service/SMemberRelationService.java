@@ -42,6 +42,7 @@ public class SMemberRelationService extends CrudService<SMemberRelationDao, SMem
 	public void saveByOldId(String oldId) {
 		if(StringUtils.isBlank(oldId))return;
 		if(StringUtils.isBlank(UserUtils.getUser().getId()))return;
+		if(oldId.equals(UserUtils.getUser().getId()))return;
 		SMemberRelation sMemberRelation = new SMemberRelation();
 		sMemberRelation.setNewMember(new SMember(UserUtils.getUser().getId()));
 		if(findList(sMemberRelation).size()>0)return;
