@@ -163,7 +163,7 @@
 	</div>
 </div>
 <script type="text/javascript">
-	var pageNo=1;
+	var pageNo=2;
 	var lockFlag=false;
 
     function downUpLoad() {
