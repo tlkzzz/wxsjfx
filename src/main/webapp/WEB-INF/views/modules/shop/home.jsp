@@ -67,7 +67,7 @@
 	<!-- 轮播区域 -->
 	<div class="lunbo">
 		<c:forEach items="${page.list}" var="goods" varStatus="status">
-			<c:if test="${status.index < 3}">
+			<c:if test="${status.index < 4}">
 			<a href="${shop}/goodsInfo?id=${goods.id}"><img src="${goods.image}"></a>
 			</c:if>
 		</c:forEach>
