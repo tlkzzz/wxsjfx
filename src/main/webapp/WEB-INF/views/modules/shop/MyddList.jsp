@@ -195,9 +195,10 @@
             待评价
         </c:if>
         </p></p>
-        <p class="time">下单时间：${sorder.createDate}</p>
+        <p>下单时间：<fmt:formatDate value="${sorder.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/></p>
+        <%--<p class="time" pattern="yyyy-MM-dd HH:mm:ss">${sorder.createDate}</p>--%>
         <div class="products">
-            <div class="images"><img src="images/btn-dibushouye.png" style="width: 100%;"></div>
+            <div class="images"><img src="${ctxStatic}/images/btn-dibushouye.png" style="width: 100%;"></div>
             <div class="name">
                 <p class="products_name">${sorder.goods.name}</p>
                 <p class="time">规格:${sorder.specIds}包</p>
@@ -339,11 +340,11 @@ function ss(data) {
     }
     function tjpj(data) {
 //        alert("回复提交成功");
-        alert(data);
+//        alert(data);
         var tt=document.getElementById(data.trim()).value;
 //        alert(tt);
         $.ajax({
-            url: "http://localhost:8080/s/saveHf",
+            url: "${shop}/saveHf",
             type: "POST",
             data:{
                 hf:tt,
@@ -351,6 +352,7 @@ function ss(data) {
             },
             success: function(data){
                 alert("回复成功");
+                window.location.href="${shop}/myDdList?data=4";
             }
         });
     }
