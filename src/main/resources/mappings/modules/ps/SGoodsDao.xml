@@ -98,7 +98,7 @@
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
-				ORDER BY a.sort DESC
+				ORDER BY a.sort
 			</otherwise>
 		</choose>
 	</select>
