@@ -58,9 +58,9 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="sMember">
 			<tr>
-				<td><a href="${ctx}/ps/sMember/form?id=${sMember.id}">
+				<td>
 					${sMember.name}
-				</a></td>
+				</td>
 				<td>
 					${sMember.loginName}
 				</td>
@@ -92,7 +92,6 @@
 					<fmt:formatDate value="${sMember.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<shiro:hasPermission name="ps:sMember:edit"><td>
-    				<a href="${ctx}/ps/sMember/form?id=${sMember.id}">修改</a>
 					<a href="${ctx}/ps/sMember/delete?id=${sMember.id}" onclick="return confirmx('确认要删除该会员吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>
