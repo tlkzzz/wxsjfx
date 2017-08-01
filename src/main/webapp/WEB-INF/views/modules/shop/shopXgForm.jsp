@@ -31,12 +31,12 @@
                 <p style="font-size: 3em;float: left;text-align: right;">手机号码</p>
                 <input value="${ss.tel}" type="text" id="sjhm" placeholder="请填写手机号码" style="border-bottom: 1px solid #666;color: #ada2a2;text-align: left;padding: 0;margin: 0;background-color: transparent;">
             </li>
-            <li style="width: 100%;padding: 6% 4% 0;box-sizing: border-box;">
-                <p style="font-size: 3em;float: left;text-align: right;">确认手机号码</p>
-                <input value="${ss.tel}" type="text" id="qrsjhm"  placeholder="请再次输入手机号码" style="border-bottom: 1px solid #666;color: #ada2a2;text-align: left;padding: 0;margin: 0;background-color: transparent;">
-            </li>
-            <li>
-                <p style="font-size: 3em;float: left;text-align: right;margin-top: 2em;">省市区</p>
+            <%--<li style="width: 100%;padding: 6% 4% 0;box-sizing: border-box;">--%>
+                <%--<p style="font-size: 3em;float: left;text-align: right;">确认手机号码</p>--%>
+                <%--<input value="${ss.tel}" type="text" id="qrsjhm"  placeholder="请再次输入手机号码" style="border-bottom: 1px solid #666;color: #ada2a2;text-align: left;padding: 0;margin: 0;background-color: transparent;">--%>
+            <%--</li>--%>
+            <li  style="width: 100%;padding: 6% 4% 0;box-sizing: border-box;">
+                <p style="font-size: 3em;float: left;text-align: right;">省市区</p>
                 <%--<input value="${ss.area}" type="text" id="ssq" placeholder="请选择城市地址" style="width:20%;height:80px;font-size:3em;-webkit-appearance:none;margin-right: 2%;">--%>
                 <select onchange="sheng(this.value,'level2');" name="level1" id="level1" style="width:20%;height:80px;font-size:3em;-webkit-appearance:none;margin-right: 2%;">
                         <%--<option value="请选择省份" selected>--%>
@@ -102,27 +102,43 @@
     }
 
     function savege() {
-        var sjhm=document.getElementById('sjhm').value;
-        var qrsjhm=document.getElementById('qrsjhm').value;
-        if(sjhm!=qrsjhm){
-            alert("确认手机号码！");
-            return;
-        }else{
+//        var sjhm=document.getElementById('sjhm').value;
+//        var qrsjhm=document.getElementById('qrsjhm').value;
+//        if(sjhm!=qrsjhm){
+//            alert("确认手机号码！");
+//            return;
+//        }else{
             document.getElementById('shouh').value=document.getElementById('shr').value;
             document.getElementById('shouj').value=document.getElementById('sjhm').value;
             document.getElementById('shoudz').value=document.getElementById('xqdz').value;
             $("#dian").click(function(){
                 $("#tan").show()
             })
-        }
+//        }
     }
     function tjSave() {
         var  idss=document.getElementById('asddid').value;
         var  shr=document.getElementById('shr').value;
+        if(shr==''||shr==null){
+            alert("请填写收货人");
+            return false;
+        }
         var sjhm=document.getElementById('sjhm').value;
+        if(shr==''||shr==null){
+            alert("请填写手机号码");
+            return false;
+        }
         var qrsjhm=document.getElementById('qrsjhm').value;
         var xqdz=document.getElementById('xqdz').value;
-        var ssq=document.getElementById('ssq').value;
+        if(shr==''||shr==null){
+            alert("请填写详情地址");
+            return false;
+        }
+        var ssq=document.getElementById('level3').value;
+        if(shr==''||shr==null){
+            alert("请选择省市区");
+            return false;
+        }
         $.ajax({
             type: "POST",
             url: "${shop}/xgdzSave",
