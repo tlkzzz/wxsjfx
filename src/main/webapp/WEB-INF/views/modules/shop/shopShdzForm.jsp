@@ -54,28 +54,9 @@
                 <input type="checkbox" style="margin-left: 1rem;margin-top: -1.6%;background-color: #fff;vertical-align: middle;width: 4%;height: 4%;"><span style="font-size: 2.2em;"> 是否默认为收货地址</span>
             </li>
             <li id="dian" style="width:100%;margin-top: 50px !important;background-color: transparent;box-sizing: border-box;">
-                <button class="bt-border-r" id="save" onclick="savege();" style="font-size: 3em;width: 90%;height: 150px;margin-left: 5%;">保 存 地 址</button>
+                <button class="bt-border-r" id="save" onclick="tjSave();" style="font-size: 3em;width: 90%;height: 150px;margin-left: 5%;">保 存 地 址</button>
             </li>
         </ul>
-    </div>
-    <div id="tan" style="position: absolute;top: 0; width: 100%;height: 100%;background-color: rgba(0,0,0,0.3);display: none;">
-        <div style="width: 70%;margin: 0 auto;background-color: #fff;margin-top: 25%;border-radius: 8px;padding: 1rem 4rem;font-size: 1em;">
-            <p style="text-align: center;margin-bottom: 2rem;font-size: 3em;">请确认收货信息</p>
-            <p style="float: left;width: 35%;margin-bottom: .4rem;font-size: 2em;">收货人：</p>
-            <p style="margin-bottom: .4rem;"><input type="text" disabled="disabled" id="shouh"/></p>
-            <p style="float: left;width: 35%;margin-bottom: .6rem;font-size: 2em;">手机号码：</p>
-            <p style="margin-bottom: .4rem;"><input type="text" disabled="disabled" id="shouj"/></p>
-            <p style="float: left;width: 35%;margin-bottom: .4rem;font-size: 2em;">收货地址：</p>
-            <p style="float: left; margin-bottom: .4rem;"><input type="text" disabled="disabled" id="shoudz"/></p>
-            <p style="clear: both;"></p>
-            <div style="width: 100%;margin-top: 3rem;">
-                <p id="qu" style="width: 50%;float: left;"><input type="button" onclick="quchu();" value="取消" style="width: 100%;border: 0;font-size:3em;margin: 0;background-color: transparent;color: #999;"></p>
-                <p style="width: 50%;float: right;"><input type="button" onclick="tjSave();" value="确定" style="width: 100%;border: 0;font-size:3em;margin: 0;background-color: transparent;color: #999;"></p>
-
-
-                <p style="clear: both;"></p>
-            </div>
-        </div>
     </div>
 </div>
 <script type="text/javascript">
@@ -90,42 +71,25 @@
     function quchu() {
         $("#tan").hide();
     }
-
-    function savege() {
-//        var sjhm=document.getElementById('sjhm').value;
-//        var qrsjhm=document.getElementById('qrsjhm').value;
-//        if(sjhm!=qrsjhm){
-//            alert("确认手机号码！");
-//            return;
-//        }else{
-            document.getElementById('shouh').value=document.getElementById('shr').value;
-            document.getElementById('shouj').value=document.getElementById('sjhm').value;
-            document.getElementById('shoudz').value=document.getElementById('xqdz').value;
-            $("#dian").click(function(){
-                $("#tan").show()
-            })
-//        }
-    }
     function tjSave(){
         var  shr=document.getElementById('shr').value;
         if(shr==''||shr==null){
-            alert("请填写收货人");
+            window.parent.Message("请填写收货人");
             return false;
         }
         var sjhm=document.getElementById('sjhm').value;
         if(shr==''||shr==null){
-            alert("请填写手机号码");
+            window.parent.Message("请填写手机号码");
             return false;
         }
-        var qrsjhm=document.getElementById('qrsjhm').value;
         var xqdz=document.getElementById('xqdz').value;
         if(shr==''||shr==null){
-            alert("请填写详情地址");
+            window.parent.Message("请填写详情地址");
             return false;
         }
         var ssq=document.getElementById('level3').value;
         if(shr==''||shr==null){
-            alert("请选择省市区");
+            window.parent.Message("请选择省市区");
             return false;
         }
         $.ajax({
