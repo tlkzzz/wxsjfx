@@ -51,10 +51,10 @@
 		<c:forEach items="${page.list}" var="sMemberCommission">
 			<tr>
 				<td>
-					${sMemberCommission.oldMemberId}
+					${sMemberCommission.oldMemberId.name}
 				</td>
 				<td>
-					${sMemberCommission.newMemberId}
+					${sMemberCommission.newMemberId.name}
 				</td>
 				<td>
 					${sMemberCommission.receipt.revenueMoney}
