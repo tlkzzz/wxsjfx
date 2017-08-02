@@ -11,6 +11,7 @@ import com.tlkzzz.jeesite.common.web.Servlets;
 import com.tlkzzz.jeesite.modules.ps.dao.SMemberDao;
 import com.tlkzzz.jeesite.modules.ps.entity.SMember;
 import com.tlkzzz.jeesite.modules.sys.dao.OfficeDao;
+import com.tlkzzz.jeesite.modules.sys.service.SystemService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.UnavailableSecurityManagerException;
 import org.apache.shiro.session.InvalidSessionException;
@@ -104,18 +105,6 @@ public class UserUtils {
 		if(StringUtils.isNotBlank(id)){
 			putCache(USER_LOGIN_ID,id);
 			putCache(USER_LOGIN_TYPE,"member");
-		}
-	}
-
-	/**
-	 * 更新会员登录IP
-	 */
-	public static void updateLoginInfo(){
-		if(getUser()!=null&&StringUtils.isNotBlank(getUser().getId())){
-			SMember member = getUser().getMember();
-			member.setLoginIp(StringUtils.getRemoteAddr(Servlets.getRequest()));
-			member.setLoginDate(new Date());
-			memberDao.updateLoginInfo(member);
 		}
 	}
 	

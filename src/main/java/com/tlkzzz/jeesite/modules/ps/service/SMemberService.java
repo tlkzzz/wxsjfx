@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.tlkzzz.jeesite.common.utils.StringUtils;
 import com.tlkzzz.jeesite.common.web.Servlets;
+import com.tlkzzz.jeesite.modules.sys.entity.User;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,6 +67,16 @@ public class SMemberService extends CrudService<SMemberDao, SMember> {
 		member.setLoginIp(StringUtils.getRemoteAddr(Servlets.getRequest()));
 		save(member);
 		return member;
+	}
+
+	@Transactional(readOnly = false)
+	public void updateLoginInfo(User user){
+		if(user!=null&&StringUtils.isNotBlank(user.getId())){
+			SMember member = user.getMember();
+			member.setLoginIp(StringUtils.getRemoteAddr(Servlets.getRequest()));
+			member.setLoginDate(new Date());
+			dao.updateLoginInfo(member);
+		}
 	}
 	
 	@Transactional(readOnly = false)
