@@ -203,8 +203,8 @@ public class SShopMallService  extends BaseService {
             if(sMemberRelationList.size()!=0){
                 userId=sMemberRelationList.get(0).getOldMember().getId();
                 SMemberCommission sMemberCommission=new SMemberCommission();
-                sMemberCommission.setOldMemberId(userId);
-                sMemberCommission.setNewMemberId(btcr);
+                sMemberCommission.setOldMember(new SMember(userId));
+                sMemberCommission.setNewMember(new SMember(btcr));
                 sMemberCommission.setReceipt(new SReceipt(reId));
                 Double sh=Double.parseDouble(shje);
                 Double tcbl=Double.parseDouble(sProportionCommissionList.get(i).getCommission());
