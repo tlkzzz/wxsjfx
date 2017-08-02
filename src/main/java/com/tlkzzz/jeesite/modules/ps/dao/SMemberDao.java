@@ -33,4 +33,9 @@ public interface SMemberDao extends CrudDao<SMember> {
      * */
 
     public void balanceUp(SMember sMember);
+
+    /**
+     * 修改会员登录IP
+     * */
+    public void updateLoginInfo(SMember sMember);
 }

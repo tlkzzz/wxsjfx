@@ -187,6 +187,13 @@
 		WHERE id = #{param1}
 	</update>
 
+	<update id="updateLoginInfo">
+		UPDATE s_member SET
+			login_ip = #{loginIp},
+			login_date = #{loginDate}
+		WHERE id = #{id}
+	</update>
+
 	<update id="delete">
 		UPDATE s_member SET
 			del_flag = #{DEL_FLAG_DELETE}
