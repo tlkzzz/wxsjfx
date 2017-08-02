@@ -19,6 +19,8 @@
 		a.sort AS "sort",
 		a.remarks AS "remarks",
 		a.create_by AS "createBy.id",
+		sm.name AS "createBy.name",
+		sm.photo AS "createBy.photo",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
@@ -31,6 +33,7 @@
 	<sql id="sOrderJoins">
 		LEFT JOIN s_goods sg ON sg.id=a.goods_id
 		LEFT JOIN s_address sa ON sa.id=a.address_id
+		LEFT JOIN s_member sm ON sm.id=a.create_by
 	</sql>
     
 	<select id="get" resultType="SOrder">
