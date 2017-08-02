@@ -159,12 +159,12 @@
             $.each($('.jjsl'),function (index,ele) {
                 var a=  ele.value;
                 var b = priceList[index].innerText;
-                sum += parseInt(a)*parseFloat(b);
+                sum += parseInt(a)*parseFloat(b).toFixed(2);
 
             });
            $('#je').text(sum);
-            $("#iframeTwo",window.parent.document)[0].contentWindow.shopping();
-            <c:if test="${empty user.member.tel}">window.parent.showSms(true);</c:if>
+            <%--$("#iframeTwo",window.parent.document)[0].contentWindow.shopping();--%>
+            <%--<c:if test="${empty user.member.tel}">window.parent.showSms(true);</c:if>--%>
         });
 
         function jia(num , no) {
@@ -185,8 +185,8 @@
                 if (s1 >= 2) {
                     s1=1;
                 }
-                    var sum = 0;
-                    sum = parseInt(s1) * parseInt(htje) + parseInt(je);
+               var zje= parseInt(s1) * parseFloat(htje).toFixed(2);
+                var   sum = (parseFloat(zje) + parseFloat(je)).toFixed(2);
                     $("#je").text(sum);
                 }
 
@@ -214,7 +214,8 @@
                 $("#sl_" + no).val(1);
                 return false;
            }else {
-                sum = parseInt(je) - parseInt(s1) * parseInt(htje);
+                var jqze= parseInt(s1) * parseFloat(htje).toFixed(2);
+                sum = (parseFloat(je) - jqze).toFixed(2)
                 $("#je").text(sum);
                 return true;
             }
@@ -226,8 +227,14 @@
                 type: "POST",
                 data:{ids:id},
                 success: function(data){
-                    message("删除成功");
-                    location.reload()
+                    if(confirm("确定删除吗")){
+                        message("删除成功");
+                        location.reload()
+                    }else{
+                        location.href="${shop}/shoplist";
+                    }
+//                    message("删除成功");
+//                    location.reload()
                 }
             });
         }
