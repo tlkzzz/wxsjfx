@@ -72,7 +72,7 @@ public class SShopMallController extends BaseController{
     /**         商城代码开始          **/
     @RequestMapping(value = {"index",""})
     public String index(Model model){/**首页**/
-        UserUtils.setMemberId("a619d5f8454b4641a54d759517b9bd71");
+        UserUtils.setMemberId("c27cbee998c74ac384638d5daeabc5e0");
         String oldId = String.valueOf(UserUtils.getCache("QRScan_Member_ID"));
         if(StringUtils.isNotBlank(oldId)&&!"null".equals(oldId))sMemberRelationService.saveByOldId(oldId);
         UserUtils.removeCache("QRScan_Member_ID");
@@ -242,16 +242,18 @@ public class SShopMallController extends BaseController{
         User user = UserUtils.getUser();
        String name=user.getName();
         String photo;
-        Double num=0.0;
         photo=user.getMember().getPhoto();
         SReceipt sReceipt=new SReceipt();
         sReceipt.setCreateBy( UserUtils.getUser());
         List<SReceipt> list=sReceiptService.findList(sReceipt);
-        if(StringUtils.isNotBlank(sReceipt.getRevenueMoney())){
+            Double num=0.0;
             for(int i=0;i<list.size();i++){
                 sReceipt=list.get(i);
-                num+=Double.parseDouble(sReceipt.getRevenueMoney());
-            }
+                if(StringUtils.isEmpty(sReceipt.getRevenueMoney())){
+                    num=0.0;
+                }else {
+                    num += Double.parseDouble(sReceipt.getRevenueMoney());
+                }
         }
         model.addAttribute("num",num);
         model.addAttribute("name",name);
