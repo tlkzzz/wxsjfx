@@ -4,8 +4,16 @@
     
 	<sql id="sMemberCommissionColumns">
 		a.id AS "id",
-		a.old_member_id AS "oldMemberId",
-		a.new_member_id AS "newMemberId",
+		a.old_member_id AS "oldMember.id",
+		oldMem.name AS "oldMember.name",
+		oldMem.photo AS "oldMember.photo",
+		oldMem.email AS "oldMember.email",
+		oldMem.tel AS "oldMember.tel",
+		a.new_member_id AS "newMember.id",
+		newMem.name AS "newMember.name",
+		newMem.photo AS "newMember.photo",
+		newMem.email AS "newMember.email",
+		newMem.tel AS "newMember.tel",
 		a.receipt_id AS "receipt.id",
 		cc.revenue_money AS "receipt.revenueMoney",
 		a.total AS "total",
@@ -20,6 +28,8 @@
 	
 	<sql id="sMemberCommissionJoins">
 		LEFT JOIN s_receipt cc ON a.receipt_id=cc.id
+		LEFT JOIN s_member oldMem on oldMem.id=a.old_member_id
+		LEFT JOIN s_member newMem on newMem.id=a.new_member_id
 	</sql>
     
 	<select id="get" resultType="SMemberCommission">
@@ -37,6 +47,12 @@
 		<include refid="sMemberCommissionJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="oldMember != null  and oldMember.id != null  and oldMember.id != ''">
+				AND a.old_member_id = #{oldMember.id}
+			</if>
+			<if test="newMember != null and newMember.id != null and newMember.id != ''">
+				AND a.new_member_id = #{newMember.id}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -55,12 +71,6 @@
 		<include refid="sMemberCommissionJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="oldMemberId != null  and oldMemberId != ''">
-				AND a.old_member_id = #{oldMemberId}
-			</if>
-			<if test="newMemberId != null  and newMemberId != ''">
-				AND a.new_member_id = #{newMemberId}
-			</if>
 		</where>		
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -88,8 +98,8 @@
 			del_flag
 		) VALUES (
 			#{id},
-			#{oldMemberId},
-			#{newMemberId},
+			#{oldMember.id},
+			#{newMember.id},
 			#{receipt.id},
 			#{total},
 			#{sort},
@@ -104,8 +114,8 @@
 	
 	<update id="update">
 		UPDATE s_member_commission SET 	
-			old_member_id = #{oldMemberId},
-			new_member_id = #{newMemberId},
+			old_member_id = #{oldMember.id},
+			new_member_id = #{newMember.id},
 			receipt_id = #{receipt.id},
 			total = #{total},
 			sort = #{sort},
