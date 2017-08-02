@@ -26,7 +26,7 @@
 			<p style="margin-bottom: 1rem;">
 				<span style="font-weight: bold;">订单时间：</span>
 				<span><fmt:formatDate value="${receipt.receiptDate}" pattern="yyyy-MM-dd HH:mm:ss"/></span></p>
-			<p style="margin-bottom: 1rem;"><span style="font-weight: bold;">订单号码：</span><span>ABCDABCDABCDABCDABCD</span></p>
+			<p style="margin-bottom: 1rem;"><span style="font-weight: bold;">支付号码：</span><span>${receipt.snKey}</span></p>
 			<p style="margin-bottom: 1rem;"><span style="font-weight: bold;">支付金额：</span><span>￥${receipt.revenueMoney}</span></p>
 		</div>
 	</div>
