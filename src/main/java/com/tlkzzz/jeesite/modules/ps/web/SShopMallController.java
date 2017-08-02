@@ -171,18 +171,18 @@ public class SShopMallController extends BaseController{
         SReceipt receipt = sReceiptService.insertByTotal(String.valueOf(total));
         if(receipt==null)return "redirect:"+Global.getShopPath()+"/confirmOrder";//重定向到订单确认;
         for(SShop ss: shopList){
-
             sShopMallService.savaOrderByShop(ss,receipt,addressId);
         }
         return "redirect:"+Global.getShopPath()+"/paymentOver?id="+receipt.getId();//重定向到支付并提交支付信息
     }
 
     @RequestMapping(value = "paymentOver")
-    public String paymentOver(String id, Model model){
-        if(StringUtils.isNotBlank(id)){
+    public String paymentOver(String id,String total, Model model){
+        if(StringUtils.isNotBlank(id)&&StringUtils.isNotBlank(total)){
             SReceipt receipt = sReceiptService.get(id);
             if(receipt!=null) {
                 sShopMallService.tcAdd(receipt);
+                sReceiptService.updateByTotal(receipt,total);
                 model.addAttribute("receipt", receipt);
                 model.addAttribute("orderList", sOrderService.findListByReceiptId(id));
                 model.addAttribute("flag", true);
