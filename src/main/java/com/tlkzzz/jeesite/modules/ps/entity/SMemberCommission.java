@@ -15,9 +15,9 @@ import com.tlkzzz.jeesite.common.persistence.DataEntity;
 public class SMemberCommission extends DataEntity<SMemberCommission> {
 	
 	private static final long serialVersionUID = 1L;
-	private String oldMemberId;		// 老会员ID
-	private String newMemberId;		// 被提成会员ID
-	private SReceipt receipt;		// 收款ID
+	private SMember oldMember;		// 老会员
+	private SMember newMember;		// 被提成会员
+	private SReceipt receipt;		// 收款
 	private String total;		// 提成金额
 	private String sort;		// 排序
 	
@@ -29,22 +29,20 @@ public class SMemberCommission extends DataEntity<SMemberCommission> {
 		super(id);
 	}
 
-	@Length(min=1, max=64, message="老会员ID长度必须介于 1 和 64 之间")
-	public String getOldMemberId() {
-		return oldMemberId;
+	public SMember getOldMember() {
+		return oldMember;
 	}
 
-	public void setOldMemberId(String oldMemberId) {
-		this.oldMemberId = oldMemberId;
+	public void setOldMember(SMember oldMember) {
+		this.oldMember = oldMember;
 	}
 	
-	@Length(min=1, max=64, message="被提成会员ID长度必须介于 1 和 64 之间")
-	public String getNewMemberId() {
-		return newMemberId;
+	public SMember getNewMember() {
+		return newMember;
 	}
 
-	public void setNewMemberId(String newMemberId) {
-		this.newMemberId = newMemberId;
+	public void setNewMember(SMember newMember) {
+		this.newMember = newMember;
 	}
 
 	public SReceipt getReceipt() {
