@@ -46,11 +46,8 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="sProportionCommission">
 			<tr>
-
-					<%--<a href="${ctx}/ps/sProportionCommission/form?id=${sProportionCommission.id}">--%>
-					<%--${sProportionCommission.remarks}</a>--%>
-			     <td>
-					 <fmt:formatNumber value="${sProportionCommission.commission}" pattern="#.####"/>
+				<td>
+					<fmt:formatNumber value="${sProportionCommission.commission}" pattern="#.####"/>%
 				</td>
 				<td>
 					${sProportionCommission.sort}
