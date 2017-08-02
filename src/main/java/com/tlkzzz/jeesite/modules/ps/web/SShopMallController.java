@@ -72,7 +72,7 @@ public class SShopMallController extends BaseController{
     /**         商城代码开始          **/
     @RequestMapping(value = {"index",""})
     public String index(Model model){/**首页**/
-        UserUtils.setMemberId("f2ffc4561e114479a2add79d5d2205e7");
+        UserUtils.setMemberId("a619d5f8454b4641a54d759517b9bd71");
         String oldId = String.valueOf(UserUtils.getCache("QRScan_Member_ID"));
         if(StringUtils.isNotBlank(oldId)&&!"null".equals(oldId))sMemberRelationService.saveByOldId(oldId);
         UserUtils.removeCache("QRScan_Member_ID");
@@ -174,7 +174,7 @@ public class SShopMallController extends BaseController{
 
             sShopMallService.savaOrderByShop(ss,receipt,addressId);
         }
-        return "redirect:"+Global.getShopPath()+"/paymentOver?if="+receipt.getId();//重定向到支付并提交支付信息
+        return "redirect:"+Global.getShopPath()+"/paymentOver?id="+receipt.getId();//重定向到支付并提交支付信息
     }
 
     @RequestMapping(value = "paymentOver")
