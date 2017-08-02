@@ -173,7 +173,7 @@ public class SShopMallController extends BaseController{
 
             sShopMallService.savaOrderByShop(ss,receipt,addressId);
         }
-        return "redirect:"+Global.getShopPath()+"/paymentOver";//重定向到支付并提交支付信息
+        return "redirect:"+Global.getShopPath()+"/paymentOver?if="+receipt.getId();//重定向到支付并提交支付信息
     }
 
     @RequestMapping(value = "paymentOver")
