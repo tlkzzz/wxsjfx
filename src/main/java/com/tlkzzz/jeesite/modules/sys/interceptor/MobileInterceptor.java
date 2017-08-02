@@ -30,8 +30,6 @@ public class MobileInterceptor extends BaseService implements HandlerInterceptor
 			if(UserUtils.getUser()==null||StringUtils.isBlank(UserUtils.getUser().getId())){
 				response.sendRedirect(request.getContextPath()+Global.getShopPath()+"/QRScan");
 				return false;
-			}else {
-				UserUtils.updateLoginInfo();
 			}
 		}
 		return true;
