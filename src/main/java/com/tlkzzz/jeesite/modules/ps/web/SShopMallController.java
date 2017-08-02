@@ -432,6 +432,7 @@ public String huiyuan(HttpServletRequest request, HttpServletResponse response, 
             sOrderService.savelist(sGoods);
             model.addAttribute("sGoods",sGoods);
         }
+        sShop.setCreateBy(user);
         List<SShop>  sshoplist = sOrderService.findList(sShop);
         model.addAttribute("generList", sSpecService.findList(new SSpec()));
         model.addAttribute("sshoplist",sshoplist);
