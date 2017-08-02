@@ -32,7 +32,7 @@
 	</div>
 	<div style="width: 100%;margin-top: 2rem;">
 		<p style="width: 80%;margin: 0 auto 2rem;">
-			<a href="${shop}">
+			<a href="${shop}/home">
 			<input type="button" value="返回首页" style="width: 100%;background-color: #86bd00;border: 0;color: #fff;border-radius: 4px;padding: 2rem;font-size: 4rem;">
 			</a>
 		</p>
