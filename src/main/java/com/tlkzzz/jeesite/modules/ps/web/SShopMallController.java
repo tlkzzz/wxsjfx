@@ -379,7 +379,7 @@ public String huiyuan(HttpServletRequest request, HttpServletResponse response, 
         sAddress.setTel(sjhm);
         sAddress.setShr(shr);
         sAddressService.updatess(sAddress);
-        return "modules/shop/shdzList";
+        return "true";
     }
 
     @ResponseBody

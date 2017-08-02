@@ -149,7 +149,12 @@
                 ssq:ssq
             },
             success: function(data){
-               window.location.href='${shop}/shdzList';
+                if(data){
+                    window.location.href='${shop}/shdzList';
+                }else{
+                    alert("系统错误，请联系管理员");
+                }
+
             }
         });
     }
