@@ -52,9 +52,10 @@ public class SReceiptService extends CrudService<SReceiptDao, SReceipt> {
 	}
 
 	@Transactional(readOnly = false)
-	public SReceipt updateByTotal(SReceipt receipt,String total){
+	public SReceipt updateByTotal(SReceipt receipt,String snKey,String total){
 		if(receipt==null)return null;
 		receipt.preUpdate();
+		receipt.setSnKey(snKey);
 		receipt.setRevenueMoney(total);
 		receipt.setReceiptDate(new Date());
 		receipt.setZfState("1");
