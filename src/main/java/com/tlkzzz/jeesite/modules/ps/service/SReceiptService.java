@@ -3,6 +3,7 @@
  */
 package com.tlkzzz.jeesite.modules.ps.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -47,6 +48,18 @@ public class SReceiptService extends CrudService<SReceiptDao, SReceipt> {
 		receipt.setZfState("0");
 		receipt.setTcState("0");
 		dao.insert(receipt);
+		return receipt;
+	}
+
+	@Transactional(readOnly = false)
+	public SReceipt updateByTotal(SReceipt receipt,String total){
+		if(receipt==null)return null;
+		receipt.preUpdate();
+		receipt.setRevenueMoney(total);
+		receipt.setReceiptDate(new Date());
+		receipt.setZfState("1");
+		receipt.setTcState("1");
+		dao.update(receipt);
 		return receipt;
 	}
 	
