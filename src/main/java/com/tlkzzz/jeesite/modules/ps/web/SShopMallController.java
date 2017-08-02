@@ -177,12 +177,12 @@ public class SShopMallController extends BaseController{
     }
 
     @RequestMapping(value = "paymentOver")
-    public String paymentOver(String id,String total, Model model){
+    public String paymentOver(String id,String snKey,String total,Model model){
         if(StringUtils.isNotBlank(id)&&StringUtils.isNotBlank(total)){
             SReceipt receipt = sReceiptService.get(id);
             if(receipt!=null) {
                 sShopMallService.tcAdd(receipt);
-                sReceiptService.updateByTotal(receipt,total);
+                sReceiptService.updateByTotal(receipt, snKey,total);
                 model.addAttribute("receipt", receipt);
                 model.addAttribute("orderList", sOrderService.findListByReceiptId(id));
                 model.addAttribute("flag", true);
