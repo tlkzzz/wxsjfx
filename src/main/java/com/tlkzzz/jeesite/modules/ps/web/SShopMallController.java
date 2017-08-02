@@ -361,6 +361,7 @@ public String huiyuan(HttpServletRequest request, HttpServletResponse response, 
     /**
      *  shizx收货地址修改方法
      **/
+    @ResponseBody
     @RequestMapping(value = {"xgdzSave"})
     public String xgdzSave(HttpServletRequest request, HttpServletResponse response, Model model) {
         String idss=request.getParameter("ids");
@@ -372,7 +373,7 @@ public String huiyuan(HttpServletRequest request, HttpServletResponse response, 
         sAddress.setId(idss);
         sAddress.setMember(new SMember(UserUtils.getUser().getId()));
         sAddress.setArea(new Area(ssq));
-//        sAddress.setAddress(xqdz);
+        sAddress.setAddress(xqdz);
         sAddress.setTel(sjhm);
         sAddress.setShr(shr);
         sAddressService.updatess(sAddress);

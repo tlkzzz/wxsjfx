@@ -76,7 +76,7 @@
             <p style="clear: both;"></p>
             <div style="width: 100%;margin-top: 3rem;">
                 <p id="qu" style="width: 50%;float: left;"><input type="button" onclick="quchu();" value="取消" style="width: 100%;border: 0;font-size:3em;margin: 0;background-color: transparent;color: #999;"></p>
-                <p style="width: 50%;float: right;"><a href="xinzengyige.html"><input type="button" onclick="tjSave();" value="确定" style="width: 100%;border: 0;font-size:3em;margin: 0;background-color: transparent;color: #999;"></a></p>
+                <p style="width: 50%;float: right;"><input type="button" onclick="tjSave();" value="确定" style="width: 100%;border: 0;font-size:3em;margin: 0;background-color: transparent;color: #999;"></p>
 
 
                 <p style="clear: both;"></p>
@@ -128,7 +128,6 @@
             alert("请填写手机号码");
             return false;
         }
-        var qrsjhm=document.getElementById('qrsjhm').value;
         var xqdz=document.getElementById('xqdz').value;
         if(shr==''||shr==null){
             alert("请填写详情地址");
