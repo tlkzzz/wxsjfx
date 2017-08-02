@@ -19,7 +19,6 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/ps/sOrder/">订单列表</a></li>
-		<!--<shiro:hasPermission name="ps:sOrder:edit"><li><a href="${ctx}/ps/sOrder/form">订单添加</a></li></shiro:hasPermission> -->
 	</ul>
 	<form:form id="searchForm" modelAttribute="sOrder" action="${ctx}/ps/sOrder/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
@@ -38,6 +37,7 @@
 			<tr>
 				<th>订单编号</th>
 				<th>商品</th>
+				<th>购买会员</th>
 				<th>规格</th>
 				<th>数量</th>
 				<th>价格</th>
@@ -55,6 +55,9 @@
 				</td>
 				<td>
 					${sOrder.goods.name}
+				</td>
+				<td>
+					${sOrder.createBy.name}
 				</td>
 				<td>
 					${sOrder.specIds}
@@ -75,7 +78,6 @@
 					<fmt:formatDate value="${sOrder.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<shiro:hasPermission name="ps:sOrder:edit"><td>
-    				<a href="${ctx}/ps/sOrder/form?id=${sOrder.id}">修改</a>
 					<a href="${ctx}/ps/sOrder/delete?id=${sOrder.id}" onclick="return confirmx('确认要删除该订单吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>
