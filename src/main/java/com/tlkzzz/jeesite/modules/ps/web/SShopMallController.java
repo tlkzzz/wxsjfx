@@ -75,6 +75,7 @@ public class SShopMallController extends BaseController{
         String oldId = String.valueOf(UserUtils.getCache("QRScan_Member_ID"));
         if(StringUtils.isNotBlank(oldId)&&!"null".equals(oldId))sMemberRelationService.saveByOldId(oldId);
         UserUtils.removeCache("QRScan_Member_ID");
+        sMemberService.updateLoginInfo(UserUtils.getUser());
         model.addAttribute("user",UserUtils.getUser());
         return "modules/shop/index";
     }
