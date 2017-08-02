@@ -49,7 +49,7 @@
               ids:data,
             },
             success: function(data){
-                alert("删除成功");
+                window.parent.Message("删除成功");
                 window.location.href="${shop}/shdzList";
             }
         });
