@@ -183,18 +183,16 @@
 <body>
 <div class="bg">
     <!-- 个人中心头像 -->
-    <a href="${photo}" style="text-decoration: none;color: #000;">
-        <div class="personal">
-            <div class="head">
-                <div class="head_touxiang"><img height="100%" width="100%"src="${photo}"/> </div>
-                <div class="member">
-                    <p>会员号 : <span>${name}</span></p>
-                    <p><span>会员昵称 : <span>${name}</span></span></p>
-                </div>
+    <div class="personal">
+        <div class="head">
+            <div class="head_touxiang"><img height="100%" width="100%"src="${photo}"/> </div>
+            <div class="member">
+                <p>会员号 : <span>${name}</span></p>
+                <p><span>会员昵称 : <span>${name}</span></span></p>
             </div>
-            <div class="clearfix"></div>
         </div>
-    </a>
+        <div class="clearfix"></div>
+    </div>
     <div class="clearfix"></div>
     <a href="${shop}/myDdList">
         <div class="my_member" style="margin: 0;">
