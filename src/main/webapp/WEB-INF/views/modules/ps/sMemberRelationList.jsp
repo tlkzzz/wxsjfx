@@ -50,9 +50,9 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="sMemberRelation">
 			<tr>
-				<td><a href="${ctx}/ps/sMemberRelation/form?id=${sMemberRelation.id}">
+				<td>
 					${sMemberRelation.oldMember.name}
-				</a></td>
+				</td>
 				<td>
 					${sMemberRelation.newMember.name}
 				</td>

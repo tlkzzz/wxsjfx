@@ -221,15 +221,12 @@
         }
 
         function deleted(id) {
-            alert(1111);
             $.ajax({
                 url: "${shop}/delshopList",
                 type: "POST",
-                data:{
-                    ids:id,
-                },
+                data:{ids:id},
                 success: function(data){
-                    alert("删除成功");
+                    message("删除成功");
                     location.reload()
                 }
             });
