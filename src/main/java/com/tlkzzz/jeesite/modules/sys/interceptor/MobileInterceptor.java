@@ -6,9 +6,11 @@ package com.tlkzzz.jeesite.modules.sys.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.tlkzzz.jeesite.common.config.Global;
 import com.tlkzzz.jeesite.common.service.BaseService;
 import com.tlkzzz.jeesite.common.utils.StringUtils;
 import com.tlkzzz.jeesite.common.utils.UserAgentUtils;
+import com.tlkzzz.jeesite.modules.sys.utils.UserUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,6 +24,16 @@ public class MobileInterceptor extends BaseService implements HandlerInterceptor
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, 
 			Object handler) throws Exception {
+		String method = request.getRequestURI();
+		method = method.substring(method.lastIndexOf("/")+1);
+		if(!"QRScan".equals(method)&&!"getQR".equals(method)){
+			if(UserUtils.getUser()==null||StringUtils.isBlank(UserUtils.getUser().getId())){
+				response.sendRedirect(request.getContextPath()+Global.getShopPath()+"/QRScan");
+				return false;
+			}else {
+				UserUtils.updateLoginInfo();
+			}
+		}
 		return true;
 	}
 
