@@ -26,10 +26,10 @@
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
 			<li><label>老会员：</label>
-				<form:input path="oldMemberId" htmlEscape="false" maxlength="64" class="input-medium"/>
+				<form:input path="oldMember" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<li><label>提成会员：</label>
-				<form:input path="newMemberId" htmlEscape="false" maxlength="64" class="input-medium"/>
+				<form:input path="newMember" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
