@@ -69,11 +69,11 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="sGoods">
 			<tr>
-				<td><a href="${ctx}/ps/sGoods/form?id=${sGoods.id}">
-					${sGoods.name}
+				<td title="${sGoods.name}"><a href="${ctx}/ps/sGoods/form?id=${sGoods.id}">
+					${fn:substring(sGoods.name, 0, 10)}..
 				</a></td>
-				<td>
-					${sGoods.title}
+				<td title="${sGoods.title}">
+					${fn:substring(sGoods.title, 0, 8)}..
 				</td>
 				<td>
 					<c:if test="${not empty sGoods.image}">
@@ -95,8 +95,8 @@
 				<td>
 					${sGoods.goodsStock}
 				</td>
-				<td>
-					${sGoods.itemNum}
+				<td title="${sGoods.itemNum}">
+					${fn:substring(sGoods.itemNum, 0, 15)}..
 				</td>
 				<td>
 					${fns:getDictLabel(sGoods.publish, "yes_no", "")}
