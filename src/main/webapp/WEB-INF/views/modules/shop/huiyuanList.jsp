@@ -35,16 +35,18 @@
 	</ul>
 	<div id="none" style="position: fixed;top: 0;width: 100%;height: 100%;background-color: rgba(0,0,0,.6);display: none;">
 		<div style="width: 80%;top: 25%;left: 25%;margin-left: 10%;margin-top: 20%;">
-			<img src="qq.png" style="width: 100%;background-color: #fff;">
+			<img id="noneImg" src="" style="width: 100%;background-color: #fff;">
 		</div>
 	</div>
 </div>
 <script>
     $("#dian").click(function(){
-        $("#none").toggle()
+        $("#none").toggle();
+		$("#noneImg").attr("src",$(this).attr("src"));
     })
     $("#none").click(function(){
-        $("#none").css("display","none")
+        $("#none").css("display","none");
+        $("#noneImg").attr("src","");
     })
 </script>
 </body>
