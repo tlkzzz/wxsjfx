@@ -222,22 +222,24 @@
         }
 
         function deleted(id) {
+            var statu = confirm("确认删除吗！");
+            if(!statu)//如果点击的是取消
+            {
+                return false;//返回页面
+            }else{
             $.ajax({
                 url: "${shop}/delshopList",
                 type: "POST",
                 data:{ids:id},
                 success: function(data){
-                    if(confirm("确定删除吗")){
                         message("删除成功");
-                        location.reload()
-                    }else{
                         location.href="${shop}/shoplist";
-                    }
-//                    message("删除成功");
-//                    location.reload()
                 }
             });
+            }
         }
+
+
         function message(text) {
             window.parent.Message(text)
         }
