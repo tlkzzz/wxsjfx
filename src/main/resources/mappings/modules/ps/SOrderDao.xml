@@ -27,7 +27,9 @@
 		a.del_flag AS "delFlag",
 		a.ddbs AS "ddbs",
 		sg.name AS "sGoods.name",
-		sg.image AS "sGoods.image"
+		sg.image AS "sGoods.image",
+		a.kddh AS "kddh",
+		a.thkddh AS "thkddh"
 	</sql>
 	
 	<sql id="sOrderJoins">
@@ -42,6 +44,34 @@
 		FROM s_order a
 		<include refid="sOrderJoins"/>
 		WHERE a.id = #{id}
+	</select>
+
+	<select id="fhfindList" resultType="SOrder">
+		SELECT
+		<include refid="sOrderColumns"/>
+		FROM s_order a
+		<include refid="sOrderJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			AND a.ddbs = '2'
+			<if test="orderNo != null  and orderNo != ''">
+				AND a.order_no = #{orderNo}
+			</if>
+		</where>
+	</select>
+
+	<select id="thfindList" resultType="SOrder">
+		SELECT
+		<include refid="sOrderColumns"/>
+		FROM s_order a
+		<include refid="sOrderJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			AND a.ddbs = '9'
+			<if test="orderNo != null  and orderNo != ''">
+				AND a.order_no = #{orderNo}
+			</if>
+		</where>
 	</select>
 	
 	<select id="findList" resultType="SOrder">
@@ -110,7 +140,9 @@
 			update_by,
 			update_date,
 			del_flag,
-			ddbs
+			ddbs,
+			kddh,
+			thkddh
 		) VALUES (
 			#{id},
 			#{orderNo},
@@ -128,10 +160,25 @@
 			#{updateBy.id},
 			#{updateDate},
 			#{delFlag},
-			#{ddbs}
+			#{ddbs},
+			#{kddh},
+			#{thkddh}
 		)
 	</insert>
-	
+
+	<update id="updataDdzt">
+		UPDATE s_order SET
+		ddbs=#{ddbs}
+		WHERE id = #{id}
+	</update>
+
+	<update id="updatathzt">
+		UPDATE s_order SET
+		ddbs=#{ddbs},
+		thkddh=#{thkddh}
+		WHERE id = #{id}
+	</update>
+
 	<update id="update">
 		UPDATE s_order SET 	
 			order_no = #{orderNo},
@@ -146,7 +193,9 @@
 			remarks = #{remarks},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
-			ddbs=#{ddbs}
+			ddbs=#{ddbs},
+			kddh=#{kddh},
+			thkddh=#{thkddh}
 		WHERE id = #{id}
 	</update>
 	

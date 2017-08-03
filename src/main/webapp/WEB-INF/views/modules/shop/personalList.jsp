@@ -205,25 +205,25 @@
             <div class="menu_code">
             <a href="${shop}/myDdList?data=1">
                 <p><img src="${ctxStatic}/images/daishouhuo.png"></p></a>
-                <p class="menu_img"><span>待收货</span></p>
+                <p class="menu_img"><span>待付款</span></p>
 
             </div>
             <div class="menu_order">
                 <a href="${shop}/myDdList?data=2">
                 <p><img src="${ctxStatic}/images/daipingjia.png"></p></a>
-                <p class="menu_img"><span>待评价</span></p>
+                <p class="menu_img"><span>待发货</span></p>
 
             </div>
             <div class="menu_commission">
                 <a href="${shop}/myDdList?data=3">
                 <p><img src="${ctxStatic}/images/yipingjia.png"></p></a>
-                <p class="menu_img"><span>已评价</span></p>
+                <p class="menu_img"><span>待收货</span></p>
 
             </div>
             <div class="menu_commission">
                 <a href="${shop}/myDdList?data=4">
                 <p><img src="${ctxStatic}/images/tuihuodan.png"></p> </a>
-                <p class="menu_img"><span>退货单</span></p>
+                <p class="menu_img"><span>待评价</span></p>
 
             </div>
             <div class="clearfix"></div>

@@ -26,7 +26,9 @@ public class SOrder extends DataEntity<SOrder> {
 	private String price;			// 价格
 	private String costPrice;		// 商品成本价
 	private String sort;			// 排序
-	private String ddbs;        	//订单标识
+	private String ddbs;        	//订单标识    6取消订单7已评价8申请退货9申请成功0退货成功
+	private String kddh;			//快递单号
+	private String thkddh;			//退货快递单号
 
 	public SOrder() {
 		super();
@@ -118,5 +120,21 @@ public class SOrder extends DataEntity<SOrder> {
 
 	public void setDdbs(String ddbs) {
 		this.ddbs = ddbs;
+	}
+
+	public String getKddh() {
+		return kddh;
+	}
+
+	public void setKddh(String kddh) {
+		this.kddh = kddh;
+	}
+
+	public String getThkddh() {
+		return thkddh;
+	}
+
+	public void setThkddh(String thkddh) {
+		this.thkddh = thkddh;
 	}
 }
