@@ -33,7 +33,7 @@
             <p style="float: left;"><input type="radio"  value="${sAddress.id}" onclick="ra('${sAddress.id}');" style="vertical-align: middle;margin: 0;padding: 0;margin-right: .4rem;margin-left: 1rem;"><span style="font-size: 1.5em;text-align: center;">设为默认</span></p>
         </c:if>
     <p style="float: right;font-size: 2em;margin-right: 2rem;margin-top: .2rem;"><input type="button" value="删除" onclick="sc('${sAddress.id}');" style="font-size:0.8em;margin: 0;background-color: transparent;color: #999;"></p>
-    <a href="${shopPath}/s/xgshList?data="+${sAddress.id}><p style="float: right;font-size: 2em;margin-right: 2rem;margin-top: .2rem;"><input type="button" value="修改" style="font-size:0.8em;margin: 0;background-color: transparent;color: #999;"></p></a>
+    <a href="${shopPath}/s/xgshList?data=${sAddress.id}"><p style="float: right;font-size: 2em;margin-right: 2rem;margin-top: .2rem;"><input type="button" value="修改" style="font-size:0.8em;margin: 0;background-color: transparent;color: #999;"></p></a>
     <p style="clear: both;"></p>
     </c:forEach>
 </div>
