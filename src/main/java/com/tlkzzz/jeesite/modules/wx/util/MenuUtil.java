@@ -73,7 +73,7 @@ public class MenuUtil {
 		ViewButton q = new ViewButton();
 		q.setName("二维码");
 		q.setType("view");
-		q.setUrl(wdbg);
+		q.setUrl(wdgh);
 		ComplexButton qq = new ComplexButton();
 		qq.setName("二维码");
 		qq.setSub_button(new Button[]{q});
