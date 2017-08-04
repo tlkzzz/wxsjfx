@@ -1,7 +1,6 @@
 package com.tlkzzz.jeesite.modules.wx.web;
 
 import com.tlkzzz.jeesite.common.config.Global;
-import com.tlkzzz.jeesite.common.mapper.JsonMapper;
 import com.tlkzzz.jeesite.common.utils.StringUtils;
 import com.tlkzzz.jeesite.common.web.BaseController;
 import com.tlkzzz.jeesite.modules.ps.entity.SMember;
@@ -15,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -66,15 +64,18 @@ public class WxUserController extends BaseController {
                     + "&grant_type=authorization_code";
             JSONObject jsonObject = null;
             try {
-//                if(session.getAttribute("access_token")==null){//token已经失效或者未获取
-                System.out.println("----------------token已经失效或者未获取");
-                jsonObject = WeiXinUtil.doGetStr(url);
-                String access_token = jsonObject.getString("access_token");
-                String openid = jsonObject.getString("openid");
-                System.out.println(openid);
-                session.setMaxInactiveInterval(110 * 60);
-                session.setAttribute("access_token", access_token);
-                session.setAttribute("openid", openid);
+                String access_token = String.valueOf(session.getAttribute("access_token"));
+                String openid = String.valueOf(session.getAttribute("openid"));
+                if(StringUtils.isBlank(access_token)||StringUtils.isBlank(openid)) {
+                    System.out.println("----------------token已经失效-----------");
+                    jsonObject = WeiXinUtil.doGetStr(url);
+                    access_token = jsonObject.getString("access_token");
+                    openid = jsonObject.getString("openid");
+                    System.out.println("-----------------token:"+access_token+";openid:"+openid+"-------------------");
+                    session.setMaxInactiveInterval(110 * 60);
+                    session.setAttribute("access_token", access_token);
+                    session.setAttribute("openid", openid);
+                }
                 WeixinUserInfo snsUserInfo = getUserInfo(access_token, openid);
 //                }else{//token 已存在
 //                    System.out.println("----------------token已经存在session中");
@@ -84,6 +85,8 @@ public class WxUserController extends BaseController {
 //                }
                 System.out.println("session中获取的access——tooken：" + session.getAttribute("access_token"));
                 return "redirect:"+ Global.getShopPath();//重定向到商城首页
+
+//                return "modules/wx/success";
             } catch (IOException e) {
                 int errorCode = jsonObject.getInt("errcode");
                 String errorMsg = jsonObject.getString("errmsg");
