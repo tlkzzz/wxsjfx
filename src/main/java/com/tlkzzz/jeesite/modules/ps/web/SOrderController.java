@@ -58,7 +58,7 @@ public class SOrderController extends BaseController {
 		return "modules/ps/sOrderList";
 	}
 
-	@RequestMapping(value = {"fHList", ""})
+	@RequestMapping(value = {"fHList"})
 	public String fHList(SOrder sOrder,Model model) {
 		List<SOrder> sOrderList=sOrderService.fhfindList(new SOrder());
 		model.addAttribute("sOrder",sOrder);
@@ -66,7 +66,7 @@ public class SOrderController extends BaseController {
 		return "modules/ps/sOrderFhList";
 	}
 
-	@RequestMapping(value = {"tuiHuoList", ""})
+	@RequestMapping(value = {"tuiHuoList"})
 	public String tuiHuoList(SOrder sOrder,Model model) {
 		List<SOrder> sOrderList=sOrderService.thfindList(new SOrder());
 		model.addAttribute("sOrder",sOrder);
@@ -108,6 +108,19 @@ public class SOrderController extends BaseController {
 		sOrderService.save(sOrder);
 		addMessage(redirectAttributes, "保存订单成功");
 		return "redirect:"+Global.getAdminPath()+"/ps/sOrder/?repage";
+	}
+
+	@RequiresPermissions("ps:sOrder:edit")
+	@RequestMapping(value = "saves")
+	public String saves(SOrder sOrder, Model model, RedirectAttributes redirectAttributes) {
+		if (!beanValidator(model, sOrder)){
+			return form(sOrder, model);
+		}
+		sOrderService.save(sOrder);
+		sOrder.setDdbs("3");//已发货，待收货
+		sOrderService.updataDdzt(sOrder);
+		addMessage(redirectAttributes, "保存订单成功");
+		return "redirect:"+Global.getAdminPath()+"/ps/sOrder/fHList?repage";
 	}
 	
 	@RequiresPermissions("ps:sOrder:edit")

@@ -78,17 +78,17 @@
             return false;
         }
         var sjhm=document.getElementById('sjhm').value;
-        if(shr==''||shr==null){
+        if(sjhm==''||sjhm==null){
             window.parent.Message("请填写手机号码");
             return false;
         }
         var xqdz=document.getElementById('xqdz').value;
-        if(shr==''||shr==null){
+        if(xqdz==''||xqdz==null){
             window.parent.Message("请填写详情地址");
             return false;
         }
         var ssq=document.getElementById('level3').value;
-        if(shr==''||shr==null){
+        if(ssq==''||ssq==null){
             window.parent.Message("请选择省市区");
             return false;
         }

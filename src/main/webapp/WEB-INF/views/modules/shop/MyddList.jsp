@@ -160,6 +160,7 @@
             font-size: 2em;
         }
         .hide{
+
             position: fixed;
             top: 0;
             width: 100%;
@@ -325,7 +326,7 @@
                 </c:if>
                 <c:if test="${sorder.ddbs=='6'}">
                     <span>
-					<input type="button" value="订单已取消" style="display: none">
+					<input type="button" value="删除" onclick="shanchu('${sorder.id}');" class="button3">
 				</span>
                 </c:if>
             </div>
@@ -341,7 +342,7 @@
 
     </div>
     <!-- 隐藏区域-->
-    <div class="hide">
+    <div class="hide" hidden>
         <div class="bg">
             <p class="queding">确定取消该订单？</p>
             <p class="anniu">
@@ -419,6 +420,25 @@
         alert("催促成功");
     }
 
+    function shanchu(data) {
+        $.ajax({
+            url: "${shop}/shanchu",
+            type: "POST",
+            data:{
+                ids:data
+            },
+            success: function(data){
+                if(data){
+                    window.parent.Message("删除成功");
+                    window.location.href="${shop}/myDdList";
+                }else{
+                    window.parent.Message("系统错误，请联系管理员");
+                }
+
+            }
+        });
+    }
+
     function tuihuo(data) {
         $.ajax({
             url: "${shop}/tuihuo",
@@ -476,7 +496,7 @@
     }
     function qb() {
         $(".dingdan_box").remove();
-        window.location.href="http://localhost:8080/s/myDdList?data";
+        window.location.href="${shop}/myDdList?data";
     }
     function ff() {
         $(".dingdan_box").remove();

@@ -409,6 +409,14 @@ public String huiyuan(HttpServletRequest request, HttpServletResponse response, 
         return "modules/shop/MyddList";
     }
 
+    @ResponseBody
+    @RequestMapping(value = {"shanchu"})
+    public String shanchu(String ids) {
+        SOrder sOrder=new SOrder();
+        sOrder.setId(ids);
+        sOrderService.delete(sOrder);
+        return "true";
+    }
 
     /**
      * shizx 我的订单详情页面
@@ -433,7 +441,6 @@ public String huiyuan(HttpServletRequest request, HttpServletResponse response, 
         return "true";
     }
 
-    @ResponseBody
     @RequestMapping(value = {"qfk"})
     public String qfk(String ids) {
 
@@ -444,7 +451,7 @@ public String huiyuan(HttpServletRequest request, HttpServletResponse response, 
         sOrder.setId(ids);
         sOrder.setDdbs("2");//取消订单
         sOrderService.updataDdzt(sOrder);
-        return "true";
+        return "modules/shop/paymentOver";
     }
 
     @ResponseBody
