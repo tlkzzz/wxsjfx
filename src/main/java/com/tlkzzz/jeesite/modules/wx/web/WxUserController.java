@@ -66,7 +66,8 @@ public class WxUserController extends BaseController {
             try {
                 String access_token = String.valueOf(session.getAttribute("access_token"));
                 String openid = String.valueOf(session.getAttribute("openid"));
-                if(StringUtils.isBlank(access_token)||StringUtils.isBlank(openid)) {
+                if(StringUtils.isBlank(access_token)||StringUtils.isBlank(openid)||
+                        "null".equals(access_token)||"null".equals(openid)) {
                     System.out.println("----------------token已经失效-----------");
                     jsonObject = WeiXinUtil.doGetStr(url);
                     access_token = jsonObject.getString("access_token");
