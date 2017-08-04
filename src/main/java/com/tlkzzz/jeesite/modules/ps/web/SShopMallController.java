@@ -72,7 +72,6 @@ public class SShopMallController extends BaseController{
     /**         商城代码开始          **/
     @RequestMapping(value = {"index",""})
     public String index(Model model){/**首页**/
-        UserUtils.setMemberId("a619d5f8454b4641a54d759517b9bd71");
         String oldId = String.valueOf(UserUtils.getCache("QRScan_Member_ID"));
         if(StringUtils.isNotBlank(oldId)&&!"null".equals(oldId))sMemberRelationService.saveByOldId(oldId);
         UserUtils.removeCache("QRScan_Member_ID");
