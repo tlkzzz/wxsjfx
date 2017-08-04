@@ -33,7 +33,43 @@
             font-size: 0px;/*ie6*/
             position: absolute;
             top: 6.3rem;
-            left: 0px;
+            left: 0.1%;
+            background-color:  #84bd00;
+        }
+        .huakuai1{
+            width: 20%;
+            height: 3px;
+            font-size: 0px;/*ie6*/
+            position: absolute;
+            top: 6.3rem;
+            left: 20%;
+            background-color:  #84bd00;
+        }
+        .huakuai2{
+            width: 20%;
+            height: 3px;
+            font-size: 0px;/*ie6*/
+            position: absolute;
+            top: 6.3rem;
+            left: 40%;
+            background-color:  #84bd00;
+        }
+        .huakuai3{
+            width: 20%;
+            height: 3px;
+            font-size: 0px;/*ie6*/
+            position: absolute;
+            top: 6.3rem;
+            left: 60%;
+            background-color:  #84bd00;
+        }
+        .huakuai4{
+            width: 20%;
+            height: 3px;
+            font-size: 0px;/*ie6*/
+            position: absolute;
+            top: 6.3rem;
+            left: 80%;
             background-color:  #84bd00;
         }
 
@@ -124,6 +160,7 @@
             font-size: 2em;
         }
         .hide{
+
             position: fixed;
             top: 0;
             width: 100%;
@@ -170,18 +207,59 @@
 <body>
 <div style="width: 100%;">
     <div class="box">
+        <c:if test="${data==''||data==null}">
         <div class="text" onclick="qb();" style="color: #84bd00;"><p>全部</p></div>
-        <div class="text" onclick="ff();"><p>待付款</p></div>
+        <div class="text" onclick="ff();" ><p>待付款</p></div>
         <div class="text" onclick="fa();"><p>待发货</p></div>
         <div class="text" onclick="sh();"><p>待收货</p></div>
         <div class="text" onclick="pin();"><p>待评价</p></div>
         <div class="huakuai"></div>
         <div style="clear: both;"></div>
+        </c:if>
+        <c:if test="${data=='1'}">
+            <div class="text" onclick="qb();" ><p>全部</p></div>
+            <div class="text" onclick="ff();" style="color: #84bd00;"><p>待付款</p></div>
+            <div class="text" onclick="fa();"><p>待发货</p></div>
+            <div class="text" onclick="sh();"><p>待收货</p></div>
+            <div class="text" onclick="pin();"><p>待评价</p></div>
+            <div class="huakuai1"></div>
+            <div style="clear: both;"></div>
+        </c:if>
+        <c:if test="${data=='2'}">
+            <div class="text" onclick="qb();" ><p>全部</p></div>
+            <div class="text" onclick="ff();" ><p>待付款</p></div>
+            <div class="text" onclick="fa();" style="color: #84bd00;"><p>待发货</p></div>
+            <div class="text" onclick="sh();"><p>待收货</p></div>
+            <div class="text" onclick="pin();"><p>待评价</p></div>
+            <div class="huakuai2"></div>
+            <div style="clear: both;"></div>
+        </c:if>
+        <c:if test="${data=='3'}">
+            <div class="text" onclick="qb();" ><p>全部</p></div>
+            <div class="text" onclick="ff();" ><p>待付款</p></div>
+            <div class="text" onclick="fa();" ><p>待发货</p></div>
+            <div class="text" onclick="sh();" style="color: #84bd00;"><p>待收货</p></div>
+            <div class="text" onclick="pin();"><p>待评价</p></div>
+            <div class="huakuai3"></div>
+            <div style="clear: both;"></div>
+        </c:if>
+        <c:if test="${data=='4'}">
+            <div class="text" onclick="qb();" ><p>全部</p></div>
+            <div class="text" onclick="ff();" ><p>待付款</p></div>
+            <div class="text" onclick="fa();"><p>待发货</p></div>
+            <div class="text" onclick="sh();"><p>待收货</p></div>
+            <div class="text" onclick="pin();" style="color: #84bd00;"><p>待评价</p></div>
+            <div class="huakuai4"></div>
+            <div style="clear: both;"></div>
+        </c:if>
     </div>
     <div id="ddiv">
 <c:forEach items="${sorderList}" var="sorder">
     <div class="dingdan_box">
         <p style="width: 100%;"><p class="text_left">订单编号：${sorder.orderNo}</p><p class="text_right">
+        <c:if test="${sorder.ddbs=='3'}">
+        <p style="width: 100%;"><p class="text_left">快递单号：${sorder.kddh}</p><p class="text_right">
+        </c:if>
         <c:if test="${sorder.ddbs=='1'}">
         待付款
         </c:if>
@@ -194,6 +272,21 @@
         <c:if test="${sorder.ddbs=='4'}">
             待评价
         </c:if>
+        <c:if test="${sorder.ddbs=='6'}">
+            已取消
+        </c:if>
+            <c:if test="${sorder.ddbs=='7'}">
+                已评价
+            </c:if>
+            <c:if test="${sorder.ddbs=='8'}">
+                退货申请中
+            </c:if>
+            <c:if test="${sorder.ddbs=='9'}">
+               退货申请成功
+            </c:if>
+            <c:if test="${sorder.ddbs=='0'}">
+                退货成功
+            </c:if>
         </p></p>
         <p>下单时间：<fmt:formatDate value="${sorder.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/></p>
         <%--<p class="time" pattern="yyyy-MM-dd HH:mm:ss">${sorder.createDate}</p>--%>
@@ -204,22 +297,41 @@
                 <p class="time">规格:${sorder.specIds}包</p>
                 <p class="price">￥${sorder.price}</p>
             </div>
+            <c:if test="${sorder.ddbs=='9'}">
+                退货地址：湖南省雨花区华雅财富中心703<br>
+                邮编：410000<br>
+                电话：13000000000
+            </c:if>
             <div style="clear: both;"></div>
             <div class="button_group">
                 <c:if test="${sorder.ddbs=='1'}">
                     <span>
-					<input type="button" value="取消订单" class="button1">
-					<input type="button" value="去付款" class="button2">
+					<input type="button" onclick="quxiao('${sorder.id}');" value="取消订单" class="button1">
+					<input type="button" value="去付款" onclick="qfk('${sorder.id}');" class="button2">
 				</span>
                 </c:if>
                 <c:if test="${sorder.ddbs=='2'}">
                     <span>
-					<input type="button" value="确认收货" onclick="qrsh();" class="button3">
+					<input type="button" value="催促卖家发货" onclick="ccfh();" class="button3">
 				</span>
                 </c:if>
                 <c:if test="${sorder.ddbs=='3'}">
                     <span>
-					<input type="button" value="催促卖家发货" onclick="ccfh();" class="button3">
+                        <input type="button" value="确认收货" onclick="qrsh('${sorder.id}');" class="button3">
+                    <input type="button" value="申请退货" onclick="tuihuo('${sorder.id}');" class="button3">
+
+				</span>
+                </c:if>
+                <c:if test="${sorder.ddbs=='9'}">
+                    <span>
+                        退货快递单号：
+                        <input type="text" id="thkdbh" style="width: 210px"><br>
+                        <input type="button" value="退货" onclick="thlc('${sorder.id}');" class="button3">
+				</span>
+                </c:if>
+                <c:if test="${sorder.ddbs=='8'}">
+                    <span>
+                        <input type="button" value="等待申请" hidden>
 				</span>
                 </c:if>
                 <c:if test="${sorder.ddbs=='4'}">
@@ -229,7 +341,11 @@
             </div><input type="button" onclick="tjpj('${sorder.id}');" value="提交评价"  class="button3">
 				</span>
                 </c:if>
-
+                <c:if test="${sorder.ddbs=='6'}">
+                    <span>
+					<input type="button" value="删除" onclick="shanchu('${sorder.id}');" class="button3">
+				</span>
+                </c:if>
             </div>
         </div>
         <div style="clear: both;"></div>
@@ -243,12 +359,13 @@
 
     </div>
     <!-- 隐藏区域-->
-    <div class="hide">
+    <div class="hide" hidden>
         <div class="bg">
             <p class="queding">确定取消该订单？</p>
             <p class="anniu">
+                <input hidden id="quxddid">
                 <input type="button" value="取消" class="anniu1">
-                <input type="button" value="确认" class="anniu2">
+                <input type="button" onclick="qxdd();" value="确认" class="anniu2">
             </p>
         </div>
     </div>
@@ -262,87 +379,125 @@
         $(this).css("color","#84bd00");
     });
     $(".hide").hide();
-    $(".button1").click(function(){
-        $(".hide").show();
-    });
-    $(".anniu1,.anniu2").click(function(){
+    $(".anniu1").click(function(){
         $(".hide").hide();
     });
 
     $(document).ready(function () {
         $(".hide").hide();
-        ss();
     })
 
-function ss(data) {
-    $.ajax({
-        url: "http://localhost:8080/s/myList",
-        type: "POST",
-        data:{bs:data,},
-        dataType:"json",
-        success: function(data){
-            for(var i=0;i<data.length;i++){
-//                alert(data[i].id);
-                addv(data[i]);
-            }
-        }
-    });
-}
-    function addv(data) {
-        var table = document.body.querySelector('.carddiv');
-        var dc=	document.createElement('div');
-
-
-
-//        var dfk = (data.ddbs=="1")?'待付款':"";
-//        var dfh = (data.ddbs=="2")?'待发货':"";
-//        var dsh = (data.ddbs=="3")?'待收货':"";
-//        var dpj = (data.ddbs=="4")?'待评价':"";
-//        var dfkbtn = (data.ddbs=="1")?'<input type="button" value="取消订单" onclick="qxdd();" class="button1"><input type="button" onclick="qfk();" value="去付款" class="button2">':"";
-//        var dfhbtn = (data.ddbs=="2")?'<input type="button" value="确认收货" onclick="qrsh();" class="button3">':"";
-//        var dshbtn = (data.ddbs=="3")?'<input type="button" value="催促卖家发货" onclick="ccfh();" class="button3">':"";
-//        var dpjbtn = (data.ddbs=="4")?'<div style="width: 100%;">'+
-//            '<textarea id="'+data.id+'" style="width: 100%;height: 70px;margin: 0;border: 1px solid #ddd;padding: .4rem;box-sizing: border-box;font-size: 0.8em;line-height: 18px;" placeholder="评价内容"></textarea>'+
-//            '</div><input type="button" onclick="tjpj('+' \' ' +data.id+' \' '+');" value="提交评价"  class="button3">':"";
-//        dc.innerHTML='	<div class="dingdan_box">'+
-//            '<p style="width: 100%;"><p class="text_left">订单编号：'+data.orderNo+'</p><p class="text_right">'+dfk+dfh+dsh+dpj+'</p></p>'+
-//            '<p class="time">下单时间：'+data.createDate+'</p>'+
-//            '<div class="products">'+
-//            '<div class="images"><img src="'+data.goods.image+'"></div>'+
-//            '<div class="name">'+
-//            '<p class="products_name">'+data.goods.name+'</p>'+
-//            '<p class="time">规格:'+data.specIds+'包</p>'+
-//            '<p class="price">￥'+data.price+'</p>'+
-//            '</div>'+
-//            '<div style="clear: both;"></div>'+
-//            '<div class="button_group">'+
-//            '<span>'+
-//            dfkbtn+dfhbtn+dshbtn+dpjbtn+
-//            '</span>'+
-//            '</div>'+
-//            '</div>'+
-//            '<div style="clear: both;"></div>'+
-//            '</div>';
-        document.body.appendChild(dc);
-    }
-    
-    function qxdd() {
+    function quxiao(data) {
         $(".hide").show();
+        document.getElementById("quxddid").value=data;
     }
-    function qfk() {
-        alert("付款成功");
+
+    function qxdd() {
+        var data=document.getElementById("quxddid").value;
+        $.ajax({
+            url: "${shop}/qxdd",
+            type: "POST",
+            data:{
+                ids:data
+            },
+            success: function(data){
+                if(data){
+                    window.parent.Message("已取消订单");
+                    window.location.href="${shop}/myDdList";
+                }else{
+                    window.parent.Message("系统错误，请联系管理员");
+                }
+
+            }
+        });
+
     }
-    function qrsh() {
-        alert("收货成功");
+    function qfk(data) {
+        window.location.href="${shop}/qfk?ids="+data;
+    }
+    function qrsh(data) {
+        $.ajax({
+            url: "${shop}/qrsh",
+            type: "POST",
+            data:{
+                ids:data
+            },
+            success: function(data){
+                if(data){
+                    window.parent.Message("收货成功");
+                    window.location.href="${shop}/myDdList?data=4";
+                }else{
+                    window.parent.Message("系统错误，请联系管理员");
+                }
+
+            }
+        });
     }
     function ccfh() {
-        alert("催促成功");
+        window.parent.Message("催促成功");
     }
+
+    function shanchu(data) {
+        $.ajax({
+            url: "${shop}/shanchu",
+            type: "POST",
+            data:{
+                ids:data
+            },
+            success: function(data){
+                if(data){
+                    window.parent.Message("删除成功");
+                    window.location.href="${shop}/myDdList";
+                }else{
+                    window.parent.Message("系统错误，请联系管理员");
+                }
+
+            }
+        });
+    }
+
+    function tuihuo(data) {
+        $.ajax({
+            url: "${shop}/tuihuo",
+            type: "POST",
+            data:{
+                ids:data
+            },
+            success: function(data){
+                if(data){
+                    window.parent.Message("申请成功");
+                    window.location.href="${shop}/myDdList?data=8";
+                }else{
+                    window.parent.Message("系统错误，请联系管理员");
+                }
+
+            }
+        });
+    }
+
+    function thlc(data) {
+        var thkdbh=document.getElementById("thkdbh").value;
+        $.ajax({
+            url: "${shop}/thlc",
+            type: "POST",
+            data:{
+                ids:data,
+                thkdbh:thkdbh
+            },
+            success: function(data){
+                if(data){
+                    window.parent.Message("退货成功");
+                    window.location.href="${shop}/myDdList?data";
+                }else{
+                    window.parent.Message("系统错误，请联系管理员");
+                }
+
+            }
+        });
+    }
+
     function tjpj(data) {
-//        alert("回复提交成功");
-//        alert(data);
         var tt=document.getElementById(data.trim()).value;
-//        alert(tt);
         $.ajax({
             url: "${shop}/saveHf",
             type: "POST",
@@ -351,30 +506,30 @@ function ss(data) {
                 ids:data
             },
             success: function(data){
-                alert("回复成功");
+                window.parent.Message("回复成功");
                 window.location.href="${shop}/myDdList?data=4";
             }
         });
     }
     function qb() {
         $(".dingdan_box").remove();
-        window.location.href="http://localhost:8080/s/myDdList";
+        window.location.href="${shop}/myDdList?data";
     }
     function ff() {
         $(".dingdan_box").remove();
-        window.location.href="http://localhost:8080/s/myDdList?data=1";
+        window.location.href="${shop}/myDdList?data=1";
     }
     function fa() {
         $(".dingdan_box").remove();
-        window.location.href="http://localhost:8080/s/myDdList?data=2";
+        window.location.href="${shop}/myDdList?data=2";
     }
     function sh() {
         $(".dingdan_box").remove();
-        window.location.href="http://localhost:8080/s/myDdList?data=3";
+        window.location.href="${shop}/myDdList?data=3";
     }
     function pin() {
         $(".dingdan_box").remove();
-        window.location.href="http://localhost:8080/s/myDdList?data=4";
+        window.location.href="${shop}/myDdList?data=4";
     }
 </script>
 </body>

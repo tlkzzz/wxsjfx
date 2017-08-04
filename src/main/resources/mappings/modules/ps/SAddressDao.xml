@@ -61,6 +61,9 @@
 			<if test="member != null and member.id != null and member.id != ''">
 				AND a.member_id = #{member.id}
 			</if>
+			<if test="id != null and id != ''">
+				AND a.id = #{id}
+			</if>
 			<if test="area != null and area.id != null and area.id != ''">
 				AND a.area_id = #{area.id}
 			</if>

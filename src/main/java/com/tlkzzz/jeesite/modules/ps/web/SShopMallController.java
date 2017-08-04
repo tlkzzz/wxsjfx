@@ -72,6 +72,7 @@ public class SShopMallController extends BaseController{
     /**         商城代码开始          **/
     @RequestMapping(value = {"index",""})
     public String index(Model model){/**首页**/
+        UserUtils.setMemberId("a619d5f8454b4641a54d759517b9bd71");
         String oldId = String.valueOf(UserUtils.getCache("QRScan_Member_ID"));
         if(StringUtils.isNotBlank(oldId)&&!"null".equals(oldId))sMemberRelationService.saveByOldId(oldId);
         UserUtils.removeCache("QRScan_Member_ID");
@@ -180,8 +181,8 @@ public class SShopMallController extends BaseController{
         if(StringUtils.isNotBlank(id)&&StringUtils.isNotBlank(total)){
             SReceipt receipt = sReceiptService.get(id);
             if(receipt!=null) {
-                sShopMallService.tcAdd(receipt);
                 sReceiptService.updateByTotal(receipt, snKey,total);
+                sShopMallService.tcAdd(receipt);
                 model.addAttribute("receipt", receipt);
                 model.addAttribute("orderList", sOrderService.findListByReceiptId(id));
                 model.addAttribute("flag", true);
@@ -404,9 +405,18 @@ public String huiyuan(HttpServletRequest request, HttpServletResponse response, 
         sOrder.setDdbs(data);
         List<SOrder> sorderList=sOrderService.findList(sOrder);
         model.addAttribute("sorderList",sorderList);
+        model.addAttribute("data",data);
         return "modules/shop/MyddList";
     }
 
+    @ResponseBody
+    @RequestMapping(value = {"shanchu"})
+    public String shanchu(String ids) {
+        SOrder sOrder=new SOrder();
+        sOrder.setId(ids);
+        sOrderService.delete(sOrder);
+        return "true";
+    }
 
     /**
      * shizx 我的订单详情页面
@@ -419,6 +429,60 @@ public String huiyuan(HttpServletRequest request, HttpServletResponse response, 
         sOrder.setDdbs(bs);
         List<SOrder> sorderList=sOrderService.findList(sOrder);
         return sorderList;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = {"qxdd"})
+    public String qxdd(String ids) {
+        SOrder sOrder=new SOrder();
+        sOrder.setId(ids);
+        sOrder.setDdbs("6");//取消订单
+        sOrderService.updataDdzt(sOrder);
+        return "true";
+    }
+
+    @RequestMapping(value = {"qfk"})
+    public String qfk(String ids) {
+
+        /**
+         * 付款预留方法
+         * */
+        SOrder sOrder=new SOrder();
+        sOrder.setId(ids);
+        sOrder.setDdbs("2");//取消订单
+        sOrderService.updataDdzt(sOrder);
+        return "modules/shop/paymentOver";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = {"qrsh"})
+    public String qrsh(String ids) {
+        SOrder sOrder=new SOrder();
+        sOrder.setId(ids);
+        sOrder.setDdbs("4");//取消订单
+        sOrderService.updataDdzt(sOrder);
+        return "true";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = {"tuihuo"})
+    public String tuihuo(String ids) {
+        SOrder sOrder=new SOrder();
+        sOrder.setId(ids);
+        sOrder.setDdbs("8");//取消订单
+        sOrderService.updataDdzt(sOrder);
+        return "true";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = {"thlc"})
+    public String thlc(String ids,String thkdbh) {
+        SOrder sOrder=new SOrder();
+        sOrder.setId(ids);
+        sOrder.setDdbs("0");//退货成功
+        sOrder.setThkddh(thkdbh);
+        sOrderService.updatathzt(sOrder);
+        return "true";
     }
 
     @RequestMapping(value = "shoplist")
@@ -459,6 +523,10 @@ public String huiyuan(HttpServletRequest request, HttpServletResponse response, 
         List<SOrder> sorderList=sOrderService.findList(new SOrder(ids));
         sGoodsComment.setGoods(new SGoods(sorderList.get(0).getGoods().getId()));
         sGoodsCommentService.save(sGoodsComment);
+        SOrder sOrder=new SOrder();
+        sOrder.setId(ids);
+        sOrder.setDdbs("7");//已评价
+        sOrderService.updataDdzt(sOrder);
         return "true";
     }
 

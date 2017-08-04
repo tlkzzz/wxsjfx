@@ -54,6 +54,13 @@ public class SOrderService extends CrudService<SOrderDao, SOrder> {
 		return super.findList(order);
 	}
 
+	public List<SOrder> fhfindList(SOrder sOrder){
+		return dao.fhfindList(sOrder);
+	}
+	public List<SOrder> thfindList(SOrder sOrder){
+		return dao.thfindList(sOrder);
+	}
+
 	public Page<SOrder> findPage(Page<SOrder> page, SOrder sOrder) {
 
 		return super.findPage(page, sOrder);
@@ -63,6 +70,12 @@ public class SOrderService extends CrudService<SOrderDao, SOrder> {
 	public void save(SOrder sOrder) {
 		super.save(sOrder);
 	}
+
+	@Transactional(readOnly = false)
+	public void updataDdzt(SOrder sOrder) {dao.updataDdzt(sOrder);}
+
+	@Transactional(readOnly = false)
+	public void updatathzt(SOrder sOrder) {dao.updatathzt(sOrder);}
 
 
 	@Transactional(readOnly = false)

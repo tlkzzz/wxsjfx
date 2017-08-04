@@ -7,6 +7,8 @@ import com.tlkzzz.jeesite.common.persistence.CrudDao;
 import com.tlkzzz.jeesite.common.persistence.annotation.MyBatisDao;
 import com.tlkzzz.jeesite.modules.ps.entity.SOrder;
 
+import java.util.List;
+
 /**
  * 订单DAO接口
  * @author xlc
@@ -14,5 +16,11 @@ import com.tlkzzz.jeesite.modules.ps.entity.SOrder;
  */
 @MyBatisDao
 public interface SOrderDao extends CrudDao<SOrder> {
-	
+
+    public List<SOrder> fhfindList(SOrder sOrder);
+    public List<SOrder> thfindList(SOrder sOrder);
+
+    public void updataDdzt(SOrder sOrder);
+    public void updatathzt(SOrder sOrder);
+
 }
