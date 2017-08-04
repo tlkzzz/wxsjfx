@@ -62,7 +62,7 @@ public class MenuUtil {
 		//预约挂号
 		String yygh="http://wx.tlkzzz.com/s/QRScan";
 		//我的挂号
-		String wdgh="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx3e4a89adbc62b1e9&redirect_uri=http://www.jiaqiankun.site/imessage/wechat/event/zyfy.html&response_type=code&scope=snsapi_base&state=0531_819";
+		String wdgh="http://wx.tlkzzz.com/s/getQR";
 		//门诊缴费
 		String mzjf="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx3e4a89adbc62b1e9&redirect_uri=http://www.jiaqiankun.site/imessage/wechat/event/zyfy.html&response_type=code&scope=snsapi_base&state=0531_819";
 		//住院押金补缴
