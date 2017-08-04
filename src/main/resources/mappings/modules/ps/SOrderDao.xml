@@ -67,7 +67,7 @@
 		<include refid="sOrderJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			AND a.ddbs = '9'
+			AND a.ddbs IN ('8','9')
 			<if test="orderNo != null  and orderNo != ''">
 				AND a.order_no = #{orderNo}
 			</if>

@@ -91,9 +91,9 @@ public class SOrderController extends BaseController {
 	public String Tuihuo(SOrder sOrder,HttpServletRequest request, Model model) {
 		String ids=request.getParameter("id");
 		sOrder.setId(ids);
-		sOrder.setDdbs("0");//退货申请成功
+		sOrder.setDdbs("9");//退货申请成功
 		sOrderService.updataDdzt(sOrder);
-		List<SOrder> sOrderList=sOrderService.fhfindList(new SOrder());
+		List<SOrder> sOrderList=sOrderService.thfindList(new SOrder());
 		model.addAttribute("sOrder",sOrder);
 		model.addAttribute("sOrderList",sOrderList);
 		return "modules/ps/sOrderTuiList";

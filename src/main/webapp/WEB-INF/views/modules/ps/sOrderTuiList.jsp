@@ -77,7 +77,12 @@
                 <fmt:formatDate value="${sOrder.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
             </td>
             <td>
+                <c:if test="${sOrder.ddbs=='8'}">
                 <a href="${ctx}/ps/sOrder/Tuihuo?id=${sOrder.id}">通过</a>
+                </c:if>
+                <c:if test="${sOrder.ddbs=='9'}">
+                    已通过
+                </c:if>
             </td>
         </tr>
     </c:forEach>

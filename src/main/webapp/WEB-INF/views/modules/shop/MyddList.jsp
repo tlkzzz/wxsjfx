@@ -275,11 +275,17 @@
         <c:if test="${sorder.ddbs=='6'}">
             已取消
         </c:if>
+            <c:if test="${sorder.ddbs=='7'}">
+                已评价
+            </c:if>
+            <c:if test="${sorder.ddbs=='8'}">
+                退货申请中
+            </c:if>
             <c:if test="${sorder.ddbs=='9'}">
-               退货申请成功<br>
-               退货地址：湖南省雨花区华雅财富中心703<br>
-               邮编：410000<br>
-               电话：13000000000
+               退货申请成功
+            </c:if>
+            <c:if test="${sorder.ddbs=='0'}">
+                退货成功
             </c:if>
         </p></p>
         <p>下单时间：<fmt:formatDate value="${sorder.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/></p>
@@ -291,6 +297,11 @@
                 <p class="time">规格:${sorder.specIds}包</p>
                 <p class="price">￥${sorder.price}</p>
             </div>
+            <c:if test="${sorder.ddbs=='9'}">
+                退货地址：湖南省雨花区华雅财富中心703<br>
+                邮编：410000<br>
+                电话：13000000000
+            </c:if>
             <div style="clear: both;"></div>
             <div class="button_group">
                 <c:if test="${sorder.ddbs=='1'}">
@@ -313,8 +324,14 @@
                 </c:if>
                 <c:if test="${sorder.ddbs=='9'}">
                     <span>
-                        <input type="text" id="thkdbh" ><br>
+                        退货快递单号：
+                        <input type="text" id="thkdbh" style="width: 210px"><br>
                         <input type="button" value="退货" onclick="thlc('${sorder.id}');" class="button3">
+				</span>
+                </c:if>
+                <c:if test="${sorder.ddbs=='8'}">
+                    <span>
+                        <input type="button" value="等待申请" hidden>
 				</span>
                 </c:if>
                 <c:if test="${sorder.ddbs=='4'}">
@@ -396,7 +413,7 @@
 
     }
     function qfk(data) {
-        window.location.href="${shop}/qfk?data="+data;
+        window.location.href="${shop}/qfk?ids="+data;
     }
     function qrsh(data) {
         $.ajax({
@@ -417,7 +434,7 @@
         });
     }
     function ccfh() {
-        alert("催促成功");
+        window.parent.Message("催促成功");
     }
 
     function shanchu(data) {
@@ -470,7 +487,7 @@
             success: function(data){
                 if(data){
                     window.parent.Message("退货成功");
-                    window.location.href="${shop}/myDdList?data=0";
+                    window.location.href="${shop}/myDdList?data";
                 }else{
                     window.parent.Message("系统错误，请联系管理员");
                 }

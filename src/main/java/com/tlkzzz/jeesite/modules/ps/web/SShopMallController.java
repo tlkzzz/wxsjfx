@@ -181,8 +181,8 @@ public class SShopMallController extends BaseController{
         if(StringUtils.isNotBlank(id)&&StringUtils.isNotBlank(total)){
             SReceipt receipt = sReceiptService.get(id);
             if(receipt!=null) {
-                sShopMallService.tcAdd(receipt);
                 sReceiptService.updateByTotal(receipt, snKey,total);
+                sShopMallService.tcAdd(receipt);
                 model.addAttribute("receipt", receipt);
                 model.addAttribute("orderList", sOrderService.findListByReceiptId(id));
                 model.addAttribute("flag", true);

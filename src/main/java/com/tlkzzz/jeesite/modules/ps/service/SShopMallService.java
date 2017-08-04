@@ -188,6 +188,7 @@ public class SShopMallService  extends BaseService {
     }
 
 
+    @Transactional(readOnly = false)
     public String tcAdd(SReceipt sReceipt) {
         if(StringUtils.isNotBlank(sReceipt.getId())){
         String btcr=sReceipt.getCreateBy().getId();   //被提成人
