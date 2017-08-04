@@ -26,7 +26,7 @@ public class MobileInterceptor extends BaseService implements HandlerInterceptor
 			Object handler) throws Exception {
 		String method = request.getRequestURI();
 		method = method.substring(method.lastIndexOf("/")+1);
-		if(!"QRScan".equals(method)&&!"getQR".equals(method)&&!"s".equals(method)){
+		if(!"QRScan".equals(method)&&!"getQR".equals(method)){
 			if(UserUtils.getUser()==null||StringUtils.isBlank(UserUtils.getUser().getId())){
 				response.sendRedirect(request.getContextPath()+Global.getShopPath()+"/QRScan");
 				return false;
